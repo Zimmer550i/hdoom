@@ -23,7 +23,7 @@ const _secondaryIconColor = AppColors.green;
 const _secondaryLoaderColor = AppColors.green;
 
 // Sizing defaults
-const _defaultHeight = 50.0;
+const _defaultHeight = 56.0;
 const _defaultWidth = double.infinity;
 const _defaultPadding = 40.0;
 const _defaultRadius = 99.0;

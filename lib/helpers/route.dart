@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/views/screens/splash.dart';
+import 'package:hdoom/views/screens/auth/splash.dart';
 
 class AppRoutes {
   static String splash = "/splash";

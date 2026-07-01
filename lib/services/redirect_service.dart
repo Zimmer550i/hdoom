@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hdoom/views/screens/design_system.dart';
+import 'package:hdoom/views/screens/auth/choose_language.dart';
 
 class RedirectService {
   static const Duration splashDuration = Duration(seconds: 2);
@@ -18,6 +18,6 @@ class RedirectService {
       await Future.delayed(splashDuration - apiTime);
     }
 
-    Get.to(() => DesignSystem());
+    Get.to(() => ChooseLanguage());
   }
 }
