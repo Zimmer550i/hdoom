@@ -71,7 +71,10 @@ class OverlayConfirmation extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: _titleColor,
-              fontVariations: [FontVariation("wght", _titleFontWeight)],
+              fontVariations: [
+                FontVariation("wght", _titleFontWeight),
+                FontVariation("wdth", 100),
+              ],
               fontSize: _titleFontSize,
             ),
           ),
@@ -82,7 +85,10 @@ class OverlayConfirmation extends StatelessWidget {
               style: TextStyle(
                 color: _highlightColor,
                 fontSize: _highlightFontSize,
-                fontVariations: [FontVariation("wght", _highlightFontWeight)],
+                fontVariations: [
+                  FontVariation("wght", _highlightFontWeight),
+                  FontVariation("wdth", 120),
+                ],
               ),
             ),
           const SizedBox(height: _buttonsTopSpacing),
@@ -93,6 +99,7 @@ class OverlayConfirmation extends StatelessWidget {
                 Expanded(
                   child: CustomButton(
                     text: buttonTextLeft!,
+                    height: 40,
                     isSecondary: leftButtonIsSecondary,
                     onTap: buttonCallBackLeft,
                   ),
@@ -101,6 +108,7 @@ class OverlayConfirmation extends StatelessWidget {
                 Expanded(
                   child: CustomButton(
                     text: buttonTextRight!,
+                    height: 40,
                     isSecondary: !leftButtonIsSecondary,
                     onTap: buttonCallBackRight,
                   ),

@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/auth/reset_password.dart';
+import 'package:hdoom/views/screens/profile/edit_profile.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/logo.dart';
@@ -39,6 +39,8 @@ class _VerificationState extends State<Verification> {
   void onSubmit() async {
     if (widget.isResettingPassword) {
       Get.to(() => ResetPassword());
+    } else {
+      Get.to(() => EditProfile(createAccount: true));
     }
   }
 

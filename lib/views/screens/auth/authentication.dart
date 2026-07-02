@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/services/redirect_service.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_constants.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/auth/forgot_password.dart';
+import 'package:hdoom/views/screens/auth/verification.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_text_field.dart';
 import 'package:hdoom/views/widgets/logo.dart';
@@ -30,7 +32,13 @@ class _AuthenticationState extends State<Authentication> {
     super.dispose();
   }
 
-  void onSubmit() async {}
+  void onSubmit() async {
+    if (index == 0) {
+      RedirectService.gotoApp();
+    } else {
+      Get.to(() => Verification(email: emailController.text));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +104,9 @@ class _AuthenticationState extends State<Authentication> {
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () {
-                          Get.to(() => ForgotPassword(email: emailController.text,));
+                          Get.to(
+                            () => ForgotPassword(email: emailController.text),
+                          );
                         },
                         child: Text(
                           "Forgot Password?",

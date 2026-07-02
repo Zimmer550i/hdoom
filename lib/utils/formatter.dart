@@ -133,16 +133,24 @@ class Formatter {
     return parts.length > 1 ? "$intPart.${parts[1]}" : intPart;
   }
 
-  /// Compact number: 1200 → "1.2K", 1500000 → "1.5M".
+  /// Compact number: 1200 → "1.2K", 1500000 → "1.5M", 1000 → "1K".
   static String compactNumber(num value) {
     if (value.abs() >= 1000000000) {
-      return "${(value / 1000000000).toStringAsFixed(1)}B";
+      return _compactNumberValue(value / 1000000000, 'B');
     } else if (value.abs() >= 1000000) {
-      return "${(value / 1000000).toStringAsFixed(1)}M";
+      return _compactNumberValue(value / 1000000, 'M');
     } else if (value.abs() >= 1000) {
-      return "${(value / 1000).toStringAsFixed(1)}K";
+      return _compactNumberValue(value / 1000, 'K');
     }
     return value.toString();
+  }
+
+  static String _compactNumberValue(num value, String suffix) {
+    final formatted = value.toStringAsFixed(1);
+    final trimmed = formatted.endsWith('.0')
+        ? formatted.substring(0, formatted.length - 2)
+        : formatted;
+    return '$trimmed$suffix';
   }
 
   /// Formats a double as currency: 1234.5 → "$1,234.50".
@@ -215,13 +223,33 @@ class Formatter {
   // ──────────────────────────────────────────
 
   static const _months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   static const _monthsShort = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   /// Returns full month name (1-indexed): 1 → "January".

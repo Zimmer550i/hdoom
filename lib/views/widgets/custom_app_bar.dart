@@ -21,7 +21,7 @@ const _leadingRadius = 8.0;
 const _titleLeftPadding = 18.0;
 
 // Typography
-final _titleStyle = AppTexts.tlgm;
+final _titleStyle = AppTexts.txlm;
 
 // Icons
 const _backIcon = AppIcons.back;
@@ -47,20 +47,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             SizedBox(width: _leadingStartPadding),
-            InkWell(
-              onTap: () => hasLeading ? Get.back() : null,
-              borderRadius: BorderRadius.circular(_leadingRadius),
-              child: SizedBox(
-                height: _leadingSize,
-                width: _leadingSize,
-                child: hasLeading
-                    ? Center(
-                        child: CustomSvg(asset: _backIcon, color: _titleColor),
-                      )
-                    : const SizedBox(),
+            if (hasLeading)
+              InkWell(
+                onTap: () => hasLeading ? Get.back() : null,
+                borderRadius: BorderRadius.circular(_leadingRadius),
+                child: SizedBox(
+                  height: _leadingSize,
+                  width: _leadingSize,
+                  child: hasLeading
+                      ? Center(
+                          child: CustomSvg(
+                            asset: _backIcon,
+                            color: _titleColor,
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
               ),
-            ),
-            const SizedBox(width: _titleLeftPadding),
+            if (hasLeading) const SizedBox(width: _titleLeftPadding),
             Text(title, style: _titleStyle.copyWith(color: _titleColor)),
           ],
         ),

@@ -88,7 +88,9 @@ class _CustomButtonState extends State<CustomButton> {
         width: widget.width,
         padding: EdgeInsets.symmetric(horizontal: widget.padding),
         decoration: BoxDecoration(
-          gradient: AppConstants.DEFAULT_GRADIENT_BACKGROUND,
+          gradient: widget.isSecondary || widget.isDisabled
+              ? null
+              : AppConstants.DEFAULT_GRADIENT_BACKGROUND,
           color: widget.isSecondary
               ? _secondaryColor
               : widget.isDisabled
