@@ -30,10 +30,13 @@ class CustomBottomNavbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(24),
-        topRight: Radius.circular(12)
-      )),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(12),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.only(top: _verticalPadding),
         child: Row(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hdoom/views/screens/home/home.dart';
 import 'package:hdoom/views/screens/profile/profile.dart';
 import 'package:hdoom/views/widgets/custom_bottom_navbar.dart';
 
@@ -12,7 +13,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   int index = 0;
   List<Widget> pages = [
-    FlutterLogo(size: 200),
+    Home(),
     FlutterLogo(size: 200),
     FlutterLogo(size: 200),
     Profile(isUserProfile: true),

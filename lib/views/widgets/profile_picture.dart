@@ -108,7 +108,7 @@ class ProfilePicture extends StatelessWidget {
                     height: size,
                     padding: EdgeInsets.all(size * _placeholderPaddingScale),
                     decoration: BoxDecoration(
-                      color: AppColors.white,
+                      color: Colors.white,
                       shape: BoxShape.circle,
                     ),
                     child: Center(

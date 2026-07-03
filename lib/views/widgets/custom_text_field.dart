@@ -9,7 +9,7 @@ import 'package:hdoom/utils/app_texts.dart';
 // ──────────────────────────────────────────────
 
 // Colors
-const _backgroundColor = AppColors.white;
+const _backgroundColor = Colors.white;
 final _focusBorderColor = AppColors.green[300]!;
 final _defaultBorderColor = AppColors.green[100]!;
 final _cursorColor = AppColors.green.shade300;

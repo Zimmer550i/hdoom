@@ -9,7 +9,7 @@ import 'package:hdoom/utils/custom_svg.dart';
 // ──────────────────────────────────────────────
 
 // Colors (same as CustomTextField)
-const _backgroundColor = AppColors.white;
+const _backgroundColor = Colors.white;
 final _focusBorderColor = AppColors.green[300]!;
 final _defaultBorderColor = AppColors.green[100]!;
 const _errorColor = AppColors.red;

@@ -11,9 +11,9 @@ import 'package:hdoom/utils/app_texts.dart';
 // Primary button colors
 final _primaryColor = AppColors.green.shade500;
 final _primaryDisabledColor = AppColors.green.shade300;
-final _primaryTextColor = AppColors.white;
-final _primaryIconColor = AppColors.white;
-final _primaryLoaderColor = AppColors.white;
+final _primaryTextColor = Colors.white;
+final _primaryIconColor = Colors.white;
+final _primaryLoaderColor = Colors.white;
 
 // Secondary button colors
 final _secondaryColor = AppColors.green[50]!;

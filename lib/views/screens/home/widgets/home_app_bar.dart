@@ -1,0 +1,41 @@
+import 'package:flutter/material.dart';
+import 'package:hdoom/utils/app_colors.dart';
+import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/utils/custom_svg.dart';
+import 'package:hdoom/views/widgets/profile_picture.dart';
+
+/// Builds the Home screen's custom [AppBar] with user greeting,
+/// profile picture, and action icons.
+AppBar buildHomeAppBar() {
+  return AppBar(
+    titleSpacing: 0,
+    title: Row(
+      children: [
+        const SizedBox(width: 20),
+        ProfilePicture(image: "https://picsum.photos/200/200", size: 36),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Good Morning, Ayesha",
+                style: AppTexts.txlm.copyWith(color: AppColors.green),
+              ),
+              Text(
+                "Here's your outfit for today",
+                style: AppTexts.tsmr.copyWith(
+                  color: AppColors.black.shade400,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 16),
+        CustomSvg(asset: "assets/icons/save.svg"),
+        const SizedBox(width: 20),
+      ],
+    ),
+  );
+}

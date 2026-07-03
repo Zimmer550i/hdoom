@@ -68,7 +68,7 @@ class _AuthenticationState extends State<Authentication> {
                 padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(99),
-                  color: AppColors.white,
+                  color: Colors.white,
                   border: Border.all(
                     color: AppColors.green.shade100,
                     width: 0.5,

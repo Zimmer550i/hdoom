@@ -57,7 +57,7 @@ class ChooseLanguage extends StatelessWidget {
                   height: 60,
                   padding: EdgeInsets.symmetric(horizontal: 24),
                   decoration: BoxDecoration(
-                    color: AppColors.white,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(33),
                   ),
                   child: Row(
@@ -84,7 +84,7 @@ class ChooseLanguage extends StatelessWidget {
                 height: 60,
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(33),
                 ),
                 child: Row(
