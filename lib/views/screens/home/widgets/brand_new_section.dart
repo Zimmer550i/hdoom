@@ -28,7 +28,7 @@ class BrandNewSection extends StatelessWidget {
             title: "Brand New",
             data: [for (int i = 0; i < 10; i++) "Hi", "End"],
             builder: (val) {
-              return _buildProductCard();
+              return _buildProductCard(hasWidth: false);
             },
           ),
         );
@@ -52,52 +52,55 @@ class BrandNewSection extends StatelessWidget {
         shrinkWrap: true,
         clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
-        children: [for (int i = 0; i < 10; i++) _buildProductCard()],
+        children: [
+          for (int i = 0; i < 10; i++)
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: _buildProductCard(),
+            ),
+        ],
       ),
     );
   }
 
-  Widget _buildProductCard() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          width: 150,
-          decoration: BoxDecoration(color: Colors.white),
-          child: Column(
-            children: [
-              Expanded(
-                child: Image.asset("assets/images/bag.jpg", fit: BoxFit.cover),
+  Widget _buildProductCard({bool hasWidth = true}) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        width: hasWidth ? 150 : null,
+        decoration: BoxDecoration(color: Colors.white),
+        child: Column(
+          children: [
+            Expanded(
+              child: Image.asset("assets/images/bag.jpg", fit: BoxFit.cover),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Soft Leather Tote",
+                    style: AppTexts.tmdm.copyWith(
+                      color: AppColors.black.shade400,
+                    ),
+                  ),
+                  Text(
+                    "Essential Collection",
+                    style: AppTexts.tsmr.copyWith(
+                      color: AppColors.black.shade400,
+                    ),
+                  ),
+                  Text(
+                    "SAR 450",
+                    style: AppTexts.tsmm.copyWith(
+                      color: AppColors.black.shade400,
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Soft Leather Tote",
-                      style: AppTexts.tmdm.copyWith(
-                        color: AppColors.black.shade400,
-                      ),
-                    ),
-                    Text(
-                      "Essential Collection",
-                      style: AppTexts.tsmr.copyWith(
-                        color: AppColors.black.shade400,
-                      ),
-                    ),
-                    Text(
-                      "SAR 450",
-                      style: AppTexts.tsmm.copyWith(
-                        color: AppColors.black.shade400,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

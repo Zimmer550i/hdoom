@@ -54,57 +54,60 @@ class FriendsStyleSection extends StatelessWidget {
         shrinkWrap: true,
         clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
-        children: [for (int i = 0; i < 10; i++) _buildFriendCard()],
+        children: [
+          for (int i = 0; i < 10; i++)
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: _buildFriendCard(),
+            ),
+        ],
       ),
     );
   }
 
   Widget _buildFriendCard() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          width: 200,
-          decoration: BoxDecoration(color: Colors.white),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Image.asset("assets/images/style_casual.jpg", fit: BoxFit.cover),
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: [0.5, 1],
-                      colors: [
-                        Colors.black.withValues(alpha: 0),
-                        Colors.black.withValues(alpha: 0.3),
-                      ],
-                    ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        width: 200,
+        decoration: BoxDecoration(color: Colors.white),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset("assets/images/style_casual.jpg", fit: BoxFit.cover),
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.5, 1],
+                    colors: [
+                      Colors.black.withValues(alpha: 0),
+                      Colors.black.withValues(alpha: 0.3),
+                    ],
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 12,
-                left: 12,
-                right: 12,
-                child: Row(
-                  spacing: 4,
-                  children: [
-                    ProfilePicture(size: 32),
-                    Expanded(
-                      child: Text(
-                        "@loura_2",
-                        style: AppTexts.tmdm.copyWith(color: Colors.white),
-                      ),
+            ),
+            Positioned(
+              bottom: 12,
+              left: 12,
+              right: 12,
+              child: Row(
+                spacing: 4,
+                children: [
+                  ProfilePicture(size: 32),
+                  Expanded(
+                    child: Text(
+                      "@loura_2",
+                      style: AppTexts.tmdm.copyWith(color: Colors.white),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

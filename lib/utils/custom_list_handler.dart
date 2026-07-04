@@ -11,6 +11,7 @@ class CustomListHandler extends StatelessWidget {
   final Widget? child;
   final List<Widget> children;
   final String endIndicator;
+  final Widget? endWidget;
   final String placeholder;
   final TextStyle textStyle;
   final bool reverse;
@@ -30,6 +31,7 @@ class CustomListHandler extends StatelessWidget {
     this.isLoadingMore = false,
     this.topPadding = false,
     this.endIndicator = "End of the list",
+    this.endWidget,
     this.placeholder = "Nothing to show",
     this.textStyle = const TextStyle(
       color: Colors.blueGrey,
@@ -116,12 +118,13 @@ class CustomListHandler extends StatelessWidget {
             return Center(child: CustomLoading());
           }
           return SafeArea(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(endIndicator, style: textStyle),
-              ),
-            ),
+            child: endWidget ??
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(endIndicator, style: textStyle),
+                  ),
+                ),
           );
         }
         return children[index];
