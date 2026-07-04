@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_svg.dart';
+import 'package:hdoom/views/screens/home/show_card_lists.dart';
 import 'package:hdoom/views/widgets/profile_picture.dart';
 
 /// Horizontally-scrolling "FRIENDS STYLE" social feed section
@@ -21,14 +23,27 @@ class FriendsStyleSection extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return Row(
-      children: [
-        Expanded(child: Text("FRIENDS STYLE", style: AppTexts.txlm)),
-        CustomSvg(
-          asset: "assets/icons/arrow_forward.svg",
-          color: AppColors.black.shade300,
-        ),
-      ],
+    return GestureDetector(
+      onTap: () {
+        Get.to(
+          () => ShowCardLists(
+            title: "Friend's Styles",
+            data: [for (int i = 0; i < 10; i++) "Hi", "End"],
+            builder: (val) {
+              return _buildFriendCard();
+            },
+          ),
+        );
+      },
+      child: Row(
+        children: [
+          Expanded(child: Text("FRIENDS STYLE", style: AppTexts.txlm)),
+          CustomSvg(
+            asset: "assets/icons/arrow_forward.svg",
+            color: AppColors.black.shade300,
+          ),
+        ],
+      ),
     );
   }
 
@@ -39,9 +54,7 @@ class FriendsStyleSection extends StatelessWidget {
         shrinkWrap: true,
         clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
-        children: [
-          for (int i = 0; i < 10; i++) _buildFriendCard(),
-        ],
+        children: [for (int i = 0; i < 10; i++) _buildFriendCard()],
       ),
     );
   }
@@ -57,10 +70,7 @@ class FriendsStyleSection extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.asset(
-                "assets/images/style_casual.jpg",
-                fit: BoxFit.cover,
-              ),
+              Image.asset("assets/images/style_casual.jpg", fit: BoxFit.cover),
               Positioned.fill(
                 child: Container(
                   decoration: BoxDecoration(
@@ -87,9 +97,7 @@ class FriendsStyleSection extends StatelessWidget {
                     Expanded(
                       child: Text(
                         "@loura_2",
-                        style: AppTexts.tmdm.copyWith(
-                          color: Colors.white,
-                        ),
+                        style: AppTexts.tmdm.copyWith(color: Colors.white),
                       ),
                     ),
                   ],

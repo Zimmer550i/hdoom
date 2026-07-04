@@ -42,6 +42,12 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      for (var i in styles) {
+        precacheImage(AssetImage("assets/images/style_$i.jpg"), context);
+      }
+    });
+
     return Scaffold(
       appBar: CustomAppBar(
         title: widget.createAccount ? "Complete Profile" : "Edit Profile",

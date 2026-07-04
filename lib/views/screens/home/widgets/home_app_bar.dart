@@ -9,6 +9,8 @@ import 'package:hdoom/views/widgets/profile_picture.dart';
 AppBar buildHomeAppBar() {
   return AppBar(
     titleSpacing: 0,
+    backgroundColor: AppColors.bg,
+    surfaceTintColor: AppColors.green,
     title: Row(
       children: [
         const SizedBox(width: 20),

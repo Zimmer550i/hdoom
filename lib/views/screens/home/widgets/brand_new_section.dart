@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_svg.dart';
+import 'package:hdoom/views/screens/home/show_card_lists.dart';
 
 /// Horizontally-scrolling "BRAND NEW" product showcase section.
 class BrandNewSection extends StatelessWidget {
@@ -19,14 +21,27 @@ class BrandNewSection extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return Row(
-      children: [
-        Expanded(child: Text("BRAND NEW", style: AppTexts.txlm)),
-        CustomSvg(
-          asset: "assets/icons/arrow_forward.svg",
-          color: AppColors.black.shade300,
-        ),
-      ],
+    return GestureDetector(
+      onTap: () {
+        Get.to(
+          () => ShowCardLists(
+            title: "Brand New",
+            data: [for (int i = 0; i < 10; i++) "Hi", "End"],
+            builder: (val) {
+              return _buildProductCard();
+            },
+          ),
+        );
+      },
+      child: Row(
+        children: [
+          Expanded(child: Text("BRAND NEW", style: AppTexts.txlm)),
+          CustomSvg(
+            asset: "assets/icons/arrow_forward.svg",
+            color: AppColors.black.shade300,
+          ),
+        ],
+      ),
     );
   }
 
@@ -37,9 +52,7 @@ class BrandNewSection extends StatelessWidget {
         shrinkWrap: true,
         clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
-        children: [
-          for (int i = 0; i < 10; i++) _buildProductCard(),
-        ],
+        children: [for (int i = 0; i < 10; i++) _buildProductCard()],
       ),
     );
   }
@@ -55,16 +68,10 @@ class BrandNewSection extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child: Image.asset(
-                  "assets/images/bag.jpg",
-                  fit: BoxFit.cover,
-                ),
+                child: Image.asset("assets/images/bag.jpg", fit: BoxFit.cover),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 16,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
