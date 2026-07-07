@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hdoom/views/screens/avatar/avatar.dart';
 import 'package:hdoom/views/screens/home/home.dart';
 import 'package:hdoom/views/screens/profile/profile.dart';
 import 'package:hdoom/views/screens/wardrobe/wardrobe.dart';
@@ -16,7 +17,7 @@ class _AppState extends State<App> {
   List<Widget> pages = [
     Home(),
     Wardrobe(),
-    FlutterLogo(size: 200),
+    Avatar(),
     Profile(isUserProfile: true),
   ];
 
