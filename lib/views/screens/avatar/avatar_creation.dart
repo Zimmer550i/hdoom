@@ -21,21 +21,21 @@ class _AvatarCreationState extends State<AvatarCreation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Avatar Creation"),
+      appBar: CustomAppBar(title: "avatar_creation".tr),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: .start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
-                crossAxisAlignment: .start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 12),
-                  Text("Avatar Created", style: AppTexts.tlgm),
+                  Text("avatar_created".tr, style: AppTexts.tlgm),
                   const SizedBox(height: 4),
                   Text(
-                    "Your avatar has been generated. Now please select your preferences, and we’ll create the best outfit for you using items from your wardrobe.",
+                    "avatar_created_subtitle".tr,
                     style: AppTexts.tsmr.copyWith(
                       color: AppColors.black.shade400,
                     ),
@@ -51,22 +51,22 @@ class _AvatarCreationState extends State<AvatarCreation> {
               child: SafeArea(
                 child: Column(
                   spacing: 12,
-                  crossAxisAlignment: .start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Select Item From Your Wardrobe",
+                      "select_item_from_wardrobe".tr,
                       style: AppTexts.tlgm,
                     ),
                     const SizedBox(),
-                    selector("Dresses", 0),
-                    selector("Shoes", 1),
-                    selector("Bag", 2),
+                    selector("dresses".tr, 0),
+                    selector("shoes".tr, 1),
+                    selector("bag".tr, 2),
                     const SizedBox(height: 40),
                     CustomButton(
                       onTap: () {
                         Get.to(() => OutfitRecommendation());
                       },
-                      text: "Create Avatar",
+                      text: "create_avatar".tr,
                     ),
                     const SizedBox(height: 20),
                   ],
@@ -81,11 +81,11 @@ class _AvatarCreationState extends State<AvatarCreation> {
 
   Container selector(String title, int pos) {
     return Container(
-      padding: .all(20),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(width: 0.5, color: AppColors.black.shade50),
-        borderRadius: .circular(20),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         spacing: 12,
@@ -142,16 +142,16 @@ class _AvatarCreationState extends State<AvatarCreation> {
 
   Widget loading() {
     return Padding(
-      padding: .symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: SafeArea(
         child: Column(
-          crossAxisAlignment: .start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 12),
-            Text("Wait a minute", style: AppTexts.tlgm),
+            Text("wait_a_minute".tr, style: AppTexts.tlgm),
             const SizedBox(height: 4),
             Text(
-              "An image is being created from your uploaded image. Please wait...",
+              "wait_a_minute_subtitle".tr,
               style: AppTexts.tsmr.copyWith(color: AppColors.black.shade400),
             ),
             const SizedBox(height: 200),
@@ -161,7 +161,7 @@ class _AvatarCreationState extends State<AvatarCreation> {
                 width: 200,
                 child: CircularProgressIndicator(
                   color: AppColors.green.shade400,
-                  strokeCap: .round,
+                  strokeCap: StrokeCap.round,
                   strokeWidth: 14,
                 ),
               ),

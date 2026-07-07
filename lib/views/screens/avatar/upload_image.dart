@@ -24,14 +24,14 @@ class _UploadImageState extends State<UploadImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Upload Image"),
+      appBar: CustomAppBar(title: "upload_image".tr),
       body: SingleChildScrollView(
-        padding: .symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
           child: Column(
             children: [
               Text(
-                "Please upload a reference image or a clear photo of yourself so We can easily create your avatar and suggest the best outfit for you.",
+                "upload_image_subtitle".tr,
                 style: AppTexts.tsmr,
               ),
               const SizedBox(height: 32),
@@ -58,14 +58,14 @@ class _UploadImageState extends State<UploadImage> {
                   child: _image != null
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(32),
-                          child: Image.file(_image!, fit: .cover),
+                          child: Image.file(_image!, fit: BoxFit.cover),
                         )
                       : Column(
-                          mainAxisAlignment: .center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           spacing: 8,
                           children: [
                             CustomSvg(asset: "assets/icons/image.svg"),
-                            Text("Select file", style: AppTexts.tmdr),
+                            Text("select_file".tr, style: AppTexts.tmdr),
                           ],
                         ),
                 ),
@@ -75,7 +75,7 @@ class _UploadImageState extends State<UploadImage> {
                 spacing: 12,
                 children: [
                   Expanded(child: Divider(color: Color(0xffeeeeee))),
-                  Text("or", style: AppTexts.tlgr),
+                  Text("or".tr, style: AppTexts.tlgr),
                   Expanded(child: Divider(color: Color(0xffeeeeee))),
                 ],
               ),
@@ -92,7 +92,7 @@ class _UploadImageState extends State<UploadImage> {
                     });
                   }
                 },
-                text: "Open Camera & Take Photo",
+                text: "open_camera_take_photo".tr,
                 isSecondary: true,
                 leading: "assets/icons/camera.svg",
               ),
@@ -101,7 +101,7 @@ class _UploadImageState extends State<UploadImage> {
                 onTap: () {
                   Get.to(() => AvatarCreation());
                 },
-                text: "Next",
+                text: "next".tr,
               ),
             ],
           ),

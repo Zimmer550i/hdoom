@@ -73,19 +73,19 @@ class _VerificationState extends State<Verification> {
               Center(child: Logo()),
               const SizedBox(height: 40),
               Text(
-                "Verification Code",
+                "verification_code".tr,
                 style: AppTexts.dxsm.copyWith(fontSize: 28),
               ),
               const SizedBox(height: 4),
               Text(
-                "We just send a 6-digit code ${widget.email}. Enter the below to verify your identity.",
+                "verification_code_subtitle".trParams({"email": widget.email}),
                 style: AppTexts.tmdr.copyWith(color: AppColors.black.shade400),
               ),
               const SizedBox(height: 32),
               Pinput(
                 controller: pinController,
                 length: 6,
-                mainAxisAlignment: .spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 cursor: Container(height: 20, width: 2, color: AppColors.green),
                 defaultPinTheme: PinTheme(
                   height: 50,
@@ -116,7 +116,7 @@ class _VerificationState extends State<Verification> {
                   child: GestureDetector(
                     onTap: resendCode,
                     child: Text(
-                      "Resend Code",
+                      "resend_code".tr,
                       style: AppTexts.tsmm.copyWith(color: AppColors.green),
                     ),
                   ),
@@ -126,7 +126,7 @@ class _VerificationState extends State<Verification> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Resend code in ",
+                      "resend_code_in".tr,
                       style: AppTexts.tsmr.copyWith(
                         color: AppColors.black.shade400,
                       ),
@@ -138,7 +138,7 @@ class _VerificationState extends State<Verification> {
                   ],
                 ),
               Spacer(),
-              CustomButton(onTap: onSubmit, text: "Verify & Continue"),
+              CustomButton(onTap: onSubmit, text: "verify_and_continue".tr),
               const SizedBox(height: 20),
             ],
           ),

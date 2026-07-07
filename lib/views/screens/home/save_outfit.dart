@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/home/widgets/custom_calender.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
@@ -12,12 +13,12 @@ class SaveOutfit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Save Outfit"),
+      appBar: CustomAppBar(title: "save_outfit".tr),
       body: SingleChildScrollView(
-        padding: .symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
           child: Column(
-            crossAxisAlignment: .start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
@@ -30,11 +31,11 @@ class SaveOutfit extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              Text("Select Date", style: AppTexts.txlm),
+              Text("select_date".tr, style: AppTexts.txlm),
               const SizedBox(height: 16),
               CustomCalendar(),
               const SizedBox(height: 50),
-              CustomButton(onTap: onSubmit, text: "Save Now"),
+              CustomButton(onTap: onSubmit, text: "save_now".tr),
               const SizedBox(height: 20),
             ],
           ),

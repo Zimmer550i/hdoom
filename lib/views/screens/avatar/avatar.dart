@@ -14,43 +14,12 @@ class Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   titleSpacing: 0,
-      //   backgroundColor: AppColors.bg,
-      //   surfaceTintColor: AppColors.green,
-      //   title: Row(
-      //     children: [
-      //       const SizedBox(width: 20),
-      //       Expanded(
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: [
-      //             Text(
-      //               "Avatar Creation",
-      //               style: AppTexts.txlm.copyWith(color: AppColors.green),
-      //             ),
-      //             Text(
-      //               "Personalized your avatar for accurate outfit recommendations",
-      //               style: AppTexts.tsmr.copyWith(
-      //                 color: AppColors.black.shade400,
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //       const SizedBox(width: 16),
-      //       CustomSvg(asset: "assets/icons/save.svg"),
-      //       const SizedBox(width: 20),
-      //     ],
-      //   ),
-      // ),
       body: SafeArea(
         child: Column(
           children: [
             const SizedBox(height: 10),
             Row(
-              crossAxisAlignment: .start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(width: 20),
                 Expanded(
@@ -59,11 +28,11 @@ class Avatar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Avatar Creation",
+                        "avatar_creation".tr,
                         style: AppTexts.txlm.copyWith(color: AppColors.green),
                       ),
                       Text(
-                        "Personalized your avatar for accurate outfit recommendations",
+                        "avatar_creation_subtitle".tr,
                         style: AppTexts.tsmr.copyWith(
                           color: AppColors.black.shade400,
                         ),
@@ -81,30 +50,20 @@ class Avatar extends StatelessWidget {
                 const SizedBox(width: 20),
               ],
             ),
-            // const SizedBox(height: 16),
-            // Padding(
-            //   padding: .symmetric(horizontal: 20),
-            //   child: LinearProgressIndicator(
-            //     value: 0.25,
-            //     color: AppColors.green.shade300,
-            //     backgroundColor: AppColors.black.shade100,
-            //     borderRadius: BorderRadius.circular(99),
-            //   ),
-            // ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Padding(
-                      padding: .symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
-                        crossAxisAlignment: .start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 28),
-                          Text("Select image or upload", style: AppTexts.txlm),
+                          Text("select_image_or_upload".tr, style: AppTexts.txlm),
                           const SizedBox(height: 0),
                           Text(
-                            "To suggest the best outfit for you, please first select or upload your reference picture",
+                            "select_image_or_upload_subtitle".tr,
                             style: AppTexts.tsmr,
                           ),
                           const SizedBox(height: 32),
@@ -113,14 +72,14 @@ class Avatar extends StatelessWidget {
                     ),
                     Image.asset("assets/images/avatar.png"),
                     Padding(
-                      padding: .symmetric(horizontal: 20, vertical: 50),
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                       child: Column(
                         children: [
                           CustomButton(
                             onTap: () {
                               Get.to(() => AvatarCreation());
                             },
-                            text: "Use This Image",
+                            text: "use_this_image".tr,
                             isSecondary: true,
                           ),
                           const SizedBox(height: 16),
@@ -130,7 +89,7 @@ class Avatar extends StatelessWidget {
                               Expanded(
                                 child: Divider(color: Color(0xffeeeeee)),
                               ),
-                              Text("or", style: AppTexts.tlgr),
+                              Text("or".tr, style: AppTexts.tlgr),
                               Expanded(
                                 child: Divider(color: Color(0xffeeeeee)),
                               ),
@@ -141,7 +100,7 @@ class Avatar extends StatelessWidget {
                             onTap: () {
                               Get.to(() => UploadImage());
                             },
-                            text: "Upload New Image",
+                            text: "upload_new_image".tr,
                           ),
                         ],
                       ),

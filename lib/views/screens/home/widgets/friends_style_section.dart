@@ -27,7 +27,7 @@ class FriendsStyleSection extends StatelessWidget {
       onTap: () {
         Get.to(
           () => ShowCardLists(
-            title: "Friend's Styles",
+            title: "friends_style".tr,
             data: [for (int i = 0; i < 10; i++) "Hi", "End"],
             builder: (val) {
               return _buildFriendCard();
@@ -37,7 +37,7 @@ class FriendsStyleSection extends StatelessWidget {
       },
       child: Row(
         children: [
-          Expanded(child: Text("FRIENDS STYLE", style: AppTexts.txlm)),
+          Expanded(child: Text("friends_style".tr, style: AppTexts.txlm)),
           CustomSvg(
             asset: "assets/icons/arrow_forward.svg",
             color: AppColors.black.shade300,

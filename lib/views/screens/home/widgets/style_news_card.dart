@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_constants.dart';
 import 'package:hdoom/utils/app_texts.dart';
@@ -25,7 +26,7 @@ class StyleNewsCard extends StatelessWidget {
   Widget _buildHeader() {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Text("STYLE NEWS", style: AppTexts.txlm),
+      child: Text("style_news".tr, style: AppTexts.txlm),
     );
   }
 
@@ -74,23 +75,23 @@ class StyleNewsCard extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    "EXCLUSIVE",
+                    "exclusive".tr,
                     style: AppTexts.txlm.copyWith(color: Colors.white),
                   ),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  "The Ramadan Edit:",
+                  "the_ramadan_edit".tr,
                   style: AppTexts.dxss.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "Remaining Modern Modesty",
+                  "remaining_modern_modesty".tr,
                   style: AppTexts.dxss.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  "Discover the exclusive collection by Saudi Designers blending traditional silhouette",
+                  "discover_exclusive_collection".tr,
                   style: AppTexts.tsmr.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 20),
@@ -104,7 +105,7 @@ class StyleNewsCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        "5 MIN READ",
+                        "five_min_read".tr,
                         style: AppTexts.tsmr.copyWith(
                           color: Colors.white,
                         ),

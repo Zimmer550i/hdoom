@@ -10,12 +10,12 @@ class OutfitRecommendation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Outfit Recommendation"),
+      appBar: CustomAppBar(title: "outfit_recommendation".tr),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              child: Image.asset("assets/images/avatar.png", fit: .cover),
+              child: Image.asset("assets/images/avatar.png", fit: BoxFit.cover),
             ),
             const SizedBox(height: 50),
             Row(
@@ -27,7 +27,7 @@ class OutfitRecommendation extends StatelessWidget {
                     onTap: () {
                       Get.to(() => SavedOutfits());
                     },
-                    text: "Save this Avatar",
+                    text: "save_this_avatar".tr,
                     padding: 0,
                     leading: "assets/icons/save.svg",
                   ),
@@ -36,7 +36,7 @@ class OutfitRecommendation extends StatelessWidget {
                 Expanded(
                   child: CustomButton(
                     onTap: () {},
-                    text: "Share Now",
+                    text: "share_now".tr,
                     padding: 0,
                     isSecondary: true,
                   ),

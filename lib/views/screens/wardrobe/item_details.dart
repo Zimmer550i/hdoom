@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
@@ -12,7 +13,7 @@ class ItemDetails extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: CustomAppBar(
-        title: 'Item Details',
+        title: 'item_details'.tr,
       ),
       body: SafeArea(
         child: Column(
@@ -31,7 +32,7 @@ class ItemDetails extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
                             image: const DecorationImage(
-                              image: AssetImage('assets/images/bag.jpg'), // Assuming asset exists
+                              image: AssetImage('assets/images/bag.jpg'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -63,10 +64,10 @@ class ItemDetails extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                _buildDetailItem('Category', 'Bag'),
-                                _buildDetailItem('Season', 'Spring'),
-                                _buildDetailItem('Occasion', 'Event'),
-                                _buildDetailItem('Source', 'Daraz'),
+                                _buildDetailItem('category'.tr, 'bag'.tr),
+                                _buildDetailItem('season'.tr, 'spring'.tr),
+                                _buildDetailItem('occasion'.tr, 'event'.tr),
+                                _buildDetailItem('source'.tr, 'Daraz'),
                               ],
                             ),
                           ),
@@ -81,10 +82,10 @@ class ItemDetails extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  _buildSecondaryButton('Remove Item', context),
+                  _buildSecondaryButton('remove_item'.tr, context),
                   const SizedBox(height: 12),
                   CustomButton(
-                    text: 'Try On',
+                    text: 'try_on'.tr,
                     onTap: () {},
                   ),
                 ],

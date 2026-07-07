@@ -25,7 +25,7 @@ class BrandNewSection extends StatelessWidget {
       onTap: () {
         Get.to(
           () => ShowCardLists(
-            title: "Brand New",
+            title: "brand_new".tr,
             data: [for (int i = 0; i < 10; i++) "Hi", "End"],
             builder: (val) {
               return _buildProductCard(hasWidth: false);
@@ -35,7 +35,7 @@ class BrandNewSection extends StatelessWidget {
       },
       child: Row(
         children: [
-          Expanded(child: Text("BRAND NEW", style: AppTexts.txlm)),
+          Expanded(child: Text("brand_new".tr, style: AppTexts.txlm)),
           CustomSvg(
             asset: "assets/icons/arrow_forward.svg",
             color: AppColors.black.shade300,
@@ -80,13 +80,13 @@ class BrandNewSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Soft Leather Tote",
+                    "soft_leather_tote".tr,
                     style: AppTexts.tmdm.copyWith(
                       color: AppColors.black.shade400,
                     ),
                   ),
                   Text(
-                    "Essential Collection",
+                    "essential_collection".tr,
                     style: AppTexts.tsmr.copyWith(
                       color: AppColors.black.shade400,
                     ),

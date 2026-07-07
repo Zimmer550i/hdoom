@@ -50,13 +50,13 @@ class _EditProfileState extends State<EditProfile> {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: widget.createAccount ? "Complete Profile" : "Edit Profile",
+        title: widget.createAccount ? "complete_profile".tr : "edit_profile".tr,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
           child: Column(
-            crossAxisAlignment: .center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 20),
               ProfilePicture(
@@ -69,7 +69,7 @@ class _EditProfileState extends State<EditProfile> {
                 },
               ),
               const SizedBox(height: 12),
-              Text("Upload Photo", style: AppTexts.tmdm),
+              Text("upload_photo".tr, style: AppTexts.tmdm),
               const SizedBox(height: 24),
               Column(
                 spacing: 16,
@@ -79,21 +79,21 @@ class _EditProfileState extends State<EditProfile> {
                     children: [
                       Expanded(
                         child: CustomTextField(
-                          hintText: "Age",
+                          hintText: "age".tr,
                           textInputType: TextInputType.number,
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: CustomDropDown(
-                          hintText: "Gender",
-                          options: ["Male", "Female"],
+                          hintText: "gender".tr,
+                          options: ["male".tr, "female".tr],
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: CustomTextField(
-                          hintText: "Height (cm)",
+                          hintText: "height_cm".tr,
                           textInputType: TextInputType.number,
                         ),
                       ),
@@ -104,11 +104,11 @@ class _EditProfileState extends State<EditProfile> {
                     children: [
                       Expanded(
                         child: CustomDropDown(
-                          hintText: "Select body type",
-                          options: ["Slim", "Athletic", "Stocky", "Curvy"],
+                          hintText: "select_body_type".tr,
+                          options: ["slim".tr, "athletic".tr, "stocky".tr, "curvy".tr],
                         ),
                       ),
-                      Expanded(child: CustomTextField(hintText: "Country")),
+                      Expanded(child: CustomTextField(hintText: "country".tr)),
                     ],
                   ),
                 ],
@@ -116,8 +116,8 @@ class _EditProfileState extends State<EditProfile> {
               const SizedBox(height: 24),
               Row(
                 children: [
-                  Expanded(child: Text("Your Aesthetic", style: AppTexts.tlgm)),
-                  Text("Select up to 3", style: AppTexts.tsmr),
+                  Expanded(child: Text("your_aesthetic".tr, style: AppTexts.tlgm)),
+                  Text("select_up_to_3".tr, style: AppTexts.tsmr),
                 ],
               ),
               const SizedBox(height: 16),
@@ -133,7 +133,7 @@ class _EditProfileState extends State<EditProfile> {
                 children: [for (var i in styles) styleCard(i)],
               ),
               const SizedBox(height: 50),
-              CustomButton(onTap: onSubmit, text: "Continue"),
+              CustomButton(onTap: onSubmit, text: "continue_btn".tr),
               const SizedBox(height: 20),
             ],
           ),

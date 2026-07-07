@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_grid_handler.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/outfit_card.dart';
@@ -27,7 +28,7 @@ class OutfitsTab extends StatelessWidget {
         // Section title
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
-          child: Text('Recommendation For You', style: AppTexts.tlgm),
+          child: Text('recommendation_for_you'.tr, style: AppTexts.tlgm),
         ),
 
         const SizedBox(height: 8),
@@ -43,8 +44,8 @@ class OutfitsTab extends StatelessWidget {
               6,
               (index) => OutfitCard(
                 image: 'assets/images/avatar.png',
-                title: 'Soft beige Evening style',
-                subtitle: 'Formal',
+                title: 'soft_beige_evening'.tr,
+                subtitle: 'formal'.tr,
               ),
             ),
           ),

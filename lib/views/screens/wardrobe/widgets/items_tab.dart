@@ -26,15 +26,6 @@ const _horizontalPadding = 20.0;
 
 // ──────────────────────────────────────────────
 
-// Dummy data
-const _categories = [
-  {'name': 'Dresses', 'count': 12},
-  {'name': 'Shoes', 'count': 15},
-  {'name': 'Bag', 'count': 6},
-  {'name': 'Hijab', 'count': 8},
-  {'name': 'Pant', 'count': 20},
-];
-
 class ItemsTab extends StatefulWidget {
   const ItemsTab({super.key});
 
@@ -44,6 +35,14 @@ class ItemsTab extends StatefulWidget {
 
 class _ItemsTabState extends State<ItemsTab> {
   int _selectedCategory = 2; // "Bag" selected by default
+
+  List<Map<String, dynamic>> get _categories => [
+    {'name': 'dresses'.tr, 'count': 12},
+    {'name': 'shoes'.tr, 'count': 15},
+    {'name': 'bag'.tr, 'count': 6},
+    {'name': 'hijab'.tr, 'count': 8},
+    {'name': 'pant'.tr, 'count': 20},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -64,23 +63,8 @@ class _ItemsTabState extends State<ItemsTab> {
           child: Text(currentCategory, style: AppTexts.tlgm),
         ),
 
-        // const SizedBox(height: 8),
-
         // Grid
         Expanded(child: _buildGrid()),
-
-        // Add New Item button
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(
-        //     horizontal: _horizontalPadding,
-        //   ),
-        //   child: CustomButton(
-        //     text: 'Add New Item',
-        //     onTap: () {
-        //       Get.to(() => const AddNewItem());
-        //     },
-        //   ),
-        // ),
       ],
     );
   }
@@ -136,7 +120,7 @@ class _ItemsTabState extends State<ItemsTab> {
           endWidget: Padding(
             padding: const EdgeInsets.all(_horizontalPadding),
             child: CustomButton(
-              text: "Add New Item",
+              text: "add_new_item".tr,
               height: 50,
               onTap: () {
                 Get.to(() => const AddNewItem());
@@ -151,8 +135,8 @@ class _ItemsTabState extends State<ItemsTab> {
               },
               child: WardrobeItemCard(
                 image: 'assets/images/bag.jpg',
-                category: 'Travel',
-                season: 'Summer',
+                category: 'travel'.tr,
+                season: 'summer'.tr,
                 title: 'Classic Beige Tote',
                 onDelete: () {},
               ),

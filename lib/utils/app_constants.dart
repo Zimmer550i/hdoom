@@ -27,11 +27,6 @@ class AppConstants {
       languageCode: 'en',
     ),
     LanguageModel(languageName: 'عربى', countryCode: 'SA', languageCode: 'ar'),
-    LanguageModel(
-      languageName: 'Spanish',
-      countryCode: 'ES',
-      languageCode: 'es',
-    ),
   ];
 
   static const LinearGradient DEFAULT_GRADIENT_BACKGROUND = LinearGradient(

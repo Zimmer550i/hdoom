@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
@@ -18,15 +19,15 @@ class _AddNewItemState extends State<AddNewItem> {
   String selectedSeason = 'Spring';
   String selectedOccasion = 'Event';
 
-  final List<String> categories = ['Kaftan', 'Dresses', 'Bag', 'Hijab', 'Bottoms'];
-  final List<String> seasons = ['Summer', 'Winter', 'Spring', 'All'];
-  final List<String> occasions = ['Daily', 'Work', 'Event', 'Wedding', 'Travel'];
+  List<String> get categories => ['kaftan'.tr, 'dresses'.tr, 'bag'.tr, 'hijab'.tr, 'bottoms'.tr];
+  List<String> get seasons => ['summer'.tr, 'winter'.tr, 'spring'.tr, 'all'.tr];
+  List<String> get occasions => ['daily'.tr, 'work'.tr, 'event'.tr, 'wedding'.tr, 'travel'.tr];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bg,
-      appBar: CustomAppBar(title: 'Add New Item'),
+      appBar: CustomAppBar(title: 'add_new_item'.tr),
       body: SafeArea(
         child: Column(
           children: [
@@ -39,16 +40,16 @@ class _AddNewItemState extends State<AddNewItem> {
                     const SizedBox(height: 20),
                     _buildUploadPhoto(),
                     const SizedBox(height: 24),
-                    _buildChipSection('Category', categories, selectedCategory, (val) => setState(() => selectedCategory = val)),
+                    _buildChipSection('category'.tr, categories, selectedCategory, (val) => setState(() => selectedCategory = val)),
                     const SizedBox(height: 24),
-                    _buildChipSection('Best for Season', seasons, selectedSeason, (val) => setState(() => selectedSeason = val)),
+                    _buildChipSection('best_for_season'.tr, seasons, selectedSeason, (val) => setState(() => selectedSeason = val)),
                     const SizedBox(height: 24),
-                    _buildChipSection('Occasion', occasions, selectedOccasion, (val) => setState(() => selectedOccasion = val)),
+                    _buildChipSection('occasion'.tr, occasions, selectedOccasion, (val) => setState(() => selectedOccasion = val)),
                     const SizedBox(height: 24),
-                    Text('The Source Of Purchases', style: AppTexts.txsb),
+                    Text('source_of_purchases'.tr, style: AppTexts.txsb),
                     const SizedBox(height: 12),
-                    const CustomTextField(
-                      hintText: 'Write here',
+                    CustomTextField(
+                      hintText: 'write_here'.tr,
                     ),
                     const SizedBox(height: 32),
                   ],
@@ -58,7 +59,7 @@ class _AddNewItemState extends State<AddNewItem> {
             Padding(
               padding: const EdgeInsets.all(20),
               child: CustomButton(
-                text: 'Save Item',
+                text: 'save_item'.tr,
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -71,16 +72,13 @@ class _AddNewItemState extends State<AddNewItem> {
   }
 
   Widget _buildUploadPhoto() {
-    // A dashed border container using a CustomPaint or simple BoxDecoration if dotted_border package is not available. 
-    // We will use a Container with a border since we can't guarantee dotted_border is in pubspec, but it's often used.
-    // Let's stick to standard Flutter widgets.
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 40),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.black.shade200, style: BorderStyle.solid), // Fallback to solid if dashed not possible natively easily
+        border: Border.all(color: AppColors.black.shade200, style: BorderStyle.solid),
       ),
       child: Column(
         children: [
@@ -97,9 +95,9 @@ class _AddNewItemState extends State<AddNewItem> {
             ),
           ),
           const SizedBox(height: 16),
-          Text('Upload Photo', style: AppTexts.tlgm),
+          Text('upload_photo'.tr, style: AppTexts.tlgm),
           const SizedBox(height: 4),
-          Text('Upload from your gallery', style: AppTexts.tsmr.copyWith(color: AppColors.black.shade300)),
+          Text('upload_from_gallery'.tr, style: AppTexts.tsmr.copyWith(color: AppColors.black.shade300)),
         ],
       ),
     );

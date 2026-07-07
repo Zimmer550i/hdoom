@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_svg.dart';
@@ -14,53 +15,53 @@ class WhyThisLook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Why this look"),
+      appBar: CustomAppBar(title: "why_this_look_title".tr),
       body: SingleChildScrollView(
-        padding: .symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
           child: Column(
-            crossAxisAlignment: .start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TodaysLookCard(hasActions: false),
               const SizedBox(height: 20),
-              Text("Why we chose this for you?", style: AppTexts.txlm),
+              Text("why_we_chose_this".tr, style: AppTexts.txlm),
               const SizedBox(height: 16),
               Container(
-                padding: .symmetric(horizontal: 12, vertical: 12),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: .circular(20),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   children: [
                     for (int i = 0; i < 4; i++)
                       reasons(
                         i + 1,
-                        "Style Matched",
-                        "Neutral colors with soft textures create an elegant and timeless look everyday wear.",
+                        "style_matched".tr,
+                        "style_matched_desc".tr,
                       ),
 
                     const SizedBox(height: 20),
                     Container(
-                      padding: .symmetric(vertical: 12, horizontal: 16),
+                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                       decoration: BoxDecoration(
-                        borderRadius: .circular(20),
+                        borderRadius: BorderRadius.circular(20),
                         color: AppColors.green.shade50,
                       ),
                       child: Column(
                         children: [
                           Row(
-                            mainAxisAlignment: .center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CustomSvg(asset: "assets/icons/note.svg"),
-                              Text("Style Note", style: AppTexts.tlgm),
+                              Text("style_note".tr, style: AppTexts.tlgm),
                             ],
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            "The outfit balanced and elegance, allowing you to feel confident while staying true to your personal guide",
+                            "style_note_desc".tr,
                             style: AppTexts.tsmr,
-                            textAlign: .center,
+                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),
@@ -72,7 +73,7 @@ class WhyThisLook extends StatelessWidget {
               const SizedBox(height: 50),
               CustomButton(
                 onTap: onSubmit,
-                text: "Save This Look",
+                text: "save_this_look".tr,
                 leading: "assets/icons/save.svg",
               ),
               const SizedBox(height: 20),
@@ -85,7 +86,7 @@ class WhyThisLook extends StatelessWidget {
 
   Widget reasons(int num, String title, String details) {
     return Container(
-      padding: .all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: AppColors.green.shade50)),
       ),
@@ -98,7 +99,7 @@ class WhyThisLook extends StatelessWidget {
                 height: 32,
                 width: 32,
                 decoration: BoxDecoration(
-                  shape: .circle,
+                  shape: BoxShape.circle,
                   color: AppColors.green.shade50,
                 ),
                 child: Center(

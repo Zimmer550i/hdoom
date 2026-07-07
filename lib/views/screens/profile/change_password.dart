@@ -23,7 +23,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Change Password"),
+      appBar: CustomAppBar(title: "change_password".tr),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -33,24 +33,24 @@ class _ChangePasswordState extends State<ChangePassword> {
             // Center(child: Logo(showName: false)),
             CustomTextField(
               leading: "assets/icons/lock.svg",
-              hintText: "Old Password",
+              hintText: "old_password".tr,
               controller: oldPassCtrl,
               isPassword: true,
             ),
             CustomTextField(
               leading: "assets/icons/lock.svg",
-              hintText: "New Password",
+              hintText: "new_password".tr,
               controller: newPassCtrl,
               isPassword: true,
             ),
             CustomTextField(
               leading: "assets/icons/lock.svg",
-              hintText: "Confirm Password",
+              hintText: "confirm_password".tr,
               controller: conPassCtrl,
               isPassword: true,
             ),
             const SizedBox(height: 20),
-            CustomButton(onTap: onSubmit, text: "Save Password"),
+            CustomButton(onTap: onSubmit, text: "save_password".tr),
           ],
         ),
       ),

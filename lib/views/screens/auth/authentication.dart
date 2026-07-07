@@ -47,20 +47,20 @@ class _AuthenticationState extends State<Authentication> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
           child: Column(
-            crossAxisAlignment: .start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
               Center(child: Logo(showName: true)),
               const SizedBox(height: 50),
               Text(
-                index == 0 ? "Welcome Back!" : "Welcome!",
+                index == 0 ? "welcome_back".tr : "welcome".tr,
                 style: AppTexts.dxsm.copyWith(fontSize: 28),
               ),
               const SizedBox(height: 4),
               Text(
                 index == 0
-                    ? "Discover the latest trends"
-                    : "Join the exclusive fashion community",
+                    ? "discover_latest_trends".tr
+                    : "join_exclusive_community".tr,
                 style: AppTexts.tmdr.copyWith(color: AppColors.black.shade400),
               ),
               const SizedBox(height: 32),
@@ -75,7 +75,7 @@ class _AuthenticationState extends State<Authentication> {
                   ),
                 ),
                 child: Row(
-                  children: [typeButton("Log In", 0), typeButton("Sign Up", 1)],
+                  children: [typeButton("log_in".tr, 0), typeButton("sign_up".tr, 1)],
                 ),
               ),
               const SizedBox(height: 32),
@@ -86,17 +86,17 @@ class _AuthenticationState extends State<Authentication> {
                     CustomTextField(
                       controller: nameController,
                       leading: "assets/icons/name.svg",
-                      hintText: "Name",
+                      hintText: "name".tr,
                     ),
                   CustomTextField(
                     controller: emailController,
                     leading: "assets/icons/phone.svg",
-                    hintText: "Mobile or Email",
+                    hintText: "mobile_or_email".tr,
                   ),
                   CustomTextField(
                     controller: passwordController,
                     leading: "assets/icons/lock.svg",
-                    hintText: "Password",
+                    hintText: "password".tr,
                     isPassword: true,
                   ),
                   if (index == 0)
@@ -109,7 +109,7 @@ class _AuthenticationState extends State<Authentication> {
                           );
                         },
                         child: Text(
-                          "Forgot Password?",
+                          "forgot_password".tr,
                           style: AppTexts.tsmr.copyWith(color: AppColors.green),
                         ),
                       ),
@@ -119,7 +119,7 @@ class _AuthenticationState extends State<Authentication> {
               Spacer(),
               CustomButton(
                 onTap: onSubmit,
-                text: index == 0 ? "Log In" : "Sign Up",
+                text: index == 0 ? "log_in".tr : "sign_up".tr,
               ),
               const SizedBox(height: 20),
             ],

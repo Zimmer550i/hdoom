@@ -41,7 +41,7 @@ class ChooseLanguage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Please select your preferred language",
+                  "select_preferred_language".tr,
                   style: AppTexts.tmdr.copyWith(
                     color: AppColors.black.shade400,
                   ),
@@ -51,6 +51,7 @@ class ChooseLanguage extends StatelessWidget {
 
               GestureDetector(
                 onTap: () {
+                  Get.updateLocale(Locale("en"));
                   Get.to(() => Authentication());
                 },
                 child: Container(
@@ -80,35 +81,41 @@ class ChooseLanguage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Container(
-                height: 60,
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(33),
-                ),
-                child: Row(
-                  spacing: 12,
-                  children: [
-                    CustomSvg(asset: "assets/icons/arabic.svg", size: 24),
-                    Text(
-                      "مرحبا",
-                      textAlign: TextAlign.end,
-                      style: AppTexts.tmdm.copyWith(
-                        color: AppColors.black.shade400,
+              GestureDetector(
+                onTap: () {
+                  Get.updateLocale(Locale("ar"));
+                  Get.to(() => Authentication());
+                },
+                child: Container(
+                  height: 60,
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(33),
+                  ),
+                  child: Row(
+                    spacing: 12,
+                    children: [
+                      CustomSvg(asset: "assets/icons/arabic.svg", size: 24),
+                      Text(
+                        "مرحبا",
+                        textAlign: TextAlign.end,
+                        style: AppTexts.tmdm.copyWith(
+                          color: AppColors.black.shade400,
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                    CustomSvg(
-                      asset: "assets/icons/arrow_forward.svg",
-                      size: 24,
-                    ),
-                  ],
+                      Spacer(),
+                      CustomSvg(
+                        asset: "assets/icons/arrow_forward.svg",
+                        size: 24,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Spacer(),
               Text(
-                "Experience luxury tailored for you",
+                "experience_luxury".tr,
                 style: AppTexts.tsmr.copyWith(color: AppColors.green.shade600),
               ),
               const SizedBox(height: 20),

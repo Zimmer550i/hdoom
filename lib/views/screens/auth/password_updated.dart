@@ -23,7 +23,7 @@ class PasswordUpdated extends StatelessWidget {
             children: [
               const SizedBox(height: 100),
               Text(
-                "Password Updated",
+                "password_updated_title".tr,
                 style: AppTexts.dsmm.copyWith(fontSize: 32),
               ),
               const SizedBox(height: 50),
@@ -32,7 +32,7 @@ class PasswordUpdated extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "Your password has been successfully reset. You can now log in with your new credentials to access your account.",
+                  "password_updated_subtitle".tr,
                   style: AppTexts.tmdr.copyWith(
                     color: AppColors.black.shade400,
                   ),
@@ -40,7 +40,7 @@ class PasswordUpdated extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              CustomButton(onTap: onSubmit, text: "Go To Log In"),
+              CustomButton(onTap: onSubmit, text: "go_to_log_in".tr),
               const SizedBox(height: 20),
             ],
           ),

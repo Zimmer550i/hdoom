@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/home/widgets/custom_calender.dart';
@@ -44,7 +45,7 @@ class _OutfitsOfTheDayTabState extends State<OutfitsOfTheDayTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Section title
-          Text('Chose Date', style: AppTexts.tlgm),
+          Text('chose_date'.tr, style: AppTexts.tlgm),
           const SizedBox(height: 12),
 
           // Calendar
@@ -70,9 +71,6 @@ class _OutfitsOfTheDayTabState extends State<OutfitsOfTheDayTab> {
           _buildExpandableSection(),
 
           const SizedBox(height: 24),
-
-          // Action buttons
-          // _buildActionButtons(),
 
           const SizedBox(height: 20),
         ],
@@ -133,7 +131,7 @@ class _OutfitsOfTheDayTabState extends State<OutfitsOfTheDayTab> {
             children: [
               Expanded(
                 child: Text(
-                  'Why we chose this for you',
+                  'why_we_chose_this_expanded'.tr,
                   style: AppTexts.tmdm.copyWith(color: _expandHeaderColor),
                 ),
               ),
@@ -149,33 +147,11 @@ class _OutfitsOfTheDayTabState extends State<OutfitsOfTheDayTab> {
         if (_isExpanded) ...[
           const SizedBox(height: 12),
           Text(
-            'This outfit was selected based on your style preferences, the weather forecast, and your calendar for the day. '
-            'The neutral colors with soft textures create an elegant and timeless look perfect for your schedule.',
+            'why_we_chose_this_expanded_desc'.tr,
             style: AppTexts.tsmr.copyWith(color: AppColors.black.shade300),
           ),
         ],
       ],
     );
   }
-
-  // Widget _buildActionButtons() {
-  //   return Row(
-  //     spacing: 12,
-  //     children: [
-  //       Expanded(
-  //         child: CustomButton(
-  //           text: 'Update',
-  //           onTap: () {},
-  //         ),
-  //       ),
-  //       Expanded(
-  //         child: CustomButton(
-  //           text: 'Share Now',
-  //           isSecondary: true,
-  //           onTap: () {},
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 }

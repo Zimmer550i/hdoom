@@ -33,41 +33,13 @@ class TodaysLookCard extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Today's Look",
+                    "todays_look".tr,
                     style: AppTexts.tsmm.copyWith(color: Colors.white),
                   ),
                   Container(height: 1, width: 85, color: Colors.white),
                 ],
               ),
             ),
-          // Positioned(
-          //   bottom: 0,
-          //   left: 0,
-          //   right: 0,
-          //   child: ClipRRect(
-          //     child: BackdropFilter(
-          //       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          //       child: Container(
-          //         width: double.infinity,
-          //         height: 62,
-          //         color: Colors.black.withValues(alpha: 0.3),
-          //         child: Center(
-          //           child: Row(
-          //             spacing: 12,
-          //             mainAxisSize: MainAxisSize.min,
-          //             children: [
-          //               Text(
-          //                 "From other brands - ",
-          //                 style: AppTexts.tsmm.copyWith(color: Colors.white),
-          //               ),
-          //               CustomSvg(asset: "assets/icons/arrow_down_circled.svg"),
-          //             ],
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -80,10 +52,10 @@ class TodaysLookCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Elegant Everyday Abaya Look", style: AppTexts.txlm),
+          Text("elegant_everyday_abaya".tr, style: AppTexts.txlm),
           const SizedBox(height: 12),
           Text(
-            "A comfortable and graceful outfit curated for your day, matching your style p preference  and todays weather.",
+            "elegant_everyday_abaya_desc".tr,
             style: AppTexts.tsmr.copyWith(color: AppColors.black.shade400),
           ),
           if (hasActions) const SizedBox(height: 28),
@@ -96,13 +68,13 @@ class TodaysLookCard extends StatelessWidget {
               child: Row(
                 children: [
                   HomeTextButton(
-                    title: "Why this look?",
+                    title: "why_this_look".tr,
                     onTap: () {
                       Get.to(() => WhyThisLook());
                     },
                   ),
                   HomeTextButton(
-                    title: "Save Look",
+                    title: "save_look".tr,
                     onTap: () {
                       Get.to(() => SaveOutfit());
                     },

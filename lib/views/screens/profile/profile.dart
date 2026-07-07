@@ -31,7 +31,10 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(hasLeading: !widget.isUserProfile, title: "Profile"),
+      appBar: CustomAppBar(
+        hasLeading: !widget.isUserProfile,
+        title: "profile".tr,
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
@@ -41,7 +44,7 @@ class _ProfileState extends State<Profile> {
               const SizedBox(height: 20),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Outfit", style: AppTexts.txlm),
+                child: Text("outfit".tr, style: AppTexts.txlm),
               ),
               const SizedBox(height: 16),
               GridView(
@@ -75,13 +78,13 @@ class _ProfileState extends State<Profile> {
                                 vertical: 12,
                               ),
                               child: Column(
-                                crossAxisAlignment: .start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Soft beige Evening style",
+                                    "soft_beige_evening".tr,
                                     style: AppTexts.tmdm,
                                   ),
-                                  Text("Casual", style: AppTexts.tsmr),
+                                  Text("casual".tr, style: AppTexts.tsmr),
                                 ],
                               ),
                             ),
@@ -108,9 +111,9 @@ class _ProfileState extends State<Profile> {
             const SizedBox(width: 12),
             Expanded(
               child: Column(
-                crossAxisAlignment: .start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Your Name Here", style: AppTexts.tlgm),
+                  Text("your_name_here".tr, style: AppTexts.tlgm),
                   Text("mrjohn123@gmail.com", style: AppTexts.tmdr),
                 ],
               ),
@@ -138,8 +141,12 @@ class _ProfileState extends State<Profile> {
                       // Overlay content
                       CompositedTransformFollower(
                         link: _layerLink,
-                        targetAnchor: Alignment.bottomRight,
-                        followerAnchor: Alignment.topRight,
+                        targetAnchor: Get.locale == const Locale('ar')
+                            ? Alignment.bottomLeft
+                            : Alignment.bottomRight,
+                        followerAnchor: Get.locale == const Locale('ar')
+                            ? Alignment.topLeft
+                            : Alignment.topRight,
                         offset: const Offset(0, 8),
                         child: Container(
                           width: MediaQuery.of(context).size.width - 40,
@@ -156,38 +163,37 @@ class _ProfileState extends State<Profile> {
                             ],
                           ),
                           child: Column(
-                            mainAxisSize: .min,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              menuRow("Edit Profile", "user", () {
+                              menuRow("edit_profile".tr, "user", () {
                                 Get.to(() => EditProfile());
                               }),
-                              menuRow("Change Password", "password", () {
+                              menuRow("change_password".tr, "password", () {
                                 Get.to(() => ChangePassword());
                               }),
-                              menuRow("Privacy Policy", "privacy", () {
-                                Get.to(() => Info(title: "Privacy Policy"));
+                              menuRow("privacy_policy".tr, "privacy", () {
+                                Get.to(() => Info(title: "privacy_policy".tr));
                               }),
-                              menuRow("About Us", "about", () {
-                                Get.to(() => Info(title: "About Us"));
+                              menuRow("about_us".tr, "about", () {
+                                Get.to(() => Info(title: "about_us".tr));
                               }),
-                              menuRow("Log Out", "logout", () {
+                              menuRow("log_out".tr, "logout", () {
                                 showDialog(
                                   context: context,
                                   builder: (ctx) => OverlayConfirmation(
-                                    title: "Are you sure you want to",
-                                    highlight: "Logout",
-                                    buttonTextLeft: "Cancel",
+                                    title: "logout_confirm".tr,
+                                    highlight: "logout".tr,
+                                    buttonTextLeft: "cancel".tr,
                                     buttonCallBackLeft: () {
                                       Get.back();
                                       Get.back();
                                     },
-                                    buttonTextRight: "Logout",
+                                    buttonTextRight: "logout".tr,
                                     buttonCallBackRight: () {
                                       Get.offAll(() => Authentication());
                                     },
                                   ),
                                 );
-                                // Get.offAll(() => Authentication());
                               }),
                             ],
                           ),
@@ -229,16 +235,13 @@ class _ProfileState extends State<Profile> {
             children: [
               Expanded(
                 child: Column(
-                  crossAxisAlignment: .start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "HDOOM-i",
                       style: AppTexts.tmds.copyWith(color: AppColors.green),
                     ),
-                    Text(
-                      "Your Subscription is active and renews on 14 Nov, 2025",
-                      style: AppTexts.tsmr,
-                    ),
+                    Text("subscription_active".tr, style: AppTexts.tsmr),
                   ],
                 ),
               ),
@@ -246,7 +249,7 @@ class _ProfileState extends State<Profile> {
                 onTap: () {
                   Get.to(() => Subscription());
                 },
-                text: "Manage",
+                text: "manage".tr,
                 width: null,
                 height: 40,
                 padding: 24,
@@ -266,9 +269,9 @@ class _ProfileState extends State<Profile> {
               Row(
                 spacing: 12,
                 children: [
-                  statBox("Style", 247, isGreen: true),
-                  statBox("Followers", 1024, isGreen: true),
-                  statBox("Following", 268, isGreen: true),
+                  statBox("style".tr, 247, isGreen: true),
+                  statBox("followers".tr, 1024, isGreen: true),
+                  statBox("following".tr, 268, isGreen: true),
                 ],
               ),
               Divider(thickness: 1, height: 32, color: AppColors.green.shade50),
@@ -276,11 +279,11 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: .start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Public Profile", style: AppTexts.tmdm),
+                        Text("public_profile".tr, style: AppTexts.tmdm),
                         Text(
-                          "Allow others to see your profile",
+                          "allow_others_see_profile".tr,
                           style: AppTexts.tsmr,
                         ),
                       ],
@@ -301,7 +304,6 @@ class _ProfileState extends State<Profile> {
                   ),
                 ],
               ),
-              // Divider(),
             ],
           ),
         ),
@@ -332,17 +334,17 @@ class _ProfileState extends State<Profile> {
       children: [
         ProfilePicture(image: "https://picsum.photos/200/200", size: 72),
         const SizedBox(height: 12),
-        Text("Your Name Here", style: AppTexts.tlgm),
+        Text("your_name_here".tr, style: AppTexts.tlgm),
         Text("mrjohn123@gmail.com", style: AppTexts.tmdr),
         const SizedBox(height: 20),
-        CustomButton(text: "Follow", height: 40, width: null),
+        CustomButton(text: "follow".tr, height: 40, width: null),
         const SizedBox(height: 20),
         Row(
           spacing: 12,
           children: [
-            statBox("Style", 247),
-            statBox("Followers", 1024),
-            statBox("Following", 268),
+            statBox("style".tr, 247),
+            statBox("followers".tr, 1024),
+            statBox("following".tr, 268),
           ],
         ),
         const SizedBox(height: 20),

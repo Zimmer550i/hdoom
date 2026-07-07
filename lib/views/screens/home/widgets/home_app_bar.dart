@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_svg.dart';
@@ -22,11 +23,11 @@ AppBar buildHomeAppBar() {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Good Morning, Ayesha",
+                "good_morning".trParams({"name": "Ayesha"}),
                 style: AppTexts.txlm.copyWith(color: AppColors.green),
               ),
               Text(
-                "Here's your outfit for today",
+                "heres_your_outfit".tr,
                 style: AppTexts.tsmr.copyWith(
                   color: AppColors.black.shade400,
                 ),

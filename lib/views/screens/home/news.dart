@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_constants.dart';
 import 'package:hdoom/utils/app_texts.dart';
@@ -10,16 +11,16 @@ class News extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Style News"),
+      appBar: CustomAppBar(title: "style_news".tr),
       body: SingleChildScrollView(
-        padding: .symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
           child: ClipRRect(
-            borderRadius: .all(Radius.circular(12)),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
             child: Container(
               decoration: BoxDecoration(color: AppColors.white),
               child: Column(
-                crossAxisAlignment: .start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AspectRatio(
                     aspectRatio: 1,
@@ -31,7 +32,7 @@ class News extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
-                      crossAxisAlignment: .start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           padding: EdgeInsets.symmetric(
@@ -45,16 +46,16 @@ class News extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            "EXCLUSIVE",
+                            "exclusive".tr,
                             style: AppTexts.txlm.copyWith(color: Colors.white),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        Text("The Ramadan Edit:", style: AppTexts.dxss),
+                        Text("the_ramadan_edit".tr, style: AppTexts.dxss),
                         const SizedBox(height: 12),
                         for (int i = 0; i < 10; i++)
                           Text(
-                            "Ramadan is a season of reflection, connection, and timeless elegance. As the holy month approaches, fashion takes on a new meaning—one that balances contemporary style with the values of modesty, grace, and cultural heritage.\n",
+                            "ramadan_article_body".tr,
                             style: AppTexts.tsmr.copyWith(
                               color: AppColors.black.shade400,
                             ),

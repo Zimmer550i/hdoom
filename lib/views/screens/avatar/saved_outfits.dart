@@ -15,7 +15,7 @@ class SavedOutfits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Save Item"),
+      appBar: CustomAppBar(title: "save_item".tr),
       body: CustomListHandler(
         spacing: 12,
         children: [
@@ -32,7 +32,7 @@ class SavedOutfits extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "11 items",
+                  "items_count".trParams({"count": "11"}),
                   style: AppTexts.tmdr.copyWith(
                     color: AppColors.black.shade400,
                   ),
@@ -46,10 +46,10 @@ class SavedOutfits extends StatelessWidget {
                 Get.to(() => OutfitRecommendation());
               },
               child: Container(
-                padding: .symmetric(horizontal: 12, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
                   color: AppColors.green.shade100,
-                  borderRadius: .circular(24),
+                  borderRadius: BorderRadius.circular(24),
                 ),
                 child: Row(
                   spacing: 12,
@@ -58,7 +58,7 @@ class SavedOutfits extends StatelessWidget {
                       image: "https://picsum.photos/200/200",
                       size: 50,
                     ),
-                    Expanded(child: Text("Casual", style: AppTexts.tsmr)),
+                    Expanded(child: Text("casual".tr, style: AppTexts.tsmr)),
                     CustomSvg(asset: "assets/icons/arrow_right_circled.svg"),
                   ],
                 ),

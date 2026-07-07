@@ -28,11 +28,11 @@ class NewsArticleTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Street Style: Highlight from Riyadh Front",
+                    "street_style_title".tr,
                     style: AppTexts.tlgm.copyWith(height: 1),
                   ),
                   Text(
-                    "Exploring the boldest looks of the season",
+                    "street_style_subtitle".tr,
                     style: AppTexts.tsmr.copyWith(height: 1),
                   ),
                 ],

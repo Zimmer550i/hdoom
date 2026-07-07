@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
@@ -10,20 +11,12 @@ class Subscription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Subscription"),
+      appBar: CustomAppBar(title: "subscription".tr),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
           child: Column(
             children: [
-              // const SizedBox(height: 20),
-              // Row(
-              //   mainAxisAlignment: .center,
-              //   children: [
-              //     Text("Current Plan: ", style: AppTexts.tlgm),
-              //     Text("Free", style: AppTexts.tlgs),
-              //   ],
-              // ),
               const SizedBox(height: 40),
               Stack(
                 clipBehavior: Clip.none,
@@ -43,28 +36,28 @@ class Subscription extends StatelessWidget {
                     ),
                     child: Column(
                       spacing: 12,
-                      crossAxisAlignment: .start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: MediaQuery.of(context).size.width / 3),
                         Text(
-                          "Features",
+                          "features".tr,
                           style: AppTexts.tlgm.copyWith(color: AppColors.green),
                         ),
                         featureRow(
-                          "Unlimited personalized outfit recommendations",
+                          "feature_unlimited_recommendations".tr,
                         ),
                         featureRow(
-                          "Advanced AI styling based on wardrobe, events, weather & culture",
+                          "feature_advanced_ai".tr,
                         ),
-                        featureRow("Event-based outfit recommendations"),
+                        featureRow("feature_event_based".tr),
                         featureRow(
-                          "Detailed “Why this look?” styling explanation",
+                          "feature_why_this_look".tr,
                         ),
-                        featureRow("Influencer & fashionista premium content"),
+                        featureRow("feature_influencer_content".tr),
                         featureRow(
-                          "Save unlimited outfits & create collections",
+                          "feature_save_unlimited".tr,
                         ),
-                        featureRow("Ad-free experience"),
+                        featureRow("feature_ad_free".tr),
                         const SizedBox(height: 80),
                       ],
                     ),
@@ -86,13 +79,13 @@ class Subscription extends StatelessWidget {
                           children: [
                             const SizedBox(height: 14),
                             Text(
-                              "PREMIUM",
+                              "premium".tr,
                               style: AppTexts.dxsm.copyWith(
                                 color: Colors.white,
                               ),
                             ),
                             Text(
-                              "PER MONTH",
+                              "per_month".tr,
                               style: AppTexts.txsr.copyWith(
                                 color: Colors.white,
                               ),
@@ -101,15 +94,15 @@ class Subscription extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                shape: .circle,
+                                shape: BoxShape.circle,
                                 border: Border.all(
                                   width: 3,
                                   color: Colors.white,
                                 ),
                               ),
                               child: Row(
-                                mainAxisSize: .min,
-                                crossAxisAlignment: .start,
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     "\$",
@@ -137,7 +130,7 @@ class Subscription extends StatelessWidget {
                     right: 0,
                     child: Center(
                       child: CustomButton(
-                        text: "Buy Now",
+                        text: "buy_now".tr,
                         height: 50,
                         width: MediaQuery.of(context).size.width / 1.5,
                       ),

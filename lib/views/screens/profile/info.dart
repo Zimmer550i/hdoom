@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/logo.dart';
@@ -18,7 +19,7 @@ class Info extends StatelessWidget {
             Center(child: Logo(showName: true)),
             const SizedBox(height: 20,),
             Text(
-              "HDOOM-I is a mobile-first, bilingual (Arabic–English) fashion platform created to empower women in the GCC with personalized, culturally relevant style guidance. By combining AI-driven recommendations with expert fashion consultant oversight, Fashion Hub delivers curated outfit suggestions, trend insights, and wardrobe-based styling tailored to regional preferences, seasons, and occasions. The platform brings together fashion news, brand updates, influencer content, and smart personalization to simplify everyday fashion decisions while celebrating modern style rooted in local culture.",
+              "about_hdoomi".tr,
               style: AppTexts.tmdr,
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/items_tab.dart';
@@ -32,9 +33,6 @@ const _addIconSize = 36.0;
 
 // ──────────────────────────────────────────────
 
-// Dummy data
-const _topTabs = ['Items', 'Outfits', 'Outfits of the day'];
-
 class Wardrobe extends StatefulWidget {
   const Wardrobe({super.key});
 
@@ -44,6 +42,8 @@ class Wardrobe extends StatefulWidget {
 
 class _WardrobeState extends State<Wardrobe> {
   int _selectedTab = 0;
+
+  List<String> get _topTabs => ['items'.tr, 'outfits'.tr, 'outfits_of_the_day'.tr];
 
   @override
   Widget build(BuildContext context) {
@@ -89,11 +89,11 @@ class _WardrobeState extends State<Wardrobe> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'My Wardrobe',
+                'my_wardrobe'.tr,
                 style: AppTexts.dxss.copyWith(color: _headerTitleColor),
               ),
               Text(
-                'Total Item: 125',
+                'total_item'.trParams({'count': '125'}),
                 style: AppTexts.tsmr.copyWith(color: _headerSubtitleColor),
               ),
             ],
