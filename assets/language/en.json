@@ -198,5 +198,15 @@
   "why_we_chose_this_expanded": "Why we chose this for you",
   "why_we_chose_this_expanded_desc": "This outfit was selected based on your style preferences, the weather forecast, and your calendar for the day. The neutral colors with soft textures create an elegant and timeless look perfect for your schedule.",
 
-  "pant": "Pant"
+  "pant": "Pant",
+
+  "rate_outfit": "Rate Outfit",
+  "rate_this_outfit": "Rate this outfit",
+  "color_harmony": "Color Harmony",
+  "trendy": "Trendy",
+  "overall_matching": "Overall Matching",
+  "accessories": "Accessories",
+  "rate_now": "Rate Now",
+  "overall_rating": "Overall Rating",
+  "download_now": "Download Now"
 }

@@ -9,6 +9,7 @@ import 'package:hdoom/views/screens/profile/change_password.dart';
 import 'package:hdoom/views/screens/profile/edit_profile.dart';
 import 'package:hdoom/views/screens/profile/info.dart';
 import 'package:hdoom/views/screens/profile/subscription.dart';
+import 'package:hdoom/views/screens/profile/view_outfit.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/overlay_confirmation.dart';
@@ -60,35 +61,38 @@ class _ProfileState extends State<Profile> {
                   for (int i = 0; i < 6; i++)
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16),
-                      child: Container(
-                        decoration: BoxDecoration(color: Colors.white),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: SizedBox.expand(
-                                child: Image.asset(
-                                  "assets/images/style_casual.jpg",
-                                  fit: BoxFit.cover,
+                      child: GestureDetector(
+                        onTap: () => Get.to(() => ViewOutfit()),
+                        child: Container(
+                          decoration: BoxDecoration(color: Colors.white),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: SizedBox.expand(
+                                  child: Image.asset(
+                                    "assets/images/style_casual.jpg",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "soft_beige_evening".tr,
+                                      style: AppTexts.tmdm,
+                                    ),
+                                    Text("casual".tr, style: AppTexts.tsmr),
+                                  ],
+                                ),
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "soft_beige_evening".tr,
-                                    style: AppTexts.tmdm,
-                                  ),
-                                  Text("casual".tr, style: AppTexts.tsmr),
-                                ],
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
