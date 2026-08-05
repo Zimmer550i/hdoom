@@ -7,6 +7,8 @@ import 'package:hdoom/views/screens/auth/reset_password.dart';
 import 'package:hdoom/views/screens/profile/edit_profile.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
+import 'package:hdoom/controllers/auth_controller.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/widgets/logo.dart';
 import 'package:pinput/pinput.dart';
 
@@ -37,16 +39,48 @@ class _VerificationState extends State<Verification> {
   }
 
   void onSubmit() async {
+    if (pinController.text.trim().length < 6) {
+      customSnackBar("Please enter the 6-digit verification code");
+      return;
+    }
+    final authController = Get.find<AuthController>();
     if (widget.isResettingPassword) {
-      Get.to(() => ResetPassword());
+      final res = await authController.verifyResetOtp(
+        widget.email,
+        pinController.text.trim(),
+      );
+      if (res == "success") {
+        Get.to(() => ResetPassword());
+      } else {
+        customSnackBar(res);
+      }
     } else {
-      Get.to(() => EditProfile(createAccount: true));
+      final res = await authController.verifyEmail(
+        widget.email,
+        pinController.text.trim(),
+      );
+      if (res == "success") {
+        customSnackBar("Email verified successfully!", isError: false);
+        Get.to(() => EditProfile(createAccount: true));
+      } else {
+        customSnackBar(res);
+      }
     }
   }
 
   void resendCode() async {
     if (canResend) {
-      startTimer();
+      final authController = Get.find<AuthController>();
+      final res = await authController.resendOtp(
+        widget.email,
+        purpose: widget.isResettingPassword ? 'password_reset' : 'email_verification',
+      );
+      if (res == "success") {
+        customSnackBar("Verification code resent successfully!", isError: false);
+        startTimer();
+      } else {
+        customSnackBar(res);
+      }
     }
   }
 
@@ -138,7 +172,13 @@ class _VerificationState extends State<Verification> {
                   ],
                 ),
               Spacer(),
-              CustomButton(onTap: onSubmit, text: "verify_and_continue".tr),
+              Obx(
+                () => CustomButton(
+                  isLoading: Get.find<AuthController>().isLoading.value,
+                  onTap: onSubmit,
+                  text: "verify_and_continue".tr,
+                ),
+              ),
               const SizedBox(height: 20),
             ],
           ),

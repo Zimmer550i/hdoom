@@ -2,14 +2,17 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
+import 'package:hdoom/controllers/auth_controller.dart';
+import 'package:hdoom/views/screens/auth/authentication.dart';
 import 'package:hdoom/services/shared_prefs_service.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
 
 class ApiService {
-  final String devUrl = "http://10.10.12.54:3001/api/v1";
-  final String prodUrl = "https://api.joinjurnee.com/api/v1";
+  final String devUrl = "http://10.10.29.50:8086/api/v1/";
+  final String prodUrl = "";
   static final String imgUrl = "";
-  final bool inDevelopment = false;
+  final bool inDevelopment = true;
   final bool showAPICalls = true;
 
   late final String baseUrl;
@@ -217,10 +220,19 @@ class ApiService {
     debugPrint('💾 Token Saved: $token');
   }
 
-  void _checkTokenExpiry(bool authReq, http.Response response) {
+  void _checkTokenExpiry(bool authReq, http.Response response) async {
     if (response.statusCode == 401 && authReq) {
-      customSnackBar("Session expired! Please login again...");
-      // Get.find<AuthController>().logout();
+      if (Get.isRegistered<AuthController>()) {
+        final auth = Get.find<AuthController>();
+        final refreshRes = await auth.refreshToken();
+        if (refreshRes != "success") {
+          customSnackBar("Session expired! Please login again...");
+          await auth.logout();
+          Get.offAll(() => Authentication());
+        }
+      } else {
+        customSnackBar("Session expired! Please login again...");
+      }
     }
   }
 }

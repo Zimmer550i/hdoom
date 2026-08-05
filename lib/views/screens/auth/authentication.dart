@@ -7,6 +7,8 @@ import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/auth/forgot_password.dart';
 import 'package:hdoom/views/screens/auth/verification.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
+import 'package:hdoom/controllers/auth_controller.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/widgets/custom_text_field.dart';
 import 'package:hdoom/views/widgets/logo.dart';
 
@@ -20,9 +22,9 @@ class Authentication extends StatefulWidget {
 class _AuthenticationState extends State<Authentication> {
   int index = 0;
 
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final nameController = TextEditingController(text: "Wasiul");
+  final emailController = TextEditingController(text: "wasiul0491@gmail.com");
+  final passwordController = TextEditingController(text: "wasiul12");
 
   @override
   void dispose() {
@@ -33,10 +35,42 @@ class _AuthenticationState extends State<Authentication> {
   }
 
   void onSubmit() async {
+    final authController = Get.find<AuthController>();
     if (index == 0) {
-      RedirectService.gotoApp();
+      if (emailController.text.trim().isEmpty ||
+          passwordController.text.isEmpty) {
+        customSnackBar("Please enter email and password");
+        return;
+      }
+      final res = await authController.login(
+        emailController.text.trim(),
+        passwordController.text,
+      );
+      if (res == "success") {
+        RedirectService.gotoApp();
+      } else if (res.contains("Email not verified")) {
+        customSnackBar(res);
+        RedirectService.gotoVerification(emailController.text.trim());
+      } else {
+        customSnackBar(res);
+      }
     } else {
-      Get.to(() => Verification(email: emailController.text));
+      if (nameController.text.trim().isEmpty ||
+          emailController.text.trim().isEmpty ||
+          passwordController.text.isEmpty) {
+        customSnackBar("Please fill in all required fields");
+        return;
+      }
+      final res = await authController.signup(
+        nameController.text.trim(),
+        emailController.text.trim(),
+        passwordController.text,
+      );
+      if (res == "success") {
+        Get.to(() => Verification(email: emailController.text.trim()));
+      } else {
+        customSnackBar(res);
+      }
     }
   }
 
@@ -75,7 +109,10 @@ class _AuthenticationState extends State<Authentication> {
                   ),
                 ),
                 child: Row(
-                  children: [typeButton("log_in".tr, 0), typeButton("sign_up".tr, 1)],
+                  children: [
+                    typeButton("log_in".tr, 0),
+                    typeButton("sign_up".tr, 1),
+                  ],
                 ),
               ),
               const SizedBox(height: 32),
@@ -117,9 +154,12 @@ class _AuthenticationState extends State<Authentication> {
                 ],
               ),
               Spacer(),
-              CustomButton(
-                onTap: onSubmit,
-                text: index == 0 ? "log_in".tr : "sign_up".tr,
+              Obx(
+                () => CustomButton(
+                  isLoading: Get.find<AuthController>().isLoading.value,
+                  onTap: onSubmit,
+                  text: index == 0 ? "log_in".tr : "sign_up".tr,
+                ),
               ),
               const SizedBox(height: 20),
             ],

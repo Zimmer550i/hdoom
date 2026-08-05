@@ -5,6 +5,8 @@ import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/auth/password_updated.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
+import 'package:hdoom/controllers/auth_controller.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/widgets/custom_text_field.dart';
 import 'package:hdoom/views/widgets/logo.dart';
 
@@ -27,7 +29,24 @@ class _ResetPasswordState extends State<ResetPassword> {
   }
 
   void onSubmit() async {
-    Get.offAll(() => PasswordUpdated());
+    if (newPasswordController.text.isEmpty || confirmPasswordController.text.isEmpty) {
+      customSnackBar("Please enter and confirm your new password");
+      return;
+    }
+    if (newPasswordController.text != confirmPasswordController.text) {
+      customSnackBar("Passwords do not match");
+      return;
+    }
+    final res = await Get.find<AuthController>().resetPassword(
+      newPasswordController.text,
+      confirmPasswordController.text,
+    );
+    if (res == "success") {
+      customSnackBar("Password reset successfully!", isError: false);
+      Get.offAll(() => PasswordUpdated());
+    } else {
+      customSnackBar(res);
+    }
   }
 
   @override
@@ -67,7 +86,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                 isPassword: true,
               ),
               Spacer(),
-              CustomButton(onTap: onSubmit, text: "send_code".tr),
+              Obx(
+                () => CustomButton(
+                  isLoading: Get.find<AuthController>().isLoading.value,
+                  onTap: onSubmit,
+                  text: "send_code".tr,
+                ),
+              ),
               const SizedBox(height: 20),
             ],
           ),

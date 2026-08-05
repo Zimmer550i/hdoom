@@ -14,6 +14,9 @@ import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/overlay_confirmation.dart';
 import 'package:hdoom/views/widgets/profile_picture.dart';
+import 'package:hdoom/controllers/auth_controller.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
+import 'package:hdoom/views/widgets/custom_text_field.dart';
 
 class Profile extends StatefulWidget {
   final bool isUserProfile;
@@ -193,11 +196,21 @@ class _ProfileState extends State<Profile> {
                                       Get.back();
                                     },
                                     buttonTextRight: "logout".tr,
-                                    buttonCallBackRight: () {
-                                      Get.offAll(() => Authentication());
+                                    buttonCallBackRight: () async {
+                                      final res =
+                                          await Get.find<AuthController>()
+                                              .logout();
+                                      if (res == "success") {
+                                        Get.offAll(() => Authentication());
+                                      } else {
+                                        customSnackBar(res);
+                                      }
                                     },
                                   ),
                                 );
+                              }),
+                              menuRow("Delete Account", "privacy", () {
+                                _showDeleteAccountDialog(context);
                               }),
                             ],
                           ),
@@ -370,6 +383,67 @@ class _ProfileState extends State<Profile> {
             Text(name, style: AppTexts.tmdr),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showDeleteAccountDialog(BuildContext context) {
+    final passwordController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.bg,
+        title: Text("Delete Account", style: AppTexts.tlgs),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Please enter your password to confirm account deletion. This action cannot be undone.",
+              style: AppTexts.tmdr,
+            ),
+            const SizedBox(height: 16),
+            CustomTextField(
+              controller: passwordController,
+              leading: "assets/icons/lock.svg",
+              hintText: "password".tr,
+              isPassword: true,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text("cancel".tr, style: AppTexts.tmdm),
+          ),
+          Obx(
+            () => CustomButton(
+              height: 40,
+              width: 120,
+              padding: 0,
+              isLoading: Get.find<AuthController>().isLoading.value,
+              onTap: () async {
+                if (passwordController.text.isEmpty) {
+                  customSnackBar("Please enter your password");
+                  return;
+                }
+                final res = await Get.find<AuthController>().deleteAccount(
+                  passwordController.text,
+                );
+                if (res == "success") {
+                  Get.offAll(() => Authentication());
+                  customSnackBar(
+                    "Account deleted successfully.",
+                    isError: false,
+                  );
+                } else {
+                  customSnackBar(res);
+                }
+              },
+              text: "Delete",
+            ),
+          ),
+        ],
       ),
     );
   }

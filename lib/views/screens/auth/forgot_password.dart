@@ -5,6 +5,8 @@ import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/auth/verification.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
+import 'package:hdoom/controllers/auth_controller.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/widgets/custom_text_field.dart';
 import 'package:hdoom/views/widgets/logo.dart';
 
@@ -32,10 +34,24 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   void onSubmit() async {
-    Get.to(
-      () =>
-          Verification(email: emailController.text, isResettingPassword: true),
+    if (emailController.text.trim().isEmpty) {
+      customSnackBar("Please enter your email address");
+      return;
+    }
+    final res = await Get.find<AuthController>().forgotPassword(
+      emailController.text.trim(),
     );
+    if (res == "success") {
+      customSnackBar("Verification code sent to your email!", isError: false);
+      Get.to(
+        () => Verification(
+          email: emailController.text.trim(),
+          isResettingPassword: true,
+        ),
+      );
+    } else {
+      customSnackBar(res);
+    }
   }
 
   @override
@@ -67,7 +83,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 hintText: "mobile_or_email".tr,
               ),
               Spacer(),
-              CustomButton(onTap: onSubmit, text: "send_code".tr),
+              Obx(
+                () => CustomButton(
+                  isLoading: Get.find<AuthController>().isLoading.value,
+                  onTap: onSubmit,
+                  text: "send_code".tr,
+                ),
+              ),
               const SizedBox(height: 20),
             ],
           ),
