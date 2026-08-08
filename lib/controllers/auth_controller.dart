@@ -68,7 +68,7 @@ class AuthController extends GetxController {
     isLoading(true);
     try {
       final data = {"name": name, "email": email, "password": password};
-      final res = await api.post("auth/signup/", data);
+      final res = await api.post("/auth/signup/", data);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
@@ -89,7 +89,7 @@ class AuthController extends GetxController {
     isLoading(true);
     try {
       final data = {"email": email, "password": password};
-      final res = await api.post("auth/login/", data);
+      final res = await api.post("/auth/login/", data);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
@@ -110,7 +110,7 @@ class AuthController extends GetxController {
     isLoading(true);
     try {
       final token = await SharedPrefsService.get('refresh_token');
-      final res = await api.post("auth/logout/", {
+      final res = await api.post("/auth/logout/", {
         "refresh": token,
       }, authReq: true);
       await SharedPrefsService.remove('token');
@@ -138,7 +138,7 @@ class AuthController extends GetxController {
     isLoading(true);
     try {
       final data = {"email": email, "otp": otp};
-      final res = await api.post("auth/verify-email/", data);
+      final res = await api.post("/auth/verify-email/", data);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
@@ -162,7 +162,7 @@ class AuthController extends GetxController {
     isLoading(true);
     try {
       final data = {"email": email, "purpose": purpose};
-      final res = await api.post("auth/resend-otp/", data);
+      final res = await api.post("/auth/resend-otp/", data);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
@@ -182,7 +182,7 @@ class AuthController extends GetxController {
     isLoading(true);
     try {
       final data = {"email": email};
-      final res = await api.post("auth/forgot-password/", data);
+      final res = await api.post("/auth/forgot-password/", data);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
@@ -202,7 +202,7 @@ class AuthController extends GetxController {
     isLoading(true);
     try {
       final data = {"email": email, "otp": otp};
-      final res = await api.post("auth/verify-reset-otp/", data);
+      final res = await api.post("/auth/verify-reset-otp/", data);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
@@ -242,7 +242,7 @@ class AuthController extends GetxController {
         "new_password": newPassword,
         "new_password_confirm": confirmPassword,
       };
-      final res = await api.post("auth/reset-password/", data);
+      final res = await api.post("/auth/reset-password/", data);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
@@ -268,7 +268,7 @@ class AuthController extends GetxController {
         return "No refresh token available.";
       }
       final data = {"refresh": storedRefresh};
-      final res = await api.post("auth/token/refresh/", data);
+      final res = await api.post("/auth/token/refresh/", data);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
@@ -289,7 +289,7 @@ class AuthController extends GetxController {
     isLoading(true);
     try {
       final data = {"password": password};
-      final res = await api.post("auth/delete-account/", data, authReq: true);
+      final res = await api.post("/auth/delete-account/", data, authReq: true);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 ||

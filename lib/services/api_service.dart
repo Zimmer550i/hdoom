@@ -9,7 +9,7 @@ import 'package:hdoom/services/shared_prefs_service.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
 
 class ApiService {
-  final String devUrl = "http://10.10.29.50:8086/api/v1/";
+  final String devUrl = "http://10.10.29.50:8086/api/v1";
   final String prodUrl = "";
   static final String imgUrl = "";
   final bool inDevelopment = true;

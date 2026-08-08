@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/user_controller.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_text_field.dart';
@@ -12,12 +14,25 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
+  final userController = Get.find<UserController>();
+
   final oldPassCtrl = TextEditingController();
   final newPassCtrl = TextEditingController();
   final conPassCtrl = TextEditingController();
 
   void onSubmit() async {
-    Get.back();
+    final message = await userController.changePassword(
+      oldPassCtrl.text,
+      newPassCtrl.text,
+      conPassCtrl.text,
+    );
+
+    if (message == "success") {
+      Get.back();
+      customSnackBar("Your password has been updated!", isError: false);
+    } else {
+      customSnackBar(message);
+    }
   }
 
   @override
@@ -29,7 +44,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         child: Column(
           spacing: 20,
           children: [
-            const SizedBox(height: 0,),
+            const SizedBox(height: 0),
             // Center(child: Logo(showName: false)),
             CustomTextField(
               leading: "assets/icons/lock.svg",
@@ -50,7 +65,13 @@ class _ChangePasswordState extends State<ChangePassword> {
               isPassword: true,
             ),
             const SizedBox(height: 20),
-            CustomButton(onTap: onSubmit, text: "save_password".tr),
+            Obx(
+              () => CustomButton(
+                onTap: onSubmit,
+                isLoading: userController.isLoading.value,
+                text: "save_password".tr,
+              ),
+            ),
           ],
         ),
       ),

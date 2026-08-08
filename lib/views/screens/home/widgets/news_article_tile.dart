@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/models/news_model.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/home/news.dart';
+import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 /// A compact article preview tile with a title, subtitle, and
 /// circular thumbnail image. Used inside the Style News card.
 class NewsArticleTile extends StatelessWidget {
-  const NewsArticleTile({super.key});
+  final NewsModel news;
+  const NewsArticleTile({super.key, required this.news});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(()=> News());
+        Get.to(() => News(news: news,));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -27,14 +30,11 @@ class NewsArticleTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "street_style_title".tr,
-                    style: AppTexts.tlgm.copyWith(height: 1),
-                  ),
-                  Text(
-                    "street_style_subtitle".tr,
-                    style: AppTexts.tsmr.copyWith(height: 1),
-                  ),
+                  Text(news.title, style: AppTexts.tlgm.copyWith(height: 1)),
+                  // Text(
+                  //   "street_style_subtitle".tr,
+                  //   style: AppTexts.tsmr.copyWith(height: 1),
+                  // ),
                 ],
               ),
             ),
@@ -47,8 +47,8 @@ class NewsArticleTile extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(999),
-                child: Image.asset(
-                  "assets/images/style_casual.jpg",
+                child: CustomNetworkedImage(
+                  url: news.featuredImage,
                   fit: BoxFit.cover,
                 ),
               ),

@@ -6,7 +6,7 @@ import 'package:hdoom/utils/app_colors.dart';
 // ──────────────────────────────────────────────
 
 // Colors
-final _defaultLoaderColor = AppColors.green[50]!;
+final _defaultLoaderColor = AppColors.green.shade500;
 
 // ──────────────────────────────────────────────
 
@@ -17,7 +17,10 @@ class CustomLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: CircularProgressIndicator(color: color ?? _defaultLoaderColor),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: CircularProgressIndicator(color: color ?? _defaultLoaderColor),
+      ),
     );
   }
 }

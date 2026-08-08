@@ -18,6 +18,33 @@ class UserController extends GetxController {
 
   void clearUser() => _userData.value = null;
 
+  dynamic _decodeBody(String body) {
+    if (body.trim().isEmpty) return {};
+    try {
+      return jsonDecode(body);
+    } catch (_) {
+      return {"message": body};
+    }
+  }
+
+  String _parseError(dynamic body) {
+    if (body is Map) {
+      if (body['message'] != null) return body['message'].toString();
+      if (body['detail'] != null) return body['detail'].toString();
+      if (body['error'] != null) return body['error'].toString();
+      for (var entry in body.entries) {
+        if (entry.value is List && (entry.value as List).isNotEmpty) {
+          return "${entry.key}: ${(entry.value as List).first}";
+        } else if (entry.value != null &&
+            entry.value is! Map &&
+            entry.value is! List) {
+          return "${entry.key}: ${entry.value}";
+        }
+      }
+    }
+    return "Something went wrong";
+  }
+
   Future<void> _handleAuthSuccess(dynamic body) async {
     if (body is Map) {
       final data = (body['data'] is Map) ? body['data'] as Map : body;
@@ -45,7 +72,7 @@ class UserController extends GetxController {
   Future<String> getUserInfo() async {
     isLoading(true);
     try {
-      final res = await api.get("auth/profile/", authReq: true);
+      final res = await api.get("/auth/profile/", authReq: true);
       final body = jsonDecode(res.body);
 
       if (res.statusCode == 200) {
@@ -58,6 +85,33 @@ class UserController extends GetxController {
       return e.toString();
     } finally {
       isLoading(true);
+    }
+  }
+
+  Future<String> changePassword(
+    String oldPassword,
+    String newPassword,
+    String newPasswordConfirmation,
+  ) async {
+    isLoading(true);
+    try {
+      final data = {
+        "old_password": oldPassword,
+        "new_password": newPassword,
+        "new_password_confirm": newPasswordConfirmation,
+      };
+      final res = await api.post("/auth/change-password/", data, authReq: true);
+      final body = _decodeBody(res.body);
+
+      if (res.statusCode == 200) {
+        return "success";
+      } else {
+        return _parseError(body);
+      }
+    } catch (e) {
+      return e.toString();
+    } finally {
+      isLoading(false);
     }
   }
 }

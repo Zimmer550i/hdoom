@@ -173,18 +173,23 @@ class _ProfileState extends State<Profile> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               menuRow("edit_profile".tr, "user", () {
+                                _overlayController.hide();
                                 Get.to(() => EditProfile());
                               }),
                               menuRow("change_password".tr, "password", () {
+                                _overlayController.hide();
                                 Get.to(() => ChangePassword());
                               }),
                               menuRow("privacy_policy".tr, "privacy", () {
+                                _overlayController.hide();
                                 Get.to(() => Info(title: "privacy_policy".tr));
                               }),
                               menuRow("about_us".tr, "about", () {
+                                _overlayController.hide();
                                 Get.to(() => Info(title: "about_us".tr));
                               }),
                               menuRow("log_out".tr, "logout", () {
+                                _overlayController.hide();
                                 showDialog(
                                   context: context,
                                   builder: (ctx) => OverlayConfirmation(
@@ -210,6 +215,7 @@ class _ProfileState extends State<Profile> {
                                 );
                               }),
                               menuRow("Delete Account", "privacy", () {
+                                _overlayController.hide();
                                 _showDeleteAccountDialog(context);
                               }),
                             ],
