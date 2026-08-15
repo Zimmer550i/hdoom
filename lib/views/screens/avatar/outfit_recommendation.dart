@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/views/screens/avatar/saved_outfits.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 
@@ -25,7 +24,7 @@ class OutfitRecommendation extends StatelessWidget {
                   flex: 2,
                   child: CustomButton(
                     onTap: () {
-                      Get.to(() => SavedOutfits());
+                      // Get.to(() => SavedOutfits());
                     },
                     text: "save_this_avatar".tr,
                     padding: 0,

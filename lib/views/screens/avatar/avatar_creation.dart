@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/ai_image_controller.dart';
+import 'package:hdoom/models/avatar_model.dart';
+import 'package:hdoom/utils/ai_loading.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_icons.dart';
 import 'package:hdoom/utils/app_texts.dart';
@@ -7,6 +10,7 @@ import 'package:hdoom/utils/custom_svg.dart';
 import 'package:hdoom/views/screens/avatar/outfit_recommendation.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
+import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 class AvatarCreation extends StatefulWidget {
   const AvatarCreation({super.key});
@@ -16,6 +20,7 @@ class AvatarCreation extends StatefulWidget {
 }
 
 class _AvatarCreationState extends State<AvatarCreation> {
+  final avatar = Get.find<AiImageController>();
   int index = -1;
 
   @override
@@ -23,61 +28,72 @@ class _AvatarCreationState extends State<AvatarCreation> {
     return Scaffold(
       appBar: CustomAppBar(title: "avatar_creation".tr),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 12),
-                  Text("avatar_created".tr, style: AppTexts.tlgm),
-                  const SizedBox(height: 4),
-                  Text(
-                    "avatar_created_subtitle".tr,
-                    style: AppTexts.tsmr.copyWith(
-                      color: AppColors.black.shade400,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 28),
-            Image.asset("assets/images/avatar.png"),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-              child: SafeArea(
+        child: Obx(
+          () => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
-                  spacing: 12,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 12),
+                    Text("avatar_created".tr, style: AppTexts.tlgm),
+                    const SizedBox(height: 4),
                     Text(
-                      "select_item_from_wardrobe".tr,
-                      style: AppTexts.tlgm,
+                      "avatar_created_subtitle".tr,
+                      style: AppTexts.tsmr.copyWith(
+                        color: AppColors.black.shade400,
+                      ),
                     ),
-                    const SizedBox(),
-                    selector("dresses".tr, 0),
-                    selector("shoes".tr, 1),
-                    selector("bag".tr, 2),
-                    const SizedBox(height: 40),
-                    CustomButton(
-                      onTap: () {
-                        Get.to(() => OutfitRecommendation());
-                      },
-                      text: "create_avatar".tr,
-                    ),
-                    const SizedBox(height: 20),
                   ],
                 ),
               ),
-            ),
-          ],
+
+              const SizedBox(height: 28),
+              getAvatar().status == "pending"
+                  ? AiLoading()
+                  : CustomNetworkedImage(url: getAvatar().resultImage),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 24,
+                ),
+                child: SafeArea(
+                  child: Column(
+                    spacing: 12,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "select_item_from_wardrobe".tr,
+                        style: AppTexts.tlgm,
+                      ),
+                      const SizedBox(),
+                      selector("dresses".tr, 0),
+                      selector("shoes".tr, 1),
+                      selector("bag".tr, 2),
+                      const SizedBox(height: 40),
+                      CustomButton(
+                        onTap: () {
+                          Get.to(() => OutfitRecommendation());
+                        },
+                        text: "create_avatar".tr,
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
+  AvatarModel getAvatar() => avatar.avatars.elementAt(
+    avatar.getAvatarIndex(avatar.currentAvatarId.value!),
+  );
 
   Container selector(String title, int pos) {
     return Container(

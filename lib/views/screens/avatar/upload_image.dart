@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/ai_image_controller.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_image_picker.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/utils/custom_svg.dart';
 import 'package:hdoom/views/screens/avatar/avatar_creation.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
@@ -21,6 +23,18 @@ class UploadImage extends StatefulWidget {
 class _UploadImageState extends State<UploadImage> {
   File? _image;
 
+  void onSubmit() async {
+    final avatar = Get.find<AiImageController>();
+
+    final message = await avatar.createAvatar(sourcePhoto: _image);
+
+    if (message == "success") {
+      Get.to(() => AvatarCreation());
+    } else {
+      customSnackBar(message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +44,7 @@ class _UploadImageState extends State<UploadImage> {
         child: SafeArea(
           child: Column(
             children: [
-              Text(
-                "upload_image_subtitle".tr,
-                style: AppTexts.tsmr,
-              ),
+              Text("upload_image_subtitle".tr, style: AppTexts.tsmr),
               const SizedBox(height: 32),
               GestureDetector(
                 onTap: () async {
@@ -97,11 +108,12 @@ class _UploadImageState extends State<UploadImage> {
                 leading: "assets/icons/camera.svg",
               ),
               const SizedBox(height: 40),
-              CustomButton(
-                onTap: () {
-                  Get.to(() => AvatarCreation());
-                },
-                text: "next".tr,
+              Obx(
+                () => CustomButton(
+                  onTap: onSubmit,
+                  isLoading: Get.find<AiImageController>().isLoading.value,
+                  text: "next".tr,
+                ),
               ),
             ],
           ),

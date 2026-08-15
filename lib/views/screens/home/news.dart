@@ -97,6 +97,10 @@ class _NewsState extends State<News> {
                                 cleanHtml(news.content) ??
                                 "<p style=\"color: red; text-align: center;\">Error Fetching Content</p>",
                             style: {
+                              "img": Style(
+                                width: Width(MediaQuery.of(context).size.width/1.7),
+                                height: Height(MediaQuery.of(context).size.width/1.7)
+                              ),
                               "p": Style(
                                 fontSize: FontSize(16),
                                 lineHeight: LineHeight(1.5),

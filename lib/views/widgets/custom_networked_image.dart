@@ -14,12 +14,12 @@ import 'package:shimmer/shimmer.dart';
 final _errorBackgroundColor = AppColors.black.shade200;
 final _errorIconColor = AppColors.black.shade400;
 final _errorTextColor = AppColors.black.shade400;
-final _shimmerBaseColor = AppColors.green.shade300;
-final _shimmerHighlightColor = AppColors.green[25]!;
+final _shimmerBaseColor = AppColors.green[25]!;
+final _shimmerHighlightColor = AppColors.green;
 const _shimmerChildColor = Colors.white;
 
 // Sizing
-const _defaultRadius = 10.0;
+const _defaultRadius = 0.0;
 
 // Animation
 const _shimmerDuration = Duration(milliseconds: 800);
@@ -79,7 +79,8 @@ class CustomNetworkedImage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.error, color: _errorIconColor),
-                        Expanded(
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             error.toString(),
                             textAlign: TextAlign.center,
