@@ -262,20 +262,14 @@ class AuthController extends GetxController {
   Future<String> refreshToken({String? token}) async {
     isLoading(true);
     try {
-      final storedRefresh =
-          token ?? await SharedPrefsService.get('refresh_token');
-      if (storedRefresh == null || storedRefresh.isEmpty) {
-        return "No refresh token available.";
+      if (token != null && token.isNotEmpty) {
+        await SharedPrefsService.set('refresh_token', token);
       }
-      final data = {"refresh": storedRefresh};
-      final res = await api.post("/auth/token/refresh/", data);
-      final body = _decodeBody(res.body);
-
-      if (res.statusCode == 200 || res.statusCode == 201) {
-        await _handleAuthSuccess(body);
+      final success = await api.refreshToken();
+      if (success) {
         return "success";
       } else {
-        return _parseError(body);
+        return "Failed to refresh token";
       }
     } catch (e) {
       return e.toString();

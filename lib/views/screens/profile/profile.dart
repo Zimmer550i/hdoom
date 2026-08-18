@@ -15,6 +15,7 @@ import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/overlay_confirmation.dart';
 import 'package:hdoom/views/widgets/profile_picture.dart';
 import 'package:hdoom/controllers/auth_controller.dart';
+import 'package:hdoom/controllers/user_controller.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/widgets/custom_text_field.dart';
 
@@ -110,19 +111,36 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget userProfile() {
+    final userController = Get.find<UserController>();
     return Column(
       children: [
         Row(
           children: [
-            ProfilePicture(image: "https://picsum.photos/200/200", size: 72),
+            Obx(
+              () => ProfilePicture(
+                image: userController.user?.avatarUrl,
+                size: 72,
+              ),
+            ),
             const SizedBox(width: 12),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("your_name_here".tr, style: AppTexts.tlgm),
-                  Text("mrjohn123@gmail.com", style: AppTexts.tmdr),
-                ],
+              child: Obx(
+                () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      userController.user?.name.isNotEmpty == true
+                          ? userController.user!.name
+                          : "your_name_here".tr,
+                      style: AppTexts.tlgm,
+                    ),
+                    if (userController.user?.email.isNotEmpty == true)
+                      Text(
+                        userController.user!.email,
+                        style: AppTexts.tmdr,
+                      ),
+                  ],
+                ),
               ),
             ),
             // Overlay trigger button

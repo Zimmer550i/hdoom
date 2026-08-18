@@ -2,13 +2,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/user_controller.dart';
+import 'package:hdoom/models/aesthetic_model.dart';
 import 'package:hdoom/services/redirect_service.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/utils/custom_svg.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_drop_down.dart';
+import 'package:hdoom/views/widgets/custom_loading.dart';
+import 'package:hdoom/views/widgets/custom_networked_image.dart';
 import 'package:hdoom/views/widgets/custom_text_field.dart';
 import 'package:hdoom/views/widgets/profile_picture.dart';
 
@@ -21,138 +26,336 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  File? _pickedImage;
-  List<String> styles = [
-    "formal",
-    "casual",
-    "bridal",
-    "luxury",
-    "elegant",
-    "trendy",
-  ];
-  List<String> selectedStyles = [];
+  final userController = Get.find<UserController>();
 
-  void onSubmit() {
-    if (widget.createAccount) {
-      RedirectService.gotoApp();
+  final nameController = TextEditingController();
+  final ageController = TextEditingController();
+  final heightController = TextEditingController();
+  final countryController = TextEditingController();
+
+  List<int> selectedAesthetics = [];
+  File? _pickedImage;
+
+  String? selectedGender;
+  String? selectedBodyType;
+
+  final List<String> genderValues = const ['male', 'female', 'other'];
+  final List<String> bodyTypeValues = const [
+    'slim',
+    'athletic',
+    'average',
+    'curvy',
+    'plus_size',
+  ];
+
+  List<String> get genderDisplayOptions => [
+        "male".tr,
+        "female".tr,
+      ];
+
+  List<String> get bodyTypeDisplayOptions => [
+        "slim".tr,
+        "athletic".tr,
+        "stocky".tr,
+        "curvy".tr,
+      ];
+
+  @override
+  void initState() {
+    super.initState();
+    _populateFields();
+
+    if (!widget.createAccount) {
+      userController.getAdditionalProfileInfo().then((message) {
+        if (message == "success") {
+          setState(() {
+            _populateFields();
+          });
+        } else {
+          customSnackBar(message);
+        }
+      });
+    }
+
+    if (userController.aesthetics.isEmpty) {
+      userController.getAesthetics();
+    }
+  }
+
+  void _populateFields() {
+    final u = userController.user;
+    if (u != null) {
+      if (u.name.isNotEmpty) {
+        nameController.text = u.name;
+      }
+      if (u.age != null) {
+        ageController.text = u.age.toString();
+      }
+      if (u.height != null) {
+        heightController.text = u.height.toString();
+      }
+      if (u.country != null) {
+        countryController.text = u.country!;
+      }
+      if (u.gender != null) {
+        selectedGender = u.gender;
+      }
+      if (u.bodyType != null) {
+        selectedBodyType = u.bodyType;
+      }
+      if (u.aesthetics != null && u.aesthetics!.isNotEmpty) {
+        selectedAesthetics = List<int>.from(u.aesthetics!);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    ageController.dispose();
+    heightController.dispose();
+    countryController.dispose();
+    super.dispose();
+  }
+
+  int? get _genderInitialIndex {
+    if (selectedGender == null) return null;
+    final index = genderValues.indexOf(selectedGender!.toLowerCase());
+    if (index >= 0 && index < genderDisplayOptions.length) {
+      return index;
+    }
+    return null;
+  }
+
+  int? get _bodyTypeInitialIndex {
+    if (selectedBodyType == null) return null;
+    final normalized = selectedBodyType!.toLowerCase();
+    int index = bodyTypeValues.indexOf(normalized);
+    if (index == 2) {
+      // Map average to stocky index (2)
+      index = 2;
+    }
+    if (index >= 0 && index < bodyTypeDisplayOptions.length) {
+      return index;
+    }
+    return null;
+  }
+
+  void onSubmit() async {
+    final name = nameController.text.trim();
+    if (name.isEmpty) {
+      customSnackBar("Please enter your name");
+      return;
+    }
+
+    int? age;
+    if (ageController.text.trim().isNotEmpty) {
+      age = int.tryParse(ageController.text.trim());
+      if (age == null || age < 0) {
+        customSnackBar("Please enter a valid age");
+        return;
+      }
+    }
+
+    int? height;
+    if (heightController.text.trim().isNotEmpty) {
+      height = int.tryParse(heightController.text.trim());
+      if (height == null || height < 0) {
+        customSnackBar("Please enter a valid height in cm");
+        return;
+      }
+    }
+
+    final country = countryController.text.trim();
+
+    final res = await userController.updateAdditionalProfileInfo(
+      name: name,
+      age: age,
+      gender: selectedGender,
+      height: height,
+      bodyType: selectedBodyType,
+      country: country.isNotEmpty ? country : null,
+      selectedAesthetic: selectedAesthetics,
+      image: _pickedImage,
+    );
+
+    if (res == "success") {
+      customSnackBar(
+        widget.createAccount
+            ? "Profile completed successfully!"
+            : "Profile updated successfully!",
+        isError: false,
+      );
+      if (widget.createAccount) {
+        RedirectService.gotoApp();
+      } else {
+        Get.back();
+      }
     } else {
-      Get.back();
+      customSnackBar(res);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      for (var i in styles) {
-        precacheImage(AssetImage("assets/images/style_$i.jpg"), context);
-      }
-    });
-
     return Scaffold(
       appBar: CustomAppBar(
         title: widget.createAccount ? "complete_profile".tr : "edit_profile".tr,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20),
-              ProfilePicture(
-                imageFile: _pickedImage,
-                isEditable: true,
-                imagePickerCallback: (val) {
-                  setState(() {
-                    _pickedImage = val;
-                  });
-                },
-              ),
-              const SizedBox(height: 12),
-              Text("upload_photo".tr, style: AppTexts.tmdm),
-              const SizedBox(height: 24),
-              Column(
-                spacing: 16,
-                children: [
-                  Row(
-                    spacing: 16,
+      body: Obx(
+        () => userController.isLoading.value
+            ? Center(child: CustomLoading())
+            : SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SafeArea(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: CustomTextField(
-                          hintText: "age".tr,
-                          textInputType: TextInputType.number,
+                      const SizedBox(height: 20),
+                      ProfilePicture(
+                        imageFile: _pickedImage,
+                        image: userController.user?.avatarUrl,
+                        isEditable: true,
+                        imagePickerCallback: (val) {
+                          setState(() {
+                            _pickedImage = val;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      Text("upload_photo".tr, style: AppTexts.tmdm),
+                      const SizedBox(height: 24),
+                      Column(
+                        spacing: 16,
+                        children: [
+                          CustomTextField(
+                            controller: nameController,
+                            // leading: "assets/icons/name.svg",
+                            hintText: "name".tr,
+                          ),
+                          Row(
+                            spacing: 16,
+                            children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  controller: ageController,
+                                  hintText: "age".tr,
+                                  textInputType: TextInputType.number,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: CustomDropDown(
+                                  key: ValueKey(selectedGender),
+                                  hintText: "gender".tr,
+                                  options: genderDisplayOptions,
+                                  initialPick: _genderInitialIndex,
+                                  onChanged: (index, value) {
+                                    if (index >= 0 && index < genderValues.length) {
+                                      selectedGender = genderValues[index];
+                                    }
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: CustomTextField(
+                                  controller: heightController,
+                                  hintText: "height_cm".tr,
+                                  textInputType: TextInputType.number,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            spacing: 16,
+                            children: [
+                              Expanded(
+                                child: CustomDropDown(
+                                  key: ValueKey(selectedBodyType),
+                                  hintText: "select_body_type".tr,
+                                  options: bodyTypeDisplayOptions,
+                                  initialPick: _bodyTypeInitialIndex,
+                                  onChanged: (index, value) {
+                                    if (index == 2) {
+                                      selectedBodyType = 'average';
+                                    } else if (index >= 0 &&
+                                        index < bodyTypeValues.length) {
+                                      selectedBodyType = bodyTypeValues[index];
+                                    }
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: CustomTextField(
+                                  controller: countryController,
+                                  hintText: "country".tr,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "your_aesthetic".tr,
+                              style: AppTexts.tlgm,
+                            ),
+                          ),
+                          Text("select_up_to_3".tr, style: AppTexts.tsmr),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Obx(
+                        () => userController.isAestheticLoading.value
+                            ? CustomLoading()
+                            : GridView(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 20,
+                                  crossAxisSpacing: 20,
+                                  childAspectRatio: 0.88,
+                                ),
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                children: [
+                                  for (var i in userController.aesthetics)
+                                    styleCard(i),
+                                ],
+                              ),
+                      ),
+                      const SizedBox(height: 40),
+                      Obx(
+                        () => CustomButton(
+                          isLoading: userController.isUpdatingInfo.value,
+                          onTap: onSubmit,
+                          text: "continue_btn".tr,
                         ),
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: CustomDropDown(
-                          hintText: "gender".tr,
-                          options: ["male".tr, "female".tr],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: CustomTextField(
-                          hintText: "height_cm".tr,
-                          textInputType: TextInputType.number,
-                        ),
-                      ),
+                      const SizedBox(height: 20),
                     ],
                   ),
-                  Row(
-                    spacing: 16,
-                    children: [
-                      Expanded(
-                        child: CustomDropDown(
-                          hintText: "select_body_type".tr,
-                          options: ["slim".tr, "athletic".tr, "stocky".tr, "curvy".tr],
-                        ),
-                      ),
-                      Expanded(child: CustomTextField(hintText: "country".tr)),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(child: Text("your_aesthetic".tr, style: AppTexts.tlgm)),
-                  Text("select_up_to_3".tr, style: AppTexts.tsmr),
-                ],
-              ),
-              const SizedBox(height: 16),
-              GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 20,
-                  childAspectRatio: 0.88,
                 ),
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                children: [for (var i in styles) styleCard(i)],
               ),
-              const SizedBox(height: 50),
-              CustomButton(onTap: onSubmit, text: "continue_btn".tr),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
       ),
     );
   }
 
-  Widget styleCard(String name) {
-    bool isSelected = selectedStyles.contains(name);
+  Widget styleCard(AestheticModel aesthetic) {
+    bool isSelected = selectedAesthetics.contains(aesthetic.id);
     return GestureDetector(
       onTap: () {
         if (isSelected) {
           setState(() {
-            selectedStyles.remove(name);
+            selectedAesthetics.remove(aesthetic.id);
           });
-        } else if (selectedStyles.length < 3) {
+        } else if (selectedAesthetics.length < 3) {
           setState(() {
-            selectedStyles.add(name);
+            selectedAesthetics.add(aesthetic.id);
           });
         }
       },
@@ -161,18 +364,20 @@ class _EditProfileState extends State<EditProfile> {
           borderRadius: BorderRadius.circular(12),
           border: isSelected
               ? Border.all(width: 2, color: AppColors.green.shade400)
-              : null,
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage("assets/images/style_$name.jpg"),
-          ),
+              : Border.all(width: 2, color: Colors.transparent),
         ),
         child: Stack(
           children: [
             Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CustomNetworkedImage(url: aesthetic.image),
+              ),
+            ),
+            Positioned.fill(
               child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
                   gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
@@ -186,21 +391,24 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Column(
                 children: [
                   if (isSelected)
-                    Align(
+                    const Align(
                       alignment: Alignment.centerRight,
                       child: CustomSvg(
                         asset: "assets/icons/tick_circle_selected.svg",
                       ),
                     ),
-                  Spacer(),
+                  const Spacer(),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      name.substring(0, 1).toUpperCase() + name.substring(1),
+                      aesthetic.name.isNotEmpty
+                          ? aesthetic.name.substring(0, 1).toUpperCase() +
+                              aesthetic.name.substring(1)
+                          : '',
                       style: AppTexts.tmds.copyWith(color: Colors.white),
                     ),
                   ),
