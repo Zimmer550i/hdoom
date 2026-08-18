@@ -7,13 +7,13 @@ import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_icons.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/views/screens/avatar/outfit_recommendation.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 class AvatarCreation extends StatefulWidget {
-  const AvatarCreation({super.key});
+  final bool useDefault;
+  const AvatarCreation({super.key, this.useDefault = true});
 
   @override
   State<AvatarCreation> createState() => _AvatarCreationState();
@@ -38,22 +38,34 @@ class _AvatarCreationState extends State<AvatarCreation> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 12),
-                    Text("avatar_created".tr, style: AppTexts.tlgm),
+                    !widget.useDefault && getAvatar().status == "processing"
+                        ? Text("Generating Avatar", style: AppTexts.tlgm)
+                        : Text("avatar_created".tr, style: AppTexts.tlgm),
                     const SizedBox(height: 4),
-                    Text(
-                      "avatar_created_subtitle".tr,
-                      style: AppTexts.tsmr.copyWith(
-                        color: AppColors.black.shade400,
+                    if (!widget.useDefault &&
+                        getAvatar().status == "processing")
+                      Text(
+                        "avatar_created_subtitle".tr,
+                        style: AppTexts.tsmr.copyWith(
+                          color: AppColors.black.shade400,
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
 
               const SizedBox(height: 28),
-              getAvatar().status == "pending"
+              widget.useDefault
+                  ? CustomNetworkedImage(
+                      height: MediaQuery.of(context).size.width,
+                      url: avatar.defaultAvatar.value!.resultImage,
+                    )
+                  : getAvatar().status == "processing"
                   ? AiLoading()
-                  : CustomNetworkedImage(url: getAvatar().resultImage),
+                  : CustomNetworkedImage(
+                      height: MediaQuery.of(context).size.width,
+                      url: getAvatar().resultImage,
+                    ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -75,9 +87,9 @@ class _AvatarCreationState extends State<AvatarCreation> {
                       const SizedBox(height: 40),
                       CustomButton(
                         onTap: () {
-                          Get.to(() => OutfitRecommendation());
+                          // Get.to(() => OutfitRecommendation());
                         },
-                        text: "create_avatar".tr,
+                        text: "Generate Outfit",
                       ),
                       const SizedBox(height: 20),
                     ],

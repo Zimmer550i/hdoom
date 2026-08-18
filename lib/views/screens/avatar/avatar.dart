@@ -68,6 +68,7 @@ class Avatar extends StatelessWidget {
             ),
             Expanded(
               child: SingleChildScrollView(
+                physics: ClampingScrollPhysics(),
                 child: Obx(() {
                   final avatar = Get.find<AiImageController>();
                   if (avatar.defaultAvatar.value == null &&
@@ -109,7 +110,7 @@ class Avatar extends StatelessWidget {
                         child: Column(
                           children: [
                             CustomButton(
-                              onTap: onSubmit,
+                              onTap: () => Get.to(() => AvatarCreation()),
                               text: "use_this_image".tr,
                               isSecondary: true,
                               isLoading: avatar.isLoading.value,

@@ -4,8 +4,9 @@ import 'package:hdoom/controllers/ai_image_controller.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_list_handler.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/views/screens/avatar/outfit_recommendation.dart';
+import 'package:hdoom/views/screens/avatar/image_viewer.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/profile_picture.dart';
 
@@ -62,7 +63,15 @@ class _GeneratedAvatarsState extends State<GeneratedAvatars> {
             for (var i in avatar.avatars)
               GestureDetector(
                 onTap: () {
-                  Get.to(() => OutfitRecommendation());
+                  if (i.status == "done") {
+                    Get.to(
+                      () => ImageViewer(url: i.resultImage ?? i.sourcePhoto!),
+                    );
+                  } else if (i.status == "processing") {
+                    customSnackBar("Avatar is still processing");
+                  } else {
+                    customSnackBar("Avatar was not generated");
+                  }
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),

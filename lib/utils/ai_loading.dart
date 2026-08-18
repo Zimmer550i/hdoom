@@ -6,6 +6,12 @@ class AiLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LottieBuilder.asset("assets/images/ai_loading.json");
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width,
+        maxHeight: MediaQuery.of(context).size.width,
+      ),
+      child: LottieBuilder.asset("assets/images/ai_loading.json"),
+    );
   }
 }
