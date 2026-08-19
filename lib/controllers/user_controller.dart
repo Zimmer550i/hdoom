@@ -12,7 +12,11 @@ class UserController extends GetxController {
 
   final Rxn<UserModel> _userData = Rxn();
   final RxList<AestheticModel> aesthetics = RxList.empty();
+  final RxnString privacyPolicy = RxnString();
+  final RxnString aboutUs = RxnString();
+
   final RxBool isLoading = RxBool(false);
+  final RxBool isAppInfoLoading = RxBool(false);
   final RxBool isUpdatingInfo = RxBool(false);
   final RxBool isAestheticLoading = RxBool(false);
 
@@ -223,6 +227,29 @@ class UserController extends GetxController {
       return e.toString();
     } finally {
       isAestheticLoading(false);
+    }
+  }
+
+  Future<String> getAppInfo() async {
+    isAppInfoLoading(true);
+    try {
+      final res = await api.get("/settings/", authReq: true);
+      final body = jsonDecode(res.body);
+
+      if (res.statusCode == 200) {
+        final data = body['data'];
+
+        privacyPolicy.value = data['privacy_policy'];
+        aboutUs.value = data['about_us'];
+
+        return "success";
+      } else {
+        return body['message'] ?? "Something went wrong";
+      }
+    } catch (e) {
+      return e.toString();
+    } finally {
+      isAppInfoLoading(false);
     }
   }
 }
