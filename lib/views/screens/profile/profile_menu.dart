@@ -1,0 +1,218 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hdoom/controllers/auth_controller.dart';
+import 'package:hdoom/utils/app_colors.dart';
+import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
+import 'package:hdoom/utils/custom_svg.dart';
+import 'package:hdoom/views/screens/auth/authentication.dart';
+import 'package:hdoom/views/screens/profile/change_password.dart';
+import 'package:hdoom/views/screens/profile/edit_profile.dart';
+import 'package:hdoom/views/screens/profile/info.dart';
+import 'package:hdoom/views/widgets/custom_button.dart';
+import 'package:hdoom/views/widgets/custom_text_field.dart';
+import 'package:hdoom/views/widgets/overlay_confirmation.dart';
+
+class ProfileMenu extends StatelessWidget {
+  final LayerLink _layerLink;
+  final OverlayPortalController _overlayController;
+  const ProfileMenu({
+    super.key,
+    required this._layerLink,
+    required this._overlayController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CompositedTransformTarget(
+      link: _layerLink,
+      child: OverlayPortal(
+        controller: _overlayController,
+        overlayChildBuilder: (context) {
+          return Stack(
+            children: [
+              // Dismiss barrier
+              Positioned.fill(
+                child: GestureDetector(
+                  onTap: () => _overlayController.hide(),
+                  behavior: HitTestBehavior.opaque,
+                  child: SizedBox.expand(
+                    child: Container(
+                      color: Colors.black.withValues(alpha: 0.3),
+                    ),
+                  ),
+                ),
+              ),
+              // Overlay content
+              CompositedTransformFollower(
+                link: _layerLink,
+                targetAnchor: Get.locale == const Locale('ar')
+                    ? Alignment.bottomLeft
+                    : Alignment.bottomRight,
+                followerAnchor: Get.locale == const Locale('ar')
+                    ? Alignment.topLeft
+                    : Alignment.topRight,
+                offset: const Offset(0, 8),
+                child: Container(
+                  width: MediaQuery.of(context).size.width - 40,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.08),
+                        blurRadius: 24,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      menuRow("edit_profile".tr, "user", () {
+                        _overlayController.hide();
+                        Get.to(() => EditProfile());
+                      }),
+                      menuRow("change_password".tr, "password", () {
+                        _overlayController.hide();
+                        Get.to(() => ChangePassword());
+                      }),
+                      menuRow("privacy_policy".tr, "privacy", () {
+                        _overlayController.hide();
+                        Get.to(() => Info(title: "privacy_policy".tr));
+                      }),
+                      menuRow("about_us".tr, "about", () {
+                        _overlayController.hide();
+                        Get.to(() => Info(title: "about_us".tr));
+                      }),
+                      menuRow("log_out".tr, "logout", () {
+                        _overlayController.hide();
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => OverlayConfirmation(
+                            title: "logout_confirm".tr,
+                            highlight: "logout".tr,
+                            buttonTextLeft: "cancel".tr,
+                            buttonCallBackLeft: () {
+                              Get.back();
+                              Get.back();
+                            },
+                            buttonTextRight: "logout".tr,
+                            buttonCallBackRight: () async {
+                              final res = await Get.find<AuthController>()
+                                  .logout();
+                              if (res == "success") {
+                                Get.offAll(() => Authentication());
+                              } else {
+                                customSnackBar(res);
+                              }
+                            },
+                          ),
+                        );
+                      }),
+                      menuRow("Delete Account", "privacy", () {
+                        _overlayController.hide();
+                        _showDeleteAccountDialog(context);
+                      }),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+        child: GestureDetector(
+          onTap: () => _overlayController.toggle(),
+          child: Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: AppColors.green),
+            ),
+            child: Icon(Icons.more_vert, size: 18, color: AppColors.green),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showDeleteAccountDialog(BuildContext context) {
+    final passwordController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.bg,
+        title: Text("Delete Account", style: AppTexts.tlgs),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Please enter your password to confirm account deletion. This action cannot be undone.",
+              style: AppTexts.tmdr,
+            ),
+            const SizedBox(height: 16),
+            CustomTextField(
+              controller: passwordController,
+              leading: "assets/icons/lock.svg",
+              hintText: "password".tr,
+              isPassword: true,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text("cancel".tr, style: AppTexts.tmdm),
+          ),
+          Obx(
+            () => CustomButton(
+              height: 40,
+              width: 120,
+              padding: 0,
+              isLoading: Get.find<AuthController>().isLoading.value,
+              onTap: () async {
+                if (passwordController.text.isEmpty) {
+                  customSnackBar("Please enter your password");
+                  return;
+                }
+                final res = await Get.find<AuthController>().deleteAccount(
+                  passwordController.text,
+                );
+                if (res == "success") {
+                  Get.offAll(() => Authentication());
+                  customSnackBar(
+                    "Account deleted successfully.",
+                    isError: false,
+                  );
+                } else {
+                  customSnackBar(res);
+                }
+              },
+              text: "Delete",
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget menuRow(String title, String iconName, void Function() onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        child: Row(
+          spacing: 8,
+          children: [
+            CustomSvg(asset: "assets/icons/$iconName.svg", size: 24),
+            Expanded(child: Text(title, style: AppTexts.tmdr)),
+            CustomSvg(asset: "assets/icons/arrow_right.svg", size: 24),
+          ],
+        ),
+      ),
+    );
+  }
+}

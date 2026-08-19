@@ -60,6 +60,7 @@ class CustomTextField extends StatefulWidget {
   final double? width;
   final TextEditingController? controller;
   final bool isPassword;
+  final bool autofocus;
   final int lines;
   final void Function()? onTap;
   const CustomTextField({
@@ -70,6 +71,7 @@ class CustomTextField extends StatefulWidget {
     this.trailing,
     this.isPassword = false,
     this.isDisabled = false,
+    this.autofocus = false,
     this.radius = _defaultRadius,
     this.lines = 1,
     this.textInputType,
@@ -163,6 +165,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 Expanded(
                   child: TextField(
                     focusNode: focusNode,
+                    autofocus: widget.autofocus,
                     controller: widget.controller,
                     maxLines: widget.lines,
                     cursorColor: _cursorColor,

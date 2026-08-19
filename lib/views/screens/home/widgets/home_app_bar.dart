@@ -4,6 +4,7 @@ import 'package:hdoom/controllers/user_controller.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_svg.dart';
+import 'package:hdoom/views/screens/home/search_user.dart';
 import 'package:hdoom/views/widgets/profile_picture.dart';
 
 /// Builds the Home screen's custom [AppBar] with user greeting,
@@ -41,15 +42,16 @@ AppBar buildHomeAppBar() {
               ),
               Text(
                 "heres_your_outfit".tr,
-                style: AppTexts.tsmr.copyWith(
-                  color: AppColors.black.shade400,
-                ),
+                style: AppTexts.tsmr.copyWith(color: AppColors.black.shade400),
               ),
             ],
           ),
         ),
         const SizedBox(width: 16),
-        CustomSvg(asset: "assets/icons/save.svg"),
+        GestureDetector(
+          onTap: () => Get.to(() => SearchUser()),
+          child: CustomSvg(asset: "assets/icons/search.svg", size: 28),
+        ),
         const SizedBox(width: 20),
       ],
     ),

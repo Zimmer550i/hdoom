@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/outfit_controller.dart';
+import 'package:hdoom/controllers/social_controller.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_svg.dart';
 import 'package:hdoom/utils/formatter.dart';
-import 'package:hdoom/views/screens/auth/authentication.dart';
-import 'package:hdoom/views/screens/profile/change_password.dart';
-import 'package:hdoom/views/screens/profile/edit_profile.dart';
-import 'package:hdoom/views/screens/profile/info.dart';
+import 'package:hdoom/views/screens/profile/profile_menu.dart';
 import 'package:hdoom/views/screens/profile/subscription.dart';
+import 'package:hdoom/views/screens/profile/users_list.dart';
 import 'package:hdoom/views/screens/profile/view_outfit.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/views/widgets/overlay_confirmation.dart';
+import 'package:hdoom/views/widgets/custom_loading.dart';
+import 'package:hdoom/views/widgets/custom_networked_image.dart';
 import 'package:hdoom/views/widgets/profile_picture.dart';
-import 'package:hdoom/controllers/auth_controller.dart';
 import 'package:hdoom/controllers/user_controller.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/widgets/custom_text_field.dart';
 
 class Profile extends StatefulWidget {
   final bool isUserProfile;
@@ -29,84 +27,150 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final social = Get.find<SocialController>();
+  final outfit = Get.find<OutfitController>();
   final OverlayPortalController _overlayController = OverlayPortalController();
   final LayerLink _layerLink = LayerLink();
 
   bool isPublic = true;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.username == null) {
+        getUserData();
+      } else {
+        getPublicData();
+      }
+    });
+  }
+
+  void getUserData() {
+    final String username = Get.find<UserController>().user!.username ?? "";
+    social.getUserProfile(username).then((message) {
+      if (message != "success") {
+        customSnackBar(message);
+      }
+    });
+
+    outfit.getPublicSavedOutfits(username).then((message) {
+      if (message != "success") {
+        customSnackBar(message);
+      }
+    });
+  }
+
+  void getPublicData() {
+    social.getUserProfile(widget.username!).then((message) {
+      if (message != "success") {
+        customSnackBar(message);
+      }
+    });
+
+    outfit.getPublicSavedOutfits(widget.username!).then((message) {
+      if (message != "success") {
+        customSnackBar(message);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        hasLeading: !widget.isUserProfile,
+        hasLeading: widget.username != null,
         title: "profile".tr,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Obx(() => widget.isUserProfile ? userProfile() : publicProfile()),
-              const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text("outfit".tr, style: AppTexts.txlm),
-              ),
-              const SizedBox(height: 16),
-              GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: 0.66,
-                ),
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  for (int i = 0; i < 6; i++)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: GestureDetector(
-                        onTap: () => Get.to(() => ViewOutfit()),
-                        child: Container(
-                          decoration: BoxDecoration(color: Colors.white),
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: SizedBox.expand(
-                                  child: Image.asset(
-                                    "assets/images/style_casual.jpg",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "soft_beige_evening".tr,
-                                      style: AppTexts.tmdm,
-                                    ),
-                                    Text("casual".tr, style: AppTexts.tsmr),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+      body: Obx(
+        () => social.isProfileLoading.value && widget.username != null
+            ? CustomLoading()
+            : SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      Obx(
+                        () => widget.username == null
+                            ? userProfile()
+                            : publicProfile(),
                       ),
-                    ),
-                ],
+                      const SizedBox(height: 20),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("outfit".tr, style: AppTexts.txlm),
+                      ),
+                      const SizedBox(height: 16),
+                      Obx(
+                        () => outfit.isPublicLoading.value
+                            ? CustomLoading()
+                            : outfit.publicOutfits.isEmpty
+                            ? Text("Nothing to show")
+                            : GridView(
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 16,
+                                      crossAxisSpacing: 16,
+                                      childAspectRatio: 0.66,
+                                    ),
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                children: [
+                                  for (var i in outfit.publicOutfits)
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: GestureDetector(
+                                        onTap: () => Get.to(() => ViewOutfit()),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                child: SizedBox.expand(
+                                                  child: CustomNetworkedImage(
+                                                    url: i
+                                                        .outfitJob
+                                                        ?.resultImage,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 16,
+                                                  vertical: 12,
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "soft_beige_evening".tr,
+                                                      style: AppTexts.tmdm,
+                                                    ),
+                                                    Text(
+                                                      "casual".tr,
+                                                      style: AppTexts.tsmr,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -137,122 +201,9 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             // Overlay trigger button
-            CompositedTransformTarget(
-              link: _layerLink,
-              child: OverlayPortal(
-                controller: _overlayController,
-                overlayChildBuilder: (context) {
-                  return Stack(
-                    children: [
-                      // Dismiss barrier
-                      Positioned.fill(
-                        child: GestureDetector(
-                          onTap: () => _overlayController.hide(),
-                          behavior: HitTestBehavior.opaque,
-                          child: SizedBox.expand(
-                            child: Container(
-                              color: Colors.black.withValues(alpha: 0.3),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Overlay content
-                      CompositedTransformFollower(
-                        link: _layerLink,
-                        targetAnchor: Get.locale == const Locale('ar')
-                            ? Alignment.bottomLeft
-                            : Alignment.bottomRight,
-                        followerAnchor: Get.locale == const Locale('ar')
-                            ? Alignment.topLeft
-                            : Alignment.topRight,
-                        offset: const Offset(0, 8),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width - 40,
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.08),
-                                blurRadius: 24,
-                                offset: const Offset(0, 8),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              menuRow("edit_profile".tr, "user", () {
-                                _overlayController.hide();
-                                Get.to(() => EditProfile());
-                              }),
-                              menuRow("change_password".tr, "password", () {
-                                _overlayController.hide();
-                                Get.to(() => ChangePassword());
-                              }),
-                              menuRow("privacy_policy".tr, "privacy", () {
-                                _overlayController.hide();
-                                Get.to(() => Info(title: "privacy_policy".tr));
-                              }),
-                              menuRow("about_us".tr, "about", () {
-                                _overlayController.hide();
-                                Get.to(() => Info(title: "about_us".tr));
-                              }),
-                              menuRow("log_out".tr, "logout", () {
-                                _overlayController.hide();
-                                showDialog(
-                                  context: context,
-                                  builder: (ctx) => OverlayConfirmation(
-                                    title: "logout_confirm".tr,
-                                    highlight: "logout".tr,
-                                    buttonTextLeft: "cancel".tr,
-                                    buttonCallBackLeft: () {
-                                      Get.back();
-                                      Get.back();
-                                    },
-                                    buttonTextRight: "logout".tr,
-                                    buttonCallBackRight: () async {
-                                      final res =
-                                          await Get.find<AuthController>()
-                                              .logout();
-                                      if (res == "success") {
-                                        Get.offAll(() => Authentication());
-                                      } else {
-                                        customSnackBar(res);
-                                      }
-                                    },
-                                  ),
-                                );
-                              }),
-                              menuRow("Delete Account", "privacy", () {
-                                _overlayController.hide();
-                                _showDeleteAccountDialog(context);
-                              }),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-                child: GestureDetector(
-                  onTap: () => _overlayController.toggle(),
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.green),
-                    ),
-                    child: Icon(
-                      Icons.more_vert,
-                      size: 18,
-                      color: AppColors.green,
-                    ),
-                  ),
-                ),
-              ),
+            ProfileMenu(
+              layerLink: _layerLink,
+              overlayController: _overlayController,
             ),
           ],
         ),
@@ -300,13 +251,45 @@ class _ProfileState extends State<Profile> {
           ),
           child: Column(
             children: [
-              Row(
-                spacing: 12,
-                children: [
-                  statBox("style".tr, 247, isGreen: true),
-                  statBox("followers".tr, 1024, isGreen: true),
-                  statBox("following".tr, 268, isGreen: true),
-                ],
+              Obx(
+                () => social.isProfileLoading.value
+                    ? CustomLoading()
+                    : Row(
+                        spacing: 12,
+                        children: [
+                          statBox(
+                            "style".tr,
+                            social.viewedProfile.value?.sharedOutfitsCount ?? 0,
+                            isGreen: true,
+                          ),
+                          statBox(
+                            "followers".tr,
+                            social.viewedProfile.value?.followersCount ?? 0,
+                            isGreen: true,
+                            onTap: () {
+                              Get.to(
+                                () => UsersList(
+                                  username: userController.user!.username!,
+                                  type: UserListType.followers,
+                                ),
+                              );
+                            },
+                          ),
+                          statBox(
+                            "following".tr,
+                            social.viewedProfile.value?.followingCount ?? 0,
+                            isGreen: true,
+                            onTap: () {
+                              Get.to(
+                                () => UsersList(
+                                  username: userController.user!.username!,
+                                  type: UserListType.following,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
               ),
               Divider(thickness: 1, height: 32, color: AppColors.green.shade50),
               Row(
@@ -345,122 +328,105 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget menuRow(String title, String iconName, void Function() onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        child: Row(
-          spacing: 8,
-          children: [
-            CustomSvg(asset: "assets/icons/$iconName.svg", size: 24),
-            Expanded(child: Text(title, style: AppTexts.tmdr)),
-            CustomSvg(asset: "assets/icons/arrow_right.svg", size: 24),
-          ],
-        ),
-      ),
-    );
-  }
-
   Column publicProfile() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ProfilePicture(image: "https://picsum.photos/200/200", size: 72),
+        ProfilePicture(
+          image: social.viewedProfile.value?.profileImage,
+          size: 72,
+        ),
         const SizedBox(height: 12),
-        Text("your_name_here".tr, style: AppTexts.tlgm),
-        Text("mrjohn123@gmail.com", style: AppTexts.tmdr),
+        Text(social.viewedProfile.value?.name ?? "", style: AppTexts.tlgm),
+        Text(
+          "${social.viewedProfile.value?.username}@gmail.com",
+          style: AppTexts.tmdr,
+        ),
         const SizedBox(height: 20),
-        CustomButton(text: "follow".tr, height: 40, width: null),
+        Obx(
+          () => social.isFollowActionLoading.value
+              ? CustomLoading()
+              : CustomButton(
+                  onTap: () {
+                    social.toggleFollow(
+                      widget.username!,
+                      isFollowing:
+                          social.viewedProfile.value?.isFollowing ?? false,
+                    );
+                  },
+                  text: social.viewedProfile.value?.isFollowing == true
+                      ? "Following"
+                      : "Follow",
+                  isSecondary: social.viewedProfile.value?.isFollowing == true,
+                  height: 40,
+                  width: null,
+                ),
+        ),
         const SizedBox(height: 20),
-        Row(
-          spacing: 12,
-          children: [
-            statBox("style".tr, 247),
-            statBox("followers".tr, 1024),
-            statBox("following".tr, 268),
-          ],
+        Obx(
+          () => social.isProfileLoading.value
+              ? CustomLoading()
+              : Row(
+                  spacing: 12,
+                  children: [
+                    statBox(
+                      "style".tr,
+                      social.viewedProfile.value?.sharedOutfitsCount ?? 0,
+                    ),
+                    statBox(
+                      "followers".tr,
+                      social.viewedProfile.value?.followersCount ?? 0,
+                      onTap: () {
+                        Get.to(
+                          () => UsersList(
+                            username: social.viewedProfile.value!.username,
+                            type: UserListType.followers,
+                          ),
+                        );
+                      },
+                    ),
+                    statBox(
+                      "following".tr,
+                      social.viewedProfile.value?.followingCount ?? 0,
+                      onTap: () {
+                        Get.to(
+                          () => UsersList(
+                            username: social.viewedProfile.value!.username,
+                            type: UserListType.following,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
         ),
         const SizedBox(height: 20),
       ],
     );
   }
 
-  Expanded statBox(String name, int value, {bool isGreen = false}) {
+  Expanded statBox(
+    String name,
+    int value, {
+    bool isGreen = false,
+    void Function()? onTap,
+  }) {
     return Expanded(
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 14),
-        decoration: BoxDecoration(
-          color: isGreen ? AppColors.green.shade50 : Colors.white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          children: [
-            Text(Formatter.compactNumber(value), style: AppTexts.tmds),
-            Text(name, style: AppTexts.tmdr),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showDeleteAccountDialog(BuildContext context) {
-    final passwordController = TextEditingController();
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: AppColors.bg,
-        title: Text("Delete Account", style: AppTexts.tlgs),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Please enter your password to confirm account deletion. This action cannot be undone.",
-              style: AppTexts.tmdr,
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              controller: passwordController,
-              leading: "assets/icons/lock.svg",
-              hintText: "password".tr,
-              isPassword: true,
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: Text("cancel".tr, style: AppTexts.tmdm),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 14),
+          decoration: BoxDecoration(
+            color: isGreen ? AppColors.green.shade50 : Colors.white,
+            borderRadius: BorderRadius.circular(12),
           ),
-          Obx(
-            () => CustomButton(
-              height: 40,
-              width: 120,
-              padding: 0,
-              isLoading: Get.find<AuthController>().isLoading.value,
-              onTap: () async {
-                if (passwordController.text.isEmpty) {
-                  customSnackBar("Please enter your password");
-                  return;
-                }
-                final res = await Get.find<AuthController>().deleteAccount(
-                  passwordController.text,
-                );
-                if (res == "success") {
-                  Get.offAll(() => Authentication());
-                  customSnackBar(
-                    "Account deleted successfully.",
-                    isError: false,
-                  );
-                } else {
-                  customSnackBar(res);
-                }
-              },
-              text: "Delete",
-            ),
+          child: Column(
+            children: [
+              Text(Formatter.compactNumber(value), style: AppTexts.tmds),
+              Text(name, style: AppTexts.tmdr),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

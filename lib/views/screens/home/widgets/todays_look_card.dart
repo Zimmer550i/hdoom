@@ -4,7 +4,6 @@ import 'package:hdoom/controllers/outfit_controller.dart';
 import 'package:hdoom/utils/ai_loading.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/screens/home/save_outfit.dart';
 import 'package:hdoom/views/screens/home/why_this_look.dart';
 import 'package:hdoom/views/screens/home/widgets/home_text_button.dart';
