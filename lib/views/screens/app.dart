@@ -14,10 +14,10 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int index = 0;
-  List<Widget> pages = [
-    Home(),
-    Wardrobe(),
-    Avatar(),
+  final List<Widget> pages = [
+    Home(key: PageStorageKey("home"),),
+    Wardrobe(key: PageStorageKey("wardrobe"),),
+    Avatar(key: PageStorageKey("avatar"),),
     Profile(isUserProfile: true),
   ];
 

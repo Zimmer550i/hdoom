@@ -17,6 +17,7 @@ class UserController extends GetxController {
   final RxBool isAestheticLoading = RxBool(false);
 
   UserModel? get user => _userData.value;
+  Rxn<UserModel> get userObs => _userData;
   set setUser(Map<String, dynamic> data) {
     _userData.value = UserModel.fromJson(data);
   }
@@ -178,11 +179,7 @@ class UserController extends GetxController {
       final body = _decodeBody(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final data = (body is Map && body['data'] is Map)
-            ? body['data'] as Map<String, dynamic>
-            : (body is Map
-                  ? body as Map<String, dynamic>
-                  : <String, dynamic>{});
+        final data = body['data'];
 
         _userData.value = UserModel.fromAdditionalJson(data, baseUser: user);
         return "success";

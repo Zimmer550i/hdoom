@@ -3,7 +3,7 @@ class UserModel {
   final String? username;
   final String name;
   final String email;
-  final String? avatarUrl;
+  final String? profileImage;
   final bool isEmailVerified;
   final bool isProfileCompleted;
   final DateTime createdAt;
@@ -20,7 +20,7 @@ class UserModel {
     this.username,
     required this.name,
     required this.email,
-    this.avatarUrl,
+    this.profileImage,
     required this.isEmailVerified,
     this.isProfileCompleted = false,
     required this.createdAt,
@@ -40,7 +40,7 @@ class UserModel {
       username: json['username'] as String?,
       name: json['name'] as String? ?? '',
       email: json['email'] as String? ?? '',
-      avatarUrl: (json['avatar_url'] ?? json['profile_image']) as String?,
+      profileImage: (json['avatar_url'] ?? json['profile_image']) as String?,
       isEmailVerified: json['is_email_verified'] as bool? ?? false,
       isProfileCompleted: json['is_profile_completed'] as bool? ?? false,
       createdAt: json['created_at'] != null
@@ -67,8 +67,8 @@ class UserModel {
       name: json.containsKey('name') && json['name'] != null
           ? json['name'] as String
           : name,
-      avatarUrl: (json['profile_image'] ?? json['avatar_url']) as String? ??
-          avatarUrl,
+      profileImage: (json['profile_image'] ?? json['avatar_url']) as String? ??
+          profileImage,
       age: json.containsKey('age')
           ? (json['age'] is int
               ? json['age'] as int?
@@ -108,7 +108,7 @@ class UserModel {
       id: 0,
       name: json['name'] as String? ?? '',
       email: '',
-      avatarUrl: (json['profile_image'] ?? json['avatar_url']) as String?,
+      profileImage: (json['profile_image'] ?? json['avatar_url']) as String?,
       isEmailVerified: false,
       isProfileCompleted: true,
       createdAt: DateTime.now(),
@@ -133,7 +133,7 @@ class UserModel {
       'username': username,
       'name': name,
       'email': email,
-      'avatar_url': avatarUrl,
+      'avatar_url': profileImage,
       'is_email_verified': isEmailVerified,
       'is_profile_completed': isProfileCompleted,
       'created_at': createdAt.toUtc().toIso8601String(),
@@ -151,7 +151,7 @@ class UserModel {
     String? username,
     String? name,
     String? email,
-    String? avatarUrl,
+    String? profileImage,
     bool? isEmailVerified,
     bool? isProfileCompleted,
     DateTime? createdAt,
@@ -167,7 +167,7 @@ class UserModel {
       username: username ?? this.username,
       name: name ?? this.name,
       email: email ?? this.email,
-      avatarUrl: avatarUrl ?? this.avatarUrl,
+      profileImage: profileImage ?? this.profileImage,
       isEmailVerified: isEmailVerified ?? this.isEmailVerified,
       isProfileCompleted: isProfileCompleted ?? this.isProfileCompleted,
       createdAt: createdAt ?? this.createdAt,
@@ -183,7 +183,7 @@ class UserModel {
   @override
   String toString() {
     return 'UserModel(id: $id, username: $username, name: $name, email: $email, '
-        'avatarUrl: $avatarUrl, isEmailVerified: $isEmailVerified, '
+        'profileImage: $profileImage, isEmailVerified: $isEmailVerified, '
         'isProfileCompleted: $isProfileCompleted, createdAt: $createdAt, '
         'age: $age, gender: $gender, height: $height, bodyType: $bodyType, '
         'country: $country, aesthetics: $aesthetics)';
@@ -198,7 +198,7 @@ class UserModel {
         other.username == username &&
         other.name == name &&
         other.email == email &&
-        other.avatarUrl == avatarUrl &&
+        other.profileImage == profileImage &&
         other.isEmailVerified == isEmailVerified &&
         other.isProfileCompleted == isProfileCompleted &&
         other.createdAt == createdAt &&
@@ -216,7 +216,7 @@ class UserModel {
         username,
         name,
         email,
-        avatarUrl,
+        profileImage,
         isEmailVerified,
         isProfileCompleted,
         createdAt,

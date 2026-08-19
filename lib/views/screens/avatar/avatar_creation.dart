@@ -56,10 +56,12 @@ class _AvatarCreationState extends State<AvatarCreation> {
 
               const SizedBox(height: 28),
               widget.useDefault
-                  ? CustomNetworkedImage(
-                      height: MediaQuery.of(context).size.width,
-                      url: avatar.defaultAvatar.value!.resultImage,
-                    )
+                  ? Center(
+                    child: CustomNetworkedImage(
+                        height: MediaQuery.of(context).size.width,
+                        url: avatar.defaultAvatar.value!.resultImage,
+                      ),
+                  )
                   : getAvatar().status == "processing"
                   ? AiLoading()
                   : CustomNetworkedImage(

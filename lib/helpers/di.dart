@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hdoom/controllers/ai_image_controller.dart';
 import 'package:hdoom/controllers/auth_controller.dart';
 import 'package:hdoom/controllers/news_controller.dart';
+import 'package:hdoom/controllers/outfit_controller.dart';
 import 'package:hdoom/controllers/user_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/localization_controller.dart';
@@ -26,6 +27,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.put(AuthController());
   Get.put(NewsController());
   Get.put(AiImageController());
+  Get.put(OutfitController());
 
   //Retrieving localized data
   Map<String, Map<String, String>> _languages = Map();

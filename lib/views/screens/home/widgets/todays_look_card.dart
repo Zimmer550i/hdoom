@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/outfit_controller.dart';
+import 'package:hdoom/utils/ai_loading.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/screens/home/save_outfit.dart';
 import 'package:hdoom/views/screens/home/why_this_look.dart';
 import 'package:hdoom/views/screens/home/widgets/home_text_button.dart';
+import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 /// Hero card displaying the AI-curated "Today's Look" outfit
 /// with a blurred glass footer and action buttons.
@@ -22,10 +26,27 @@ class TodaysLookCard extends StatelessWidget {
       borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
       child: Stack(
         children: [
-          AspectRatio(
-            aspectRatio: 4 / 5,
-            child: Image.asset("assets/images/avatar.png", fit: BoxFit.cover),
-          ),
+          Obx(() {
+            final outfit = Get.find<OutfitController>();
+            // if (!outfit.isTodayLoading.value &&
+            //     outfit.todayOutfit.value == null) {
+            //   outfit.getTodayOutfit().then((message) {
+            //     if (message != "success") {
+            //       customSnackBar(message);
+            //     }
+            //   });
+            // }
+            return AspectRatio(
+              aspectRatio: 1,
+              child:
+                  outfit.isTodayLoading.value ||
+                      outfit.todayOutfit.value == null
+                  ? AiLoading()
+                  : CustomNetworkedImage(
+                      url: outfit.todayOutfit.value?.resultImage,
+                    ),
+            );
+          }),
           if (hasActions)
             Positioned(
               left: 20,

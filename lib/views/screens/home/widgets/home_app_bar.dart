@@ -19,7 +19,7 @@ AppBar buildHomeAppBar() {
         const SizedBox(width: 20),
         Obx(
           () => ProfilePicture(
-            image: userController.user?.avatarUrl,
+            image: userController.user?.profileImage,
             size: 36,
           ),
         ),

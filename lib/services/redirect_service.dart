@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hdoom/controllers/auth_controller.dart';
 import 'package:hdoom/controllers/user_controller.dart';
@@ -13,6 +14,7 @@ class RedirectService {
   static Future<bool> getUserData() async {
     final user = Get.find<UserController>();
     final token = await SharedPrefsService.get('token');
+    debugPrint("Token Retrived: $token");
     if (token != null) {
       final message = await user.getUserInfo();
       if (message == "success") {

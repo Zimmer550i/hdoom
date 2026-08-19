@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/views/screens/wardrobe/add_new_item.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/items_tab.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/outfits_of_the_day_tab.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/outfits_tab.dart';
@@ -43,7 +44,11 @@ class Wardrobe extends StatefulWidget {
 class _WardrobeState extends State<Wardrobe> {
   int _selectedTab = 0;
 
-  List<String> get _topTabs => ['items'.tr, 'outfits'.tr, 'outfits_of_the_day'.tr];
+  List<String> get _topTabs => [
+    'items'.tr,
+    'outfits'.tr,
+    'outfits_of_the_day'.tr,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +105,9 @@ class _WardrobeState extends State<Wardrobe> {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Get.to(() => AddNewItem());
+          },
           child: Container(
             width: _addIconSize,
             height: _addIconSize,

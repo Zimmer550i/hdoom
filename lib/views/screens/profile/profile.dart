@@ -21,7 +21,8 @@ import 'package:hdoom/views/widgets/custom_text_field.dart';
 
 class Profile extends StatefulWidget {
   final bool isUserProfile;
-  const Profile({super.key, this.isUserProfile = false});
+  final String? username;
+  const Profile({super.key, this.isUserProfile = false, this.username});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -45,7 +46,7 @@ class _ProfileState extends State<Profile> {
         child: SafeArea(
           child: Column(
             children: [
-              widget.isUserProfile ? userProfile() : publicProfile(),
+              Obx(() => widget.isUserProfile ? userProfile() : publicProfile()),
               const SizedBox(height: 20),
               Align(
                 alignment: Alignment.centerLeft,
@@ -116,12 +117,7 @@ class _ProfileState extends State<Profile> {
       children: [
         Row(
           children: [
-            Obx(
-              () => ProfilePicture(
-                image: userController.user?.avatarUrl,
-                size: 72,
-              ),
-            ),
+            ProfilePicture(image: userController.user?.profileImage, size: 72),
             const SizedBox(width: 12),
             Expanded(
               child: Obx(
@@ -135,10 +131,7 @@ class _ProfileState extends State<Profile> {
                       style: AppTexts.tlgm,
                     ),
                     if (userController.user?.email.isNotEmpty == true)
-                      Text(
-                        userController.user!.email,
-                        style: AppTexts.tmdr,
-                      ),
+                      Text(userController.user!.email, style: AppTexts.tmdr),
                   ],
                 ),
               ),

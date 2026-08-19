@@ -180,17 +180,17 @@ class _EditProfileState extends State<EditProfile> {
     );
 
     if (res == "success") {
+      if (widget.createAccount) {
+        RedirectService.gotoApp();
+      } else {
+        Get.back();
+      }
       customSnackBar(
         widget.createAccount
             ? "Profile completed successfully!"
             : "Profile updated successfully!",
         isError: false,
       );
-      if (widget.createAccount) {
-        RedirectService.gotoApp();
-      } else {
-        Get.back();
-      }
     } else {
       customSnackBar(res);
     }
@@ -214,7 +214,7 @@ class _EditProfileState extends State<EditProfile> {
                       const SizedBox(height: 20),
                       ProfilePicture(
                         imageFile: _pickedImage,
-                        image: userController.user?.avatarUrl,
+                        image: userController.user?.profileImage,
                         isEditable: true,
                         imagePickerCallback: (val) {
                           setState(() {
