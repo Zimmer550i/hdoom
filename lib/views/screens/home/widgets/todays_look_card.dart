@@ -4,6 +4,7 @@ import 'package:hdoom/controllers/outfit_controller.dart';
 import 'package:hdoom/utils/ai_loading.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/screens/home/save_outfit.dart';
 import 'package:hdoom/views/screens/home/why_this_look.dart';
 import 'package:hdoom/views/screens/home/widgets/home_text_button.dart';
@@ -27,14 +28,14 @@ class TodaysLookCard extends StatelessWidget {
         children: [
           Obx(() {
             final outfit = Get.find<OutfitController>();
-            // if (!outfit.isTodayLoading.value &&
-            //     outfit.todayOutfit.value == null) {
-            //   outfit.getTodayOutfit().then((message) {
-            //     if (message != "success") {
-            //       customSnackBar(message);
-            //     }
-            //   });
-            // }
+            if (!outfit.isTodayLoading.value &&
+                outfit.todayOutfit.value == null) {
+              outfit.getTodayOutfit().then((message) {
+                if (message != "success") {
+                  customSnackBar(message);
+                }
+              });
+            }
             return AspectRatio(
               aspectRatio: 1,
               child:
@@ -43,6 +44,7 @@ class TodaysLookCard extends StatelessWidget {
                   ? AiLoading()
                   : CustomNetworkedImage(
                       url: outfit.todayOutfit.value?.resultImage,
+                      errorMessage: outfit.todayOutfit.value?.errorMessage,
                     ),
             );
           }),

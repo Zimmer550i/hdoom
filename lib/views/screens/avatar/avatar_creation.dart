@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hdoom/controllers/ai_image_controller.dart';
-import 'package:hdoom/models/avatar_model.dart';
 import 'package:hdoom/utils/ai_loading.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_icons.dart';
@@ -13,7 +12,7 @@ import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 class AvatarCreation extends StatefulWidget {
   final bool useDefault;
-  const AvatarCreation({super.key, this.useDefault = true});
+  const AvatarCreation({super.key, this.useDefault = false});
 
   @override
   State<AvatarCreation> createState() => _AvatarCreationState();
@@ -28,22 +27,23 @@ class _AvatarCreationState extends State<AvatarCreation> {
     return Scaffold(
       appBar: CustomAppBar(title: "avatar_creation".tr),
       body: SingleChildScrollView(
-        child: Obx(
-          () => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Obx(
+              () => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 12),
-                    !widget.useDefault && getAvatar().status == "processing"
+                    !widget.useDefault &&
+                            avatar.currentAvatar.value?.status == "processing"
                         ? Text("Generating Avatar", style: AppTexts.tlgm)
                         : Text("avatar_created".tr, style: AppTexts.tlgm),
                     const SizedBox(height: 4),
                     if (!widget.useDefault &&
-                        getAvatar().status == "processing")
+                        avatar.currentAvatar.value?.status == "processing")
                       Text(
                         "avatar_created_subtitle".tr,
                         style: AppTexts.tsmr.copyWith(
@@ -53,61 +53,55 @@ class _AvatarCreationState extends State<AvatarCreation> {
                   ],
                 ),
               ),
+            ),
 
-              const SizedBox(height: 28),
-              widget.useDefault
+            const SizedBox(height: 28),
+            Obx(
+              () => widget.useDefault
                   ? Center(
-                    child: CustomNetworkedImage(
+                      child: CustomNetworkedImage(
                         height: MediaQuery.of(context).size.width,
                         url: avatar.defaultAvatar.value!.resultImage,
                       ),
-                  )
-                  : getAvatar().status == "processing"
+                    )
+                  : avatar.currentAvatar.value?.status == "processing"
                   ? AiLoading()
-                  : CustomNetworkedImage(
-                      height: MediaQuery.of(context).size.width,
-                      url: getAvatar().resultImage,
+                  : Center(
+                      child: CustomNetworkedImage(
+                        height: MediaQuery.of(context).size.width,
+                        url: avatar.currentAvatar.value?.resultImage,
+                      ),
                     ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 24,
-                ),
-                child: SafeArea(
-                  child: Column(
-                    spacing: 12,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "select_item_from_wardrobe".tr,
-                        style: AppTexts.tlgm,
-                      ),
-                      const SizedBox(),
-                      selector("dresses".tr, 0),
-                      selector("shoes".tr, 1),
-                      selector("bag".tr, 2),
-                      const SizedBox(height: 40),
-                      CustomButton(
-                        onTap: () {
-                          // Get.to(() => OutfitRecommendation());
-                        },
-                        text: "Generate Outfit",
-                      ),
-                      const SizedBox(height: 20),
-                    ],
-                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+              child: SafeArea(
+                child: Column(
+                  spacing: 12,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("select_item_from_wardrobe".tr, style: AppTexts.tlgm),
+                    const SizedBox(),
+                    selector("dresses".tr, 0),
+                    selector("shoes".tr, 1),
+                    selector("bag".tr, 2),
+                    const SizedBox(height: 40),
+                    CustomButton(
+                      onTap: () {
+                        // Get.to(() => OutfitRecommendation());
+                      },
+                      text: "Generate Outfit",
+                    ),
+                    const SizedBox(height: 20),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
-
-  AvatarModel getAvatar() => avatar.avatars.elementAt(
-    avatar.getAvatarIndex(avatar.currentAvatarId.value!),
-  );
 
   Container selector(String title, int pos) {
     return Container(

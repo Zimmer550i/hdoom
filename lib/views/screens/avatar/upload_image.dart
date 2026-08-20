@@ -14,7 +14,8 @@ import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadImage extends StatefulWidget {
-  const UploadImage({super.key});
+  final String type;
+  const UploadImage({super.key, required this.type});
 
   @override
   State<UploadImage> createState() => _UploadImageState();
@@ -26,7 +27,10 @@ class _UploadImageState extends State<UploadImage> {
   void onSubmit() async {
     final avatar = Get.find<AiImageController>();
 
-    final message = await avatar.createAvatar(sourcePhoto: _image);
+    final message = await avatar.createAvatar(
+      sourcePhoto: _image,
+      style: widget.type,
+    );
 
     if (message == "success") {
       Get.to(() => AvatarCreation());

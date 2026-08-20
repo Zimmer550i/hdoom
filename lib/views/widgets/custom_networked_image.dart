@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/views/screens/avatar/image_viewer.dart';
 import 'package:shimmer/shimmer.dart';
 
 // ──────────────────────────────────────────────
@@ -15,7 +17,7 @@ final _errorBackgroundColor = AppColors.black.shade200;
 final _errorIconColor = AppColors.black.shade400;
 final _errorTextColor = AppColors.black.shade400;
 final _shimmerBaseColor = AppColors.green[25]!;
-final _shimmerHighlightColor = AppColors.green;
+final _shimmerHighlightColor = AppColors.green[50]!;
 const _shimmerChildColor = Colors.white;
 
 // Sizing
@@ -31,6 +33,7 @@ final _errorTextStyle = AppTexts.tsmr;
 
 class CustomNetworkedImage extends StatelessWidget {
   final String? url;
+  final String? errorMessage;
   final File? file;
   final String? randomSeed;
   final double? height;
@@ -41,6 +44,7 @@ class CustomNetworkedImage extends StatelessWidget {
   const CustomNetworkedImage({
     super.key,
     this.url,
+    this.errorMessage,
     this.randomSeed,
     this.height,
     this.width,
@@ -57,56 +61,54 @@ class CustomNetworkedImage extends StatelessWidget {
       child: file != null
           ? Image.file(file!, height: height, width: width, fit: fit)
           : url == null
-          ? Container(
-              height: height,
-              width: width,
-              decoration: BoxDecoration(color: _errorBackgroundColor),
-              child: Center(child: Icon(Icons.error_outline_rounded)),
-            )
-          : CachedNetworkImage(
-              imageUrl: url!,
-              height: height,
-              width: width,
-              fit: fit,
-              errorWidget: (context, url, error) {
-                return Container(
-                  height: height,
-                  width: width,
-                  color: _errorBackgroundColor,
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.error, color: _errorIconColor),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            error.toString(),
-                            textAlign: TextAlign.center,
-                            style: _errorTextStyle.copyWith(
-                              color: _errorTextColor,
-                            ),
-                          ),
-                        ),
-                      ],
+          ? errorWidget()
+          : GestureDetector(
+              onTap: () => Get.to(() => ImageViewer(url: url!)),
+              child: CachedNetworkImage(
+                imageUrl: url!,
+                height: height,
+                width: width,
+                fit: fit,
+                errorWidget: (context, url, error) => errorWidget(error: error),
+                placeholder: (context, url) {
+                  return Shimmer.fromColors(
+                    baseColor: _shimmerBaseColor,
+                    highlightColor: _shimmerHighlightColor,
+                    period: _shimmerDuration,
+                    child: Container(
+                      height: height ?? width,
+                      width: width ?? height,
+                      color: _shimmerChildColor,
                     ),
-                  ),
-                );
-              },
-              placeholder: (context, url) {
-                return Shimmer.fromColors(
-                  baseColor: _shimmerBaseColor,
-                  highlightColor: _shimmerHighlightColor,
-                  period: _shimmerDuration,
-                  child: Container(
-                    height: height ?? width,
-                    width: width ?? height,
-                    color: _shimmerChildColor,
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
+    );
+  }
+
+  Widget errorWidget({Object? error}) {
+    return Container(
+      height: height,
+      width: width,
+      color: _errorBackgroundColor,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error, color: _errorIconColor),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                errorMessage ?? error.toString(),
+                textAlign: TextAlign.center,
+                style: _errorTextStyle.copyWith(color: _errorTextColor),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

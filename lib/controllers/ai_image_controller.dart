@@ -16,7 +16,7 @@ class AiImageController extends GetxController {
   final RxBool isLoading = RxBool(false);
   final RxList<AvatarModel> avatars = RxList.empty();
   final Rxn<AvatarModel> defaultAvatar = Rxn<AvatarModel>();
-  final RxnInt currentAvatarId = RxnInt();
+  final Rxn<AvatarModel> currentAvatar = Rxn<AvatarModel>();
   final Rxn<ThreeDConversionModel> currentConversion =
       Rxn<ThreeDConversionModel>();
 
@@ -89,8 +89,8 @@ class AiImageController extends GetxController {
       if (res.statusCode == 201 || res.statusCode == 200) {
         final newAvatar = AvatarModel.fromJson(body['data']);
         avatars.add(newAvatar);
-        currentAvatarId.value = newAvatar.id;
-        _startAvatarStatusPolling(currentAvatarId.value!);
+        currentAvatar.value = newAvatar;
+        _startAvatarStatusPolling(newAvatar.id);
         return "success";
       } else {
         return _parseError(body);
@@ -111,8 +111,14 @@ class AiImageController extends GetxController {
       if (res.statusCode == 200) {
         final avatar = AvatarModel.fromJson(body['data']);
 
-        // Update in the avatars list if present
+        debugPrint('Avatar = $avatar');
+        debugPrint('CurrentAvatar BEFORE = ${currentAvatar.value}');
+        currentAvatar.value = null;
+        currentAvatar.value = avatar;
+        debugPrint('CurrentAvatar AFTER = ${currentAvatar.value}');
+
         final idx = avatars.indexWhere((a) => a.id == id);
+
         if (idx != -1) {
           avatars[idx] = avatar;
         } else {
@@ -129,10 +135,14 @@ class AiImageController extends GetxController {
   }
 
   /// GET /avatars/default/ — fetch the user's default avatar.
-  Future<String> getDefaultAvatar() async {
+  Future<String> getDefaultAvatar({String type = "cartoon"}) async {
     isLoading(true);
     try {
-      final res = await api.get('/avatars/default/', authReq: true);
+      final res = await api.get(
+        '/avatars/default/',
+        queryParams: {"style": type},
+        authReq: true,
+      );
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200) {
