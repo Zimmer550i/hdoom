@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/wardrobe_controller.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_grid_handler.dart';
@@ -34,19 +35,14 @@ class ItemsTab extends StatefulWidget {
 }
 
 class _ItemsTabState extends State<ItemsTab> {
-  int _selectedCategory = 2; // "Bag" selected by default
-
-  List<Map<String, dynamic>> get _categories => [
-    {'name': 'dresses'.tr, 'count': 12},
-    {'name': 'shoes'.tr, 'count': 15},
-    {'name': 'bag'.tr, 'count': 6},
-    {'name': 'hijab'.tr, 'count': 8},
-    {'name': 'pant'.tr, 'count': 20},
-  ];
+  final wardrobe = Get.find<WardrobeController>();
+  int _selectedCategory = 2;
 
   @override
   Widget build(BuildContext context) {
-    final currentCategory = _categories[_selectedCategory]['name'] as String;
+    final currentCategory = wardrobe.itemCategories.keys
+        .elementAt(_selectedCategory)
+        .name;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,12 +71,12 @@ class _ItemsTabState extends State<ItemsTab> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
-        itemCount: _categories.length,
+        itemCount: wardrobe.itemCategories.length,
         separatorBuilder: (context, index) => const SizedBox(width: 20),
         itemBuilder: (context, i) {
           final isSelected = _selectedCategory == i;
-          final cat = _categories[i];
-          final label = '${cat['name']} (${cat['count']})';
+          final cat = wardrobe.itemCategories.entries.elementAt(i);
+          final label = '${cat.key.name} (${cat.value.length})';
 
           return GestureDetector(
             onTap: () => setState(() => _selectedCategory = i),

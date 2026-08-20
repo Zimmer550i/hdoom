@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/wardrobe_controller.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/wardrobe/add_new_item.dart';
@@ -97,9 +98,14 @@ class _WardrobeState extends State<Wardrobe> {
                 'my_wardrobe'.tr,
                 style: AppTexts.dxss.copyWith(color: _headerTitleColor),
               ),
-              Text(
-                'total_item'.trParams({'count': '125'}),
-                style: AppTexts.tsmr.copyWith(color: _headerSubtitleColor),
+              Obx(
+                () => Text(
+                  'total_item'.trParams({
+                    'count': Get.find<WardrobeController>().items.length
+                        .toString(),
+                  }),
+                  style: AppTexts.tsmr.copyWith(color: _headerSubtitleColor),
+                ),
               ),
             ],
           ),
