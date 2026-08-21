@@ -36,7 +36,7 @@ class _AddNewItemState extends State<AddNewItem> {
       customSnackBar("Fill in all the informations");
       return;
     }
-    
+
     final image = _image!;
     final category =
         wardrobe.wardrobeOptions.value!.categories[selectedCategory].id;
@@ -54,8 +54,8 @@ class _AddNewItemState extends State<AddNewItem> {
     );
 
     if (message == "success") {
-      Get.off(() => ItemDetails());
-      customSnackBar("Item created successfully");
+      Get.off(() => ItemDetails(item: wardrobe.currentItem.value!,));
+      customSnackBar("Item created successfully", isError: false);
     } else {
       customSnackBar(message);
     }

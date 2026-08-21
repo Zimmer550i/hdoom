@@ -130,6 +130,13 @@ class WardrobeController extends GetxController {
 
   Future<String> deleteWardrobeItem(int id) async {
     isWardrobeItemsLoading(true);
+    // Temporary delete
+    int idx = items.indexWhere((val) => val.id == id);
+    late ItemModel item;
+    if (idx != -1) {
+      item = items[idx];
+      items.removeAt(idx);
+    }
     try {
       final res = await api.delete(
         "/wardrobe-items-ai/items/$id/",
@@ -138,17 +145,13 @@ class WardrobeController extends GetxController {
       final body = jsonDecode(res.body);
 
       if (res.statusCode == 200) {
-        int idx = items.indexWhere((val) => val.id == id);
-
-        if (idx != -1) {
-          items.removeAt(idx);
-        }
-
         return "success";
       } else {
+        items.insert(idx, item);
         return body['message'] ?? "Something went wrong";
       }
     } catch (e) {
+      items.insert(idx, item);
       return e.toString();
     } finally {
       isWardrobeItemsLoading(false);

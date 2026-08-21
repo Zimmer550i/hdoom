@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:hdoom/controllers/wardrobe_controller.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/screens/wardrobe/add_new_item.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/items_tab.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/outfits_of_the_day_tab.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/outfits_tab.dart';
+import 'package:hdoom/views/widgets/custom_loading.dart';
 
 // ──────────────────────────────────────────────
 // CUSTOMIZABLE VARIABLES — Change these to style
@@ -43,6 +45,7 @@ class Wardrobe extends StatefulWidget {
 }
 
 class _WardrobeState extends State<Wardrobe> {
+  final wardrobe = Get.find<WardrobeController>();
   int _selectedTab = 0;
 
   List<String> get _topTabs => [
@@ -50,6 +53,16 @@ class _WardrobeState extends State<Wardrobe> {
     'outfits'.tr,
     'outfits_of_the_day'.tr,
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    wardrobe.getWardrobeItems().then((message) {
+      if (message != "success") {
+        customSnackBar(message);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +93,7 @@ class _WardrobeState extends State<Wardrobe> {
             const SizedBox(height: 16),
 
             // Tab content
-            Expanded(child: _buildTabContent()),
+            Expanded(child: Obx(() => _buildTabContent())),
           ],
         ),
       ),
@@ -101,8 +114,7 @@ class _WardrobeState extends State<Wardrobe> {
               Obx(
                 () => Text(
                   'total_item'.trParams({
-                    'count': Get.find<WardrobeController>().items.length
-                        .toString(),
+                    'count': wardrobe.items.length.toString(),
                   }),
                   style: AppTexts.tsmr.copyWith(color: _headerSubtitleColor),
                 ),
@@ -161,7 +173,9 @@ class _WardrobeState extends State<Wardrobe> {
   Widget _buildTabContent() {
     switch (_selectedTab) {
       case 0:
-        return const ItemsTab();
+        return wardrobe.isWardrobeItemsLoading.value
+            ? CustomLoading()
+            : const ItemsTab();
       case 1:
         return const OutfitsTab();
       case 2:
