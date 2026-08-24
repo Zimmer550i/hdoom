@@ -20,6 +20,7 @@ class OutfitController extends GetxController {
   final RxBool isTryOnLoading = RxBool(false);
   final RxBool isRatingLoading = RxBool(false);
   final RxBool isPublicLoading = RxBool(false);
+  final RxBool isOutfitOfTheDayLoading = RxBool(false);
 
   final Rxn<OutfitJobModel> todayOutfit = Rxn<OutfitJobModel>();
   final RxList<SavedOutfitModel> savedOutfits = RxList.empty();
@@ -28,6 +29,8 @@ class OutfitController extends GetxController {
   final Rxn<OutfitJobModel> currentTryOnJob = Rxn<OutfitJobModel>();
   final Rxn<OutfitRatingModel> currentOutfitRating = Rxn<OutfitRatingModel>();
   final RxList<OutfitRatingDetailModel> outfitRatings = RxList.empty();
+  final RxList<SavedOutfitModel> outfitsOfTheDay = RxList.empty();
+  final Rx<DateTime> outfitsOfTheDayDate = Rx(DateTime.now());
 
   // ── Polling internals ────────────────────────────────────────────────────
 
@@ -126,7 +129,39 @@ class OutfitController extends GetxController {
   // SAVED OUTFITS API
   // ══════════════════════════════════════════════════════════════════════════
 
-  /// GET /outfits/saved/ — List all saved outfits for current user.
+  /// /api/v1/outfits/1-months/
+  Future<String> getOutfitsOfTheDay() async {
+    isOutfitOfTheDayLoading(true);
+    try {
+      final res = await api.get(
+        '/outfits/1-months/',
+        queryParams: {
+          "month": outfitsOfTheDayDate.value.month.toString(),
+          "year": outfitsOfTheDayDate.value.year.toString(),
+        },
+        authReq: true,
+      );
+      final body = _decodeBody(res.body);
+
+      if (res.statusCode == 200) {
+        final data = body['data'];
+
+        outfitsOfTheDay.clear();
+        for (var i in data) {
+          outfitsOfTheDay.add(SavedOutfitModel.fromJson(i));
+        }
+
+        return "success";
+      } else {
+        return _parseError(body);
+      }
+    } catch (e) {
+      return e.toString();
+    } finally {
+      isOutfitOfTheDayLoading(false);
+    }
+  }
+
   Future<String> getSavedOutfits() async {
     isSavedLoading(true);
     try {
@@ -308,11 +343,7 @@ class OutfitController extends GetxController {
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200) {
-        final results = (body is Map && body['results'] is List)
-            ? body['results'] as List
-            : ((body is Map && body['data'] is List)
-                  ? body['data'] as List
-                  : (body is List ? body : []));
+        final results = body['data']['results'];
 
         if (page == 1) publicOutfits.clear();
 

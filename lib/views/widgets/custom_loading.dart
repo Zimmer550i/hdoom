@@ -12,13 +12,14 @@ final _defaultLoaderColor = AppColors.green.shade500;
 
 class CustomLoading extends StatelessWidget {
   final Color? color;
-  const CustomLoading({super.key, this.color});
+  final double padding;
+  const CustomLoading({super.key, this.color, this.padding = 16});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(padding),
         child: CircularProgressIndicator(color: color ?? _defaultLoaderColor),
       ),
     );

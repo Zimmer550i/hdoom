@@ -3,13 +3,13 @@ import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 
 class CustomCalendar extends StatefulWidget {
-  final Set<DateTime> markedDates;
+  final List<DateTime> markedDates;
   final DateTime? selectedDate;
   final ValueChanged<DateTime>? onDateSelected;
 
   const CustomCalendar({
     super.key,
-    this.markedDates = const {},
+    this.markedDates = const[],
     this.selectedDate,
     this.onDateSelected,
   });

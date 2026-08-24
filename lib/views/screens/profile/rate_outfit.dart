@@ -1,24 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/outfit_controller.dart';
+import 'package:hdoom/models/saved_outfit_model.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
+import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 class RateOutfit extends StatefulWidget {
-  const RateOutfit({super.key});
+  final SavedOutfitModel outfit;
+  const RateOutfit({super.key, required this.outfit});
 
   @override
   State<RateOutfit> createState() => _RateOutfitState();
 }
 
 class _RateOutfitState extends State<RateOutfit> {
+  final outfitCtrl = Get.find<OutfitController>();
+
   final Map<String, double> ratingValues = {
     "color_harmony": 0.5,
     "trendy": 0.5,
     "overall_matching": 0.5,
     "accessories": 0.5,
   };
+
+  void onSubmit() async {
+    final message = await outfitCtrl.rateOutfit(
+      widget.outfit.id,
+      colorHarmony: ratingValues["color_harmony"]!.toInt(),
+      trendy: ratingValues["trendy"]!.toInt(),
+      overallMatching: ratingValues["overall_matching"]!.toInt(),
+      accessories: ratingValues["accessories"]!.toInt(),
+    );
+
+    if (message == "success") {
+      if (mounted) {
+        Get.back();
+      }
+
+      customSnackBar("Submited outfit rating");
+    } else {
+      customSnackBar(message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +55,10 @@ class _RateOutfitState extends State<RateOutfit> {
         child: SafeArea(
           child: Column(
             children: [
-              Image.asset("assets/images/avatar.png"),
+              CustomNetworkedImage(
+                url: widget.outfit.outfitJob?.resultImage,
+                errorMessage: widget.outfit.outfitJob?.errorMessage,
+              ),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -49,13 +79,21 @@ class _RateOutfitState extends State<RateOutfit> {
               Row(
                 children: [
                   const SizedBox(width: 20),
-                  Expanded(child: CustomButton(text: "rate_now".tr)),
-                  const SizedBox(width: 12),
                   Expanded(
                     child: CustomButton(
                       onTap: () => Get.back(),
                       text: "cancel".tr,
                       isSecondary: true,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Obx(
+                      () => CustomButton(
+                        text: "rate_now".tr,
+                        onTap: onSubmit,
+                        isLoading: outfitCtrl.isRatingLoading.value,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 20),

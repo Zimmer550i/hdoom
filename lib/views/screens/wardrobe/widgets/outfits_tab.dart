@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hdoom/controllers/outfit_controller.dart';
 import 'package:hdoom/utils/custom_grid_handler.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
+import 'package:hdoom/views/screens/wardrobe/outfit_details.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/outfit_card.dart';
 
 // ──────────────────────────────────────────────
@@ -47,7 +48,11 @@ class _OutfitsTabState extends State<OutfitsTab> {
       crossAxisSpacing: _gridSpacing,
       children: List.generate(
         outfit.savedOutfits.length,
-        (index) => OutfitCard(outfit: outfit.savedOutfits[index]),
+        (index) => OutfitCard(
+          outfit: outfit.savedOutfits[index],
+          onTap: () =>
+              Get.to(() => OutfitDetails(outfit: outfit.savedOutfits[index])),
+        ),
       ),
     );
   }

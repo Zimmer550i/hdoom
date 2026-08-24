@@ -9,10 +9,10 @@ import 'package:hdoom/views/screens/profile/profile_menu.dart';
 import 'package:hdoom/views/screens/profile/subscription.dart';
 import 'package:hdoom/views/screens/profile/users_list.dart';
 import 'package:hdoom/views/screens/profile/view_outfit.dart';
+import 'package:hdoom/views/screens/wardrobe/widgets/outfit_card.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_loading.dart';
-import 'package:hdoom/views/widgets/custom_networked_image.dart';
 import 'package:hdoom/views/widgets/profile_picture.dart';
 import 'package:hdoom/controllers/user_controller.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
@@ -118,50 +118,10 @@ class _ProfileState extends State<Profile> {
                                 physics: NeverScrollableScrollPhysics(),
                                 children: [
                                   for (var i in outfit.publicOutfits)
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(16),
-                                      child: GestureDetector(
-                                        onTap: () => Get.to(() => ViewOutfit()),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              Expanded(
-                                                child: SizedBox.expand(
-                                                  child: CustomNetworkedImage(
-                                                    url: i
-                                                        .outfitJob
-                                                        ?.resultImage,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 16,
-                                                  vertical: 12,
-                                                ),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "soft_beige_evening".tr,
-                                                      style: AppTexts.tmdm,
-                                                    ),
-                                                    Text(
-                                                      "casual".tr,
-                                                      style: AppTexts.tsmr,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                    OutfitCard(
+                                      outfit: i,
+                                      onTap: () =>
+                                          Get.to(() => ViewOutfit(outfit: i)),
                                     ),
                                 ],
                               ),

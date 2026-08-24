@@ -12,13 +12,27 @@ import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 /// Hero card displaying the AI-curated "Today's Look" outfit
 /// with a blurred glass footer and action buttons.
-class TodaysLookCard extends StatelessWidget {
+class TodaysLookCard extends StatefulWidget {
   final bool hasActions;
   const TodaysLookCard({super.key, this.hasActions = true});
 
   @override
+  State<TodaysLookCard> createState() => _TodaysLookCardState();
+}
+
+class _TodaysLookCardState extends State<TodaysLookCard> {
+  final outfit = Get.find<OutfitController>();
+
+  @override
   Widget build(BuildContext context) {
-    return Column(children: [_buildImageSection(), _buildDescriptionSection()]);
+    return Obx(
+      () => Column(
+        children: [
+          _buildImageSection(),
+          if (outfit.todayOutfit.value != null) _buildDescriptionSection(),
+        ],
+      ),
+    );
   }
 
   Widget _buildImageSection() {
@@ -27,7 +41,6 @@ class TodaysLookCard extends StatelessWidget {
       child: Stack(
         children: [
           Obx(() {
-            final outfit = Get.find<OutfitController>();
             if (!outfit.isTodayLoading.value &&
                 outfit.todayOutfit.value == null) {
               outfit.getTodayOutfit().then((message) {
@@ -49,7 +62,7 @@ class TodaysLookCard extends StatelessWidget {
                     ),
             );
           }),
-          if (hasActions)
+          if (widget.hasActions)
             Positioned(
               left: 20,
               top: 26,
@@ -70,19 +83,23 @@ class TodaysLookCard extends StatelessWidget {
 
   Widget _buildDescriptionSection() {
     return Container(
+      width: double.infinity,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("elegant_everyday_abaya".tr, style: AppTexts.txlm),
+          Text(
+            outfit.todayOutfit.value?.reasoningTitle ?? "",
+            style: AppTexts.txlm,
+          ),
           const SizedBox(height: 12),
           Text(
-            "elegant_everyday_abaya_desc".tr,
+            outfit.todayOutfit.value?.reasoningSubtitle ?? "",
             style: AppTexts.tsmr.copyWith(color: AppColors.black.shade400),
           ),
-          if (hasActions) const SizedBox(height: 28),
-          if (hasActions)
+          if (widget.hasActions) const SizedBox(height: 28),
+          if (widget.hasActions)
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
@@ -93,7 +110,9 @@ class TodaysLookCard extends StatelessWidget {
                   HomeTextButton(
                     title: "why_this_look".tr,
                     onTap: () {
-                      Get.to(() => WhyThisLook());
+                      Get.to(
+                        () => WhyThisLook(outfitJob: outfit.todayOutfit.value!),
+                      );
                     },
                   ),
                   HomeTextButton(

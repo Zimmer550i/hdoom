@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/models/saved_outfit_model.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/views/screens/profile/rate_outfit.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
+import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 class ViewOutfit extends StatefulWidget {
-  const ViewOutfit({super.key});
+  final SavedOutfitModel outfit;
+  const ViewOutfit({super.key, required this.outfit});
 
   @override
   State<ViewOutfit> createState() => _ViewOutfitState();
@@ -22,7 +25,10 @@ class _ViewOutfitState extends State<ViewOutfit> {
         child: SafeArea(
           child: Column(
             children: [
-              Image.asset("assets/images/avatar.png"),
+              CustomNetworkedImage(
+                url: widget.outfit.outfitJob?.resultImage,
+                errorMessage: widget.outfit.outfitJob?.errorMessage,
+              ),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -32,32 +38,40 @@ class _ViewOutfitState extends State<ViewOutfit> {
                       children: [
                         Text("overall_rating".tr, style: AppTexts.tlgm),
                         Spacer(),
-                        Text("8/10", style: AppTexts.tlgm),
+                        Text(
+                          "${widget.outfit.averageRating}/10",
+                          style: AppTexts.tlgm,
+                        ),
                       ],
                     ),
                     const SizedBox(),
-                    ratingWidget("color_harmony", 8),
-                    ratingWidget("trendy", 8),
-                    ratingWidget("overall_matching", 8),
-                    ratingWidget("accessories", 8),
+                    ratingWidget(
+                      "color_harmony",
+                      widget.outfit.ratingBreakdown?['color_harmony'] ?? 0,
+                    ),
+                    ratingWidget(
+                      "trendy",
+                      widget.outfit.ratingBreakdown?['trendy'] ?? 0,
+                    ),
+                    ratingWidget(
+                      "overall_matching",
+                      widget.outfit.ratingBreakdown?['overall_matching'] ?? 0,
+                    ),
+                    ratingWidget(
+                      "accessories",
+                      widget.outfit.ratingBreakdown?['accessories'] ?? 0,
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 50),
-              Row(
-                children: [
-                  const SizedBox(width: 20),
-                  Expanded(child: CustomButton(text: "download_now".tr)),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: CustomButton(
-                      onTap: () => Get.to(() => RateOutfit()),
-                      text: "rate_now".tr,
-                      isSecondary: true,
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: CustomButton(
+                  onTap: () => Get.to(() => RateOutfit(outfit: widget.outfit)),
+                  text: "rate_now".tr,
+                  isSecondary: true,
+                ),
               ),
               const SizedBox(height: 20),
             ],

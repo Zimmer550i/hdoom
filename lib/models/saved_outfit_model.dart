@@ -2,7 +2,7 @@ import 'package:hdoom/models/outfit_job_model.dart';
 
 class SavedOutfitModel {
   final int id;
-  final String savedDate;
+  final DateTime savedDate;
   final String note;
   final bool isShared;
   final OutfitJobModel? outfitJob;
@@ -26,53 +26,26 @@ class SavedOutfitModel {
   });
 
   factory SavedOutfitModel.fromJson(Map<String, dynamic> json) {
-    OutfitJobModel? job;
-    if (json['outfit_job'] is Map<String, dynamic>) {
-      job = OutfitJobModel.fromJson(json['outfit_job'] as Map<String, dynamic>);
-    } else if (json['outfit_job'] is Map) {
-      job = OutfitJobModel.fromJson(
-        Map<String, dynamic>.from(json['outfit_job'] as Map),
-      );
-    }
-
-    Map<String, double?>? breakdown;
-    if (json['rating_breakdown'] is Map) {
-      breakdown = (json['rating_breakdown'] as Map).map(
-        (key, value) => MapEntry(
-          key.toString(),
-          value != null ? double.tryParse(value.toString()) : null,
-        ),
-      );
-    }
-
     return SavedOutfitModel(
-      id: (json['id'] is int)
-          ? json['id'] as int
-          : int.tryParse(json['id']?.toString() ?? '') ?? 0,
-      savedDate: json['saved_date'] as String? ?? '',
-      note: json['note'] as String? ?? '',
-      isShared: json['is_shared'] as bool? ?? false,
-      outfitJob: job,
-      ratingsCount: (json['ratings_count'] is int)
-          ? json['ratings_count'] as int
-          : int.tryParse(json['ratings_count']?.toString() ?? '') ?? 0,
-      averageRating: json['average_rating'] != null
-          ? double.tryParse(json['average_rating'].toString())
-          : null,
-      ratingBreakdown: breakdown,
-      createdAt: json['created_at'] != null
-          ? DateTime.tryParse(json['created_at'].toString()) ?? DateTime.now()
-          : DateTime.now(),
-      updatedAt: json['updated_at'] != null
-          ? DateTime.tryParse(json['updated_at'].toString())
-          : null,
+      id: _parseInt(json['id']),
+      savedDate: _parseDateTime(json['saved_date']),
+      note: json['note']?.toString() ?? '',
+      isShared: _parseBool(json['is_shared']),
+      outfitJob: _parseOutfitJob(json['outfit_job']),
+      ratingsCount: _parseInt(json['ratings_count']),
+      averageRating: _parseDouble(json['average_rating']),
+      ratingBreakdown: _parseRatingBreakdown(
+        json['rating_breakdown'],
+      ),
+      createdAt: _parseDateTime(json['created_at']),
+      updatedAt: _parseNullableDateTime(json['updated_at']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'saved_date': savedDate,
+      'saved_date': savedDate.toIso8601String(),
       'note': note,
       'is_shared': isShared,
       'outfit_job': outfitJob?.toJson(),
@@ -86,7 +59,7 @@ class SavedOutfitModel {
 
   SavedOutfitModel copyWith({
     int? id,
-    String? savedDate,
+    DateTime? savedDate,
     String? note,
     bool? isShared,
     OutfitJobModel? outfitJob,
@@ -112,15 +85,209 @@ class SavedOutfitModel {
 
   @override
   String toString() {
-    return 'SavedOutfitModel(id: $id, savedDate: $savedDate, isShared: $isShared)';
+    return 'SavedOutfitModel('
+        'id: $id, '
+        'savedDate: $savedDate, '
+        'note: $note, '
+        'isShared: $isShared, '
+        'outfitJob: $outfitJob, '
+        'ratingsCount: $ratingsCount, '
+        'averageRating: $averageRating, '
+        'ratingBreakdown: $ratingBreakdown, '
+        'createdAt: $createdAt, '
+        'updatedAt: $updatedAt'
+        ')';
   }
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is SavedOutfitModel && other.id == id;
+    if (identical(this, other)) {
+      return true;
+    }
+
+    return other is SavedOutfitModel &&
+        other.id == id &&
+        other.savedDate == savedDate &&
+        other.note == note &&
+        other.isShared == isShared &&
+        other.outfitJob == outfitJob &&
+        other.ratingsCount == ratingsCount &&
+        other.averageRating == averageRating &&
+        _mapEquals(
+          other.ratingBreakdown,
+          ratingBreakdown,
+        ) &&
+        other.createdAt == createdAt &&
+        other.updatedAt == updatedAt;
   }
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode {
+    return Object.hash(
+      id,
+      savedDate,
+      note,
+      isShared,
+      outfitJob,
+      ratingsCount,
+      averageRating,
+      _mapHashCode(ratingBreakdown),
+      createdAt,
+      updatedAt,
+    );
+  }
+
+  static int _parseInt(dynamic value) {
+    if (value == null) {
+      return 0;
+    }
+
+    if (value is int) {
+      return value;
+    }
+
+    if (value is double) {
+      return value.toInt();
+    }
+
+    return int.tryParse(value.toString()) ?? 0;
+  }
+
+  static double? _parseDouble(dynamic value) {
+    if (value == null) {
+      return null;
+    }
+
+    if (value is double) {
+      return value;
+    }
+
+    if (value is int) {
+      return value.toDouble();
+    }
+
+    return double.tryParse(value.toString());
+  }
+
+  static bool _parseBool(dynamic value) {
+    if (value is bool) {
+      return value;
+    }
+
+    if (value is int) {
+      return value == 1;
+    }
+
+    if (value == null) {
+      return false;
+    }
+
+    return value.toString().toLowerCase() == 'true';
+  }
+
+  static DateTime _parseDateTime(dynamic value) {
+    if (value is DateTime) {
+      return value;
+    }
+
+    if (value == null) {
+      return DateTime.now();
+    }
+
+    final parsed = DateTime.tryParse(value.toString());
+
+    return parsed ?? DateTime.now();
+  }
+
+  static DateTime? _parseNullableDateTime(dynamic value) {
+    if (value == null) {
+      return null;
+    }
+
+    if (value is DateTime) {
+      return value;
+    }
+
+    return DateTime.tryParse(value.toString());
+  }
+
+  static OutfitJobModel? _parseOutfitJob(dynamic value) {
+    if (value == null) {
+      return null;
+    }
+
+    if (value is Map<String, dynamic>) {
+      return OutfitJobModel.fromJson(value);
+    }
+
+    if (value is Map) {
+      return OutfitJobModel.fromJson(
+        Map<String, dynamic>.from(value),
+      );
+    }
+
+    return null;
+  }
+
+  static Map<String, double?>? _parseRatingBreakdown(
+    dynamic value,
+  ) {
+    if (value == null || value is! Map) {
+      return null;
+    }
+
+    final result = <String, double?>{};
+
+    value.forEach((key, itemValue) {
+      result[key.toString()] = _parseDouble(itemValue);
+    });
+
+    return result;
+  }
+
+  static bool _mapEquals(
+    Map<String, double?>? a,
+    Map<String, double?>? b,
+  ) {
+    if (identical(a, b)) {
+      return true;
+    }
+
+    if (a == null || b == null) {
+      return a == b;
+    }
+
+    if (a.length != b.length) {
+      return false;
+    }
+
+    for (final entry in a.entries) {
+      if (!b.containsKey(entry.key)) {
+        return false;
+      }
+
+      if (b[entry.key] != entry.value) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  static int? _mapHashCode(
+    Map<String, double?>? map,
+  ) {
+    if (map == null) {
+      return null;
+    }
+
+    return Object.hashAll(
+      map.entries.map(
+        (entry) => Object.hash(
+          entry.key,
+          entry.value,
+        ),
+      ),
+    );
+  }
 }

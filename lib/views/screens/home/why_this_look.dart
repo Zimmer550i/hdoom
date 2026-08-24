@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/models/outfit_job_model.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/views/screens/home/widgets/todays_look_card.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
+import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 class WhyThisLook extends StatelessWidget {
-  const WhyThisLook({super.key});
+  final OutfitJobModel outfitJob;
+  const WhyThisLook({super.key, required this.outfitJob});
 
   void onSubmit() async {}
 
@@ -22,9 +24,34 @@ class WhyThisLook extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TodaysLookCard(hasActions: false),
+              ClipRRect(
+                borderRadius: .vertical(top: Radius.circular(12)),
+                child: CustomNetworkedImage(
+                  url: outfitJob.resultImage,
+                  errorMessage: outfitJob.errorMessage,
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(color: Colors.white),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(outfitJob.reasoningTitle ?? "", style: AppTexts.txlm),
+                    const SizedBox(height: 12),
+                    Text(
+                      outfitJob.reasoningSubtitle ?? "",
+                      style: AppTexts.tsmr.copyWith(
+                        color: AppColors.black.shade400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 20),
-              Text("why_we_chose_this".tr, style: AppTexts.txlm),
+              if (outfitJob.reasoningItems.isNotEmpty)
+                Text("why_we_chose_this".tr, style: AppTexts.txlm),
               const SizedBox(height: 16),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -34,21 +61,25 @@ class WhyThisLook extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    for (int i = 0; i < 4; i++)
+                    for (int i = 0; i < outfitJob.reasoningItems.length; i++)
                       reasons(
                         i + 1,
-                        "style_matched".tr,
-                        "style_matched_desc".tr,
+                        outfitJob.reasoningItems[i].title,
+                        outfitJob.reasoningItems[i].description,
                       ),
 
                     const SizedBox(height: 20),
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: AppColors.green.shade50,
                       ),
                       child: Column(
+                        crossAxisAlignment: .start,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +90,7 @@ class WhyThisLook extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            "style_note_desc".tr,
+                            outfitJob.reasoningNote ?? "",
                             style: AppTexts.tsmr,
                             textAlign: TextAlign.center,
                           ),
