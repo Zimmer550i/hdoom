@@ -40,7 +40,8 @@ class TodaysLookCard extends StatelessWidget {
               aspectRatio: 1,
               child:
                   outfit.isTodayLoading.value ||
-                      outfit.todayOutfit.value == null
+                      outfit.todayOutfit.value == null ||
+                      outfit.todayOutfit.value?.status == "processing"
                   ? AiLoading()
                   : CustomNetworkedImage(
                       url: outfit.todayOutfit.value?.resultImage,

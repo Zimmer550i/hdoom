@@ -85,12 +85,14 @@ class _AvatarState extends State<Avatar> {
                   return Column(
                     spacing: 12,
                     children: [
-                      avatar.defaultAvatar.value == null || avatar.isLoading.value
+                      avatar.defaultAvatar.value == null ||
+                              avatar.isLoading.value
                           ? AiLoading()
                           : CustomNetworkedImage(
                               height: MediaQuery.of(context).size.width,
                               url: avatar.defaultAvatar.value!.resultImage,
-                              errorMessage: avatar.defaultAvatar.value?.errorMessage,
+                              errorMessage:
+                                  avatar.defaultAvatar.value?.errorMessage,
                             ),
 
                       Padding(
@@ -143,7 +145,9 @@ class _AvatarState extends State<Avatar> {
                         child: Column(
                           children: [
                             CustomButton(
-                              onTap: () => Get.to(() => AvatarCreation()),
+                              onTap: () => Get.to(
+                                () => AvatarCreation(useDefault: true),
+                              ),
                               text: "use_this_image".tr,
                               isSecondary: true,
                               // isLoading: avatar.isLoading.value,
@@ -164,9 +168,7 @@ class _AvatarState extends State<Avatar> {
                             const SizedBox(height: 16),
                             CustomButton(
                               onTap: () {
-                                Get.to(() => UploadImage(
-                                  type: type
-                                ));
+                                Get.to(() => UploadImage(type: type));
                               },
                               text: "upload_new_image".tr,
                             ),

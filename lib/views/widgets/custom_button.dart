@@ -10,7 +10,7 @@ import 'package:hdoom/utils/app_texts.dart';
 
 // Primary button colors
 final _primaryColor = AppColors.green.shade500;
-final _primaryDisabledColor = AppColors.green.shade300;
+final _primaryDisabledColor = AppColors.green.shade100;
 final _primaryTextColor = Colors.white;
 final _primaryIconColor = Colors.white;
 final _primaryLoaderColor = Colors.white;
@@ -81,7 +81,7 @@ class _CustomButtonState extends State<CustomButton> {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(widget.radius),
-      onTap: widget.isLoading ? null : widget.onTap,
+      onTap: widget.isLoading || widget.isDisabled ? null : widget.onTap,
       child: AnimatedContainer(
         duration: _animationDuration,
         height: widget.height,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hdoom/models/outfit_model.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 // ──────────────────────────────────────────────
 // CUSTOMIZABLE VARIABLES — Change these to style
@@ -20,18 +22,10 @@ const _textPaddingBottom = 4.0;
 // ──────────────────────────────────────────────
 
 class OutfitCard extends StatelessWidget {
-  final String image;
-  final String title;
-  final String subtitle;
+  final SavedOutfitModel outfit;
   final VoidCallback? onTap;
 
-  const OutfitCard({
-    super.key,
-    required this.image,
-    required this.title,
-    required this.subtitle,
-    this.onTap,
-  });
+  const OutfitCard({super.key, required this.outfit, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +41,12 @@ class OutfitCard extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 color: _cardBg,
-                child: Image.asset(image, fit: BoxFit.cover),
+                child: AbsorbPointer(
+                  child: CustomNetworkedImage(
+                    url: outfit.outfitJob?.resultImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
           ),
@@ -64,13 +63,13 @@ class OutfitCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  outfit.outfitJob?.reasoningTitle ?? "",
                   style: AppTexts.tsmm.copyWith(color: _titleColor),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  subtitle,
+                  outfit.outfitJob?.reasoningSubtitle ?? "",
                   style: AppTexts.txsr.copyWith(color: _subtitleColor),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

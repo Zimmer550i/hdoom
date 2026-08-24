@@ -97,6 +97,9 @@ class WardrobeItemCard extends StatelessWidget {
               ],
             ),
           ),
+
+          if (!["done", "processing"].contains(item.analysis?.status))
+            Center(child: Icon(Icons.error, color: Colors.redAccent)),
         ],
       ),
     );

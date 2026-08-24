@@ -86,7 +86,9 @@ class OutfitController extends GetxController {
       if (res.statusCode == 200) {
         final data = (body is Map && body['data'] is Map)
             ? body['data'] as Map<String, dynamic>
-            : (body is Map ? body as Map<String, dynamic> : <String, dynamic>{});
+            : (body is Map
+                  ? body as Map<String, dynamic>
+                  : <String, dynamic>{});
 
         todayOutfit.value = OutfitJobModel.fromJson(data);
         return "success";
@@ -178,7 +180,9 @@ class OutfitController extends GetxController {
       if (res.statusCode == 201 || res.statusCode == 200) {
         final data = (body is Map && body['data'] is Map)
             ? body['data'] as Map<String, dynamic>
-            : (body is Map ? body as Map<String, dynamic> : <String, dynamic>{});
+            : (body is Map
+                  ? body as Map<String, dynamic>
+                  : <String, dynamic>{});
 
         final created = SavedOutfitModel.fromJson(data);
         savedOutfits.insert(0, created);
@@ -202,7 +206,9 @@ class OutfitController extends GetxController {
       if (res.statusCode == 200) {
         final data = (body is Map && body['data'] is Map)
             ? body['data'] as Map<String, dynamic>
-            : (body is Map ? body as Map<String, dynamic> : <String, dynamic>{});
+            : (body is Map
+                  ? body as Map<String, dynamic>
+                  : <String, dynamic>{});
         return SavedOutfitModel.fromJson(data);
       }
     } catch (e) {
@@ -228,13 +234,19 @@ class OutfitController extends GetxController {
         "is_shared": ?isShared,
       };
 
-      final res = await api.patch('/outfits/saved/$id/', payload, authReq: true);
+      final res = await api.patch(
+        '/outfits/saved/$id/',
+        payload,
+        authReq: true,
+      );
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200) {
         final data = (body is Map && body['data'] is Map)
             ? body['data'] as Map<String, dynamic>
-            : (body is Map ? body as Map<String, dynamic> : <String, dynamic>{});
+            : (body is Map
+                  ? body as Map<String, dynamic>
+                  : <String, dynamic>{});
 
         final updated = SavedOutfitModel.fromJson(data);
         final index = savedOutfits.indexWhere((o) => o.id == id);
@@ -299,8 +311,8 @@ class OutfitController extends GetxController {
         final results = (body is Map && body['results'] is List)
             ? body['results'] as List
             : ((body is Map && body['data'] is List)
-                ? body['data'] as List
-                : (body is List ? body : []));
+                  ? body['data'] as List
+                  : (body is List ? body : []));
 
         if (page == 1) publicOutfits.clear();
 
@@ -354,7 +366,9 @@ class OutfitController extends GetxController {
       if (res.statusCode == 200 || res.statusCode == 201) {
         final data = (body is Map && body['data'] is Map)
             ? body['data'] as Map<String, dynamic>
-            : (body is Map ? body as Map<String, dynamic> : <String, dynamic>{});
+            : (body is Map
+                  ? body as Map<String, dynamic>
+                  : <String, dynamic>{});
         currentOutfitRating.value = OutfitRatingModel.fromJson(data);
         return "success";
       } else {
@@ -412,8 +426,8 @@ class OutfitController extends GetxController {
         final results = (body is Map && body['results'] is List)
             ? body['results'] as List
             : ((body is Map && body['data'] is List)
-                ? body['data'] as List
-                : (body is List ? body : []));
+                  ? body['data'] as List
+                  : (body is List ? body : []));
 
         if (page == 1) outfitRatings.clear();
 
@@ -422,9 +436,7 @@ class OutfitController extends GetxController {
             outfitRatings.add(OutfitRatingDetailModel.fromJson(item));
           } else if (item is Map) {
             outfitRatings.add(
-              OutfitRatingDetailModel.fromJson(
-                Map<String, dynamic>.from(item),
-              ),
+              OutfitRatingDetailModel.fromJson(Map<String, dynamic>.from(item)),
             );
           }
         }
@@ -493,7 +505,9 @@ class OutfitController extends GetxController {
       if (res.statusCode == 201 || res.statusCode == 200) {
         final data = (body is Map && body['data'] is Map)
             ? body['data'] as Map<String, dynamic>
-            : (body is Map ? body as Map<String, dynamic> : <String, dynamic>{});
+            : (body is Map
+                  ? body as Map<String, dynamic>
+                  : <String, dynamic>{});
 
         // TryOnCreate returns { avatar_id, wardrobe_item_ids } or OutfitJob
         final int? jobId = data['id'] ?? data['outfit_job_id'];
@@ -502,6 +516,34 @@ class OutfitController extends GetxController {
           tryOnJobs.insert(0, currentTryOnJob.value!);
           _startTryOnPolling(jobId);
         }
+        return "success";
+      } else {
+        return _parseError(body);
+      }
+    } catch (e) {
+      return e.toString();
+    } finally {
+      isTryOnLoading(false);
+    }
+  }
+
+  /// POST /outfits/try-on/id/save — Save try-on job as outfit.
+  Future<String> saveTryOn() async {
+    isTryOnLoading(true);
+    try {
+      final res = await api.post(
+        '/outfits/try-on/${currentTryOnJob.value?.id}/save/',
+        {},
+        authReq: true,
+      );
+      final body = _decodeBody(res.body);
+
+      if (res.statusCode == 201 || res.statusCode == 200) {
+        final data = body['data'];
+        final outfit = SavedOutfitModel.fromJson(data);
+
+        savedOutfits.add(outfit);
+
         return "success";
       } else {
         return _parseError(body);
@@ -522,15 +564,18 @@ class OutfitController extends GetxController {
       if (res.statusCode == 200) {
         final data = (body is Map && body['data'] is Map)
             ? body['data'] as Map<String, dynamic>
-            : (body is Map ? body as Map<String, dynamic> : <String, dynamic>{});
+            : (body is Map
+                  ? body as Map<String, dynamic>
+                  : <String, dynamic>{});
 
         final status = data['status'] as String? ?? '';
         final resultImage = data['result_image'] as String?;
         final errorMessage = data['error_message'] as String?;
 
-        if (currentTryOnJob.value != null &&
-            currentTryOnJob.value!.id == id) {
-          currentTryOnJob.value = currentTryOnJob.value!.copyWith(
+        if (currentTryOnJob.value != null && currentTryOnJob.value!.id == id) {
+          final prev = currentTryOnJob.value!;
+          currentTryOnJob.value = null;
+          currentTryOnJob.value = prev.copyWith(
             status: status,
             resultImage: resultImage,
             errorMessage: errorMessage,

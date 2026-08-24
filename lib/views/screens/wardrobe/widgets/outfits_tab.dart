@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/controllers/outfit_controller.dart';
 import 'package:hdoom/utils/custom_grid_handler.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/outfit_card.dart';
 
 // ──────────────────────────────────────────────
@@ -17,40 +18,37 @@ const _horizontalPadding = 20.0;
 
 // ──────────────────────────────────────────────
 
-class OutfitsTab extends StatelessWidget {
+class OutfitsTab extends StatefulWidget {
   const OutfitsTab({super.key});
 
   @override
+  State<OutfitsTab> createState() => _OutfitsTabState();
+}
+
+class _OutfitsTabState extends State<OutfitsTab> {
+  final outfit = Get.find<OutfitController>();
+
+  @override
+  void initState() {
+    super.initState();
+    outfit.getSavedOutfits().then((message) {
+      if (message != "success") {
+        customSnackBar(message);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Section title
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
-          child: Text('recommendation_for_you'.tr, style: AppTexts.tlgm),
-        ),
-
-        const SizedBox(height: 8),
-
-        // Grid
-        Expanded(
-          child: CustomGridHandler(
-            horizontalPadding: _horizontalPadding,
-            childAspectRatio: _gridAspectRatio,
-            mainAxisSpacing: _gridSpacing,
-            crossAxisSpacing: _gridSpacing,
-            children: List.generate(
-              6,
-              (index) => OutfitCard(
-                image: 'assets/images/avatar.png',
-                title: 'soft_beige_evening'.tr,
-                subtitle: 'formal'.tr,
-              ),
-            ),
-          ),
-        ),
-      ],
+    return CustomGridHandler(
+      horizontalPadding: _horizontalPadding,
+      childAspectRatio: _gridAspectRatio,
+      mainAxisSpacing: _gridSpacing,
+      crossAxisSpacing: _gridSpacing,
+      children: List.generate(
+        outfit.savedOutfits.length,
+        (index) => OutfitCard(outfit: outfit.savedOutfits[index]),
+      ),
     );
   }
 }

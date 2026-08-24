@@ -11,7 +11,7 @@ import 'package:hdoom/services/api_service.dart';
 class WardrobeController extends GetxController {
   final api = ApiService();
 
-  RxMap<WardrobeCategory, RxList<String>> itemCategories = RxMap();
+  RxMap<WardrobeCategory, RxList<ItemModel>> itemCategories = RxMap();
   Rxn<WardrobeOptionsModel> wardrobeOptions = Rxn();
   RxList<ItemModel> items = RxList();
   Rxn<ItemModel> currentItem = Rxn();
@@ -27,6 +27,12 @@ class WardrobeController extends GetxController {
   /// Polling intervals: first at 15s, then 10s, then every 5s.
   static const List<int> _pollIntervals = [25, 20, 15];
   int _pollStep = 0;
+
+  @override
+  void onInit() {
+    super.onInit();
+    ever<List<ItemModel>>(items, (_) => populateItemCategories());
+  }
 
   @override
   void onClose() {
@@ -72,6 +78,8 @@ class WardrobeController extends GetxController {
         for (var i in data) {
           items.add(ItemModel.fromJson(i));
         }
+
+        populateItemCategories();
 
         return "success";
       } else {
@@ -215,6 +223,19 @@ class WardrobeController extends GetxController {
     } finally {
       isWardrobeItemsLoading(false);
     }
+  }
+
+  void populateItemCategories() {
+    itemCategories.clear();
+    for (var i in items) {
+      if (itemCategories.containsKey(i.category)) {
+        itemCategories[i.category]!.add(i);
+      } else {
+        itemCategories[i.category] = RxList([i]);
+      }
+    }
+    debugPrint("Item sorted as per category");
+    debugPrint(itemCategories.toString());
   }
 
   // ═══════════════════════════════════════════════════════════════════════

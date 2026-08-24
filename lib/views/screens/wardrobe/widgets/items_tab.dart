@@ -75,9 +75,10 @@ class _ItemsTabState extends State<ItemsTab> {
         itemBuilder: (context, i) {
           final isSelected = _selectedCategory == i;
           final cat = wardrobe.wardrobeOptions.value?.categories.elementAt(i);
-          final label =
-              '${cat?.name} (${wardrobe.items.where((val) => val.category.id == cat?.id).length})';
-
+          final length = wardrobe.items
+              .where((val) => val.category.id == cat?.id)
+              .length;
+          final label = '${cat?.name} ($length)';
           return GestureDetector(
             onTap: () => setState(() => _selectedCategory = i),
             child: Column(

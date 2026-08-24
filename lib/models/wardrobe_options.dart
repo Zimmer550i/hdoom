@@ -11,28 +11,19 @@ class WardrobeOptionsModel {
 
   factory WardrobeOptionsModel.fromJson(Map<String, dynamic> json) {
     return WardrobeOptionsModel(
-      categories: (json['categories'] as List<dynamic>?)
-              ?.map(
-                (e) => WardrobeCategory.fromJson(
-                  e as Map<String, dynamic>,
-                ),
-              )
+      categories:
+          (json['categories'] as List<dynamic>?)
+              ?.map((e) => WardrobeCategory.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      seasons: (json['seasons'] as List<dynamic>?)
-              ?.map(
-                (e) => WardrobeOption.fromJson(
-                  e as Map<String, dynamic>,
-                ),
-              )
+      seasons:
+          (json['seasons'] as List<dynamic>?)
+              ?.map((e) => WardrobeOption.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      occasions: (json['occasions'] as List<dynamic>?)
-              ?.map(
-                (e) => WardrobeOption.fromJson(
-                  e as Map<String, dynamic>,
-                ),
-              )
+      occasions:
+          (json['occasions'] as List<dynamic>?)
+              ?.map((e) => WardrobeOption.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
@@ -51,10 +42,17 @@ class WardrobeCategory {
   final int id;
   final String name;
 
-  WardrobeCategory({
-    required this.id,
-    required this.name,
-  });
+  WardrobeCategory({required this.id, required this.name});
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is WardrobeCategory && other.id == id && other.name == name;
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name);
 
   factory WardrobeCategory.fromJson(Map<String, dynamic> json) {
     return WardrobeCategory(
@@ -64,10 +62,7 @@ class WardrobeCategory {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-    };
+    return {'id': id, 'name': name};
   }
 }
 
@@ -75,10 +70,7 @@ class WardrobeOption {
   final String value;
   final String label;
 
-  WardrobeOption({
-    required this.value,
-    required this.label,
-  });
+  WardrobeOption({required this.value, required this.label});
 
   factory WardrobeOption.fromJson(Map<String, dynamic> json) {
     return WardrobeOption(
@@ -88,9 +80,6 @@ class WardrobeOption {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'value': value,
-      'label': label,
-    };
+    return {'value': value, 'label': label};
   }
 }

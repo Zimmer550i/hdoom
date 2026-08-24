@@ -5,6 +5,7 @@ import 'package:hdoom/models/item_model.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
+import 'package:hdoom/views/screens/avatar/avatar_creation.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_networked_image.dart';
@@ -13,6 +14,12 @@ import 'package:hdoom/views/widgets/overlay_confirmation.dart';
 class ItemDetails extends StatelessWidget {
   final ItemModel item;
   const ItemDetails({super.key, required this.item});
+
+  void onSubmit() {
+    Get.to(
+      () => AvatarCreation(useDefault: true, alreadySelectedOutfit: [item.id]),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,13 +84,25 @@ class ItemDetails extends StatelessWidget {
                 ),
               ),
             ),
+            if (item.analysis?.errorMessage.isNotEmpty ?? false)
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  item.analysis?.errorMessage ?? "",
+                  style: AppTexts.tsmr.copyWith(color: AppColors.red),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
                   _buildSecondaryButton('remove_item'.tr, context),
                   const SizedBox(height: 12),
-                  CustomButton(text: 'try_on'.tr, onTap: () {}),
+                  CustomButton(
+                    text: 'try_on'.tr,
+                    isDisabled: item.analysis?.status != "done",
+                    onTap: onSubmit,
+                  ),
                 ],
               ),
             ),
