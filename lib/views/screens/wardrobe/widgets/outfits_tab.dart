@@ -41,17 +41,20 @@ class _OutfitsTabState extends State<OutfitsTab> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomGridHandler(
-      horizontalPadding: _horizontalPadding,
-      childAspectRatio: _gridAspectRatio,
-      mainAxisSpacing: _gridSpacing,
-      crossAxisSpacing: _gridSpacing,
-      children: List.generate(
-        outfit.savedOutfits.length,
-        (index) => OutfitCard(
-          outfit: outfit.savedOutfits[index],
-          onTap: () =>
-              Get.to(() => OutfitDetails(outfit: outfit.savedOutfits[index])),
+    return Obx(
+      () => CustomGridHandler(
+        horizontalPadding: _horizontalPadding,
+        childAspectRatio: _gridAspectRatio,
+        mainAxisSpacing: _gridSpacing,
+        crossAxisSpacing: _gridSpacing,
+        isLoading: outfit.isSavedLoading.value,
+        children: List.generate(
+          outfit.savedOutfits.length,
+          (index) => OutfitCard(
+            outfit: outfit.savedOutfits[index],
+            onTap: () =>
+                Get.to(() => OutfitDetails(outfit: outfit.savedOutfits[index])),
+          ),
         ),
       ),
     );

@@ -39,10 +39,15 @@ class _TryOnState extends State<TryOn> {
               children: [
                 tryOn.currentTryOnJob.value?.status == "processing"
                     ? AiLoading()
-                    : CustomNetworkedImage(
-                        url: tryOn.currentTryOnJob.value?.resultImage,
-                        errorMessage: tryOn.currentTryOnJob.value?.errorMessage,
+                    : ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.width
                       ),
+                      child: CustomNetworkedImage(
+                          url: tryOn.currentTryOnJob.value?.resultImage,
+                          errorMessage: tryOn.currentTryOnJob.value?.errorMessage,
+                        ),
+                    ),
                 if (tryOn.currentTryOnJob.value?.status != "processing")
                   Padding(
                     padding: const EdgeInsets.all(20.0),

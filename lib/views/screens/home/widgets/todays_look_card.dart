@@ -5,7 +5,7 @@ import 'package:hdoom/utils/ai_loading.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/screens/home/save_outfit.dart';
+import 'package:hdoom/views/screens/home/save_for_a_day.dart';
 import 'package:hdoom/views/screens/home/why_this_look.dart';
 import 'package:hdoom/views/screens/home/widgets/home_text_button.dart';
 import 'package:hdoom/views/widgets/custom_networked_image.dart';
@@ -118,7 +118,9 @@ class _TodaysLookCardState extends State<TodaysLookCard> {
                   HomeTextButton(
                     title: "save_look".tr,
                     onTap: () {
-                      Get.to(() => SaveOutfit());
+                      Get.to(
+                        () => SaveForADay(outfit: outfit.todayOutfit.value!),
+                      );
                     },
                   ),
                 ],

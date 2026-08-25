@@ -5,6 +5,8 @@ import 'package:hdoom/models/saved_outfit_model.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
+import 'package:hdoom/views/screens/home/save_for_a_day.dart';
+import 'package:hdoom/views/screens/home/why_this_look.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_loading.dart';
@@ -92,8 +94,28 @@ class _OutfitDetailsState extends State<OutfitDetails> {
                         }),
                       ],
                     ),
-                    CustomButton(text: "Why this look?"),
-                    CustomButton(text: "Save for a day"),
+                    CustomButton(
+                      onTap: () {
+                        if (widget.outfit.outfitJob != null) {
+                          Get.to(
+                            () => WhyThisLook(
+                              outfitJob: widget.outfit.outfitJob!,
+                            ),
+                          );
+                        }
+                      },
+                      text: "Why this look?",
+                    ),
+                    CustomButton(
+                      onTap: () {
+                        if (widget.outfit.outfitJob != null) {
+                          Get.to(
+                            () => SaveForADay(outfit: widget.outfit.outfitJob!),
+                          );
+                        }
+                      },
+                      text: "Save for a day",
+                    ),
                   ],
                 ),
               ),

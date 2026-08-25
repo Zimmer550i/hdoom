@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/views/widgets/custom_loading.dart';
 
 class CustomCalendar extends StatefulWidget {
   final List<DateTime> markedDates;
   final DateTime? selectedDate;
   final ValueChanged<DateTime>? onDateSelected;
+  final void Function(DateTime)? onMonthChanged;
+  final bool isLoading;
 
   const CustomCalendar({
     super.key,
-    this.markedDates = const[],
+    this.markedDates = const [],
     this.selectedDate,
     this.onDateSelected,
+    this.onMonthChanged,
+    this.isLoading = false,
   });
 
   @override
@@ -54,19 +59,13 @@ class _CustomCalendarState extends State<CustomCalendar> {
 
   void _previousMonth() {
     setState(() {
-      _focusedMonth = DateTime(
-        _focusedMonth.year,
-        _focusedMonth.month - 1,
-      );
+      _focusedMonth = DateTime(_focusedMonth.year, _focusedMonth.month - 1);
     });
   }
 
   void _nextMonth() {
     setState(() {
-      _focusedMonth = DateTime(
-        _focusedMonth.year,
-        _focusedMonth.month + 1,
-      );
+      _focusedMonth = DateTime(_focusedMonth.year, _focusedMonth.month + 1);
     });
   }
 
@@ -93,9 +92,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
   Widget build(BuildContext context) {
     final days = _buildCalendarDays();
 
-    final headerDay = _isInCurrentMonth(_selectedDay)
-        ? _selectedDay.day
-        : 1;
+    final headerDay = _isInCurrentMonth(_selectedDay) ? _selectedDay.day : 1;
 
     final headerLabel =
         '$headerDay ${_months[_focusedMonth.month - 1]}, ${_focusedMonth.year}';
@@ -109,10 +106,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                headerLabel,
-                style: AppTexts.tmdr,
-              ),
+              Text(headerLabel, style: AppTexts.tmdr),
               Row(
                 children: [
                   GestureDetector(
@@ -145,17 +139,19 @@ class _CustomCalendarState extends State<CustomCalendar> {
             color: AppColors.white,
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildDayOfWeekRow(),
-              const SizedBox(height: 4),
-              ...List.generate(5, (row) {
-                final weekDays = days.sublist(row * 7, row * 7 + 7);
-                return _buildWeekRow(weekDays);
-              }),
-            ],
-          ),
+          child: widget.isLoading
+              ? CustomLoading()
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildDayOfWeekRow(),
+                    const SizedBox(height: 4),
+                    ...List.generate(5, (row) {
+                      final weekDays = days.sublist(row * 7, row * 7 + 7);
+                      return _buildWeekRow(weekDays);
+                    }),
+                  ],
+                ),
         ),
       ],
     );
@@ -172,8 +168,9 @@ class _CustomCalendarState extends State<CustomCalendar> {
               child: Center(
                 child: Text(
                   l,
-                  style:
-                      AppTexts.tmdm.copyWith(color: AppColors.black.shade400),
+                  style: AppTexts.tmdm.copyWith(
+                    color: AppColors.black.shade400,
+                  ),
                 ),
               ),
             ),

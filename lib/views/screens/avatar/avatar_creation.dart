@@ -40,7 +40,7 @@ class _AvatarCreationState extends State<AvatarCreation> {
   @override
   void initState() {
     super.initState();
-    selectedItems = widget.alreadySelectedOutfit;
+    selectedItems = widget.alreadySelectedOutfit.toList();
     WidgetsBinding.instance.addPostFrameCallback((val) {
       wardrobe.getWardrobeItems().then((message) {
         if (message != "success") {
