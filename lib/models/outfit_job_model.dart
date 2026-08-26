@@ -57,7 +57,7 @@ class OutfitReasoningItem {
 
 class OutfitJobModel {
   final int id;
-  final String generatedDate;
+  final DateTime generatedDate;
   final String triggerType;
   final String status;
   final int avatar;
@@ -96,9 +96,12 @@ class OutfitJobModel {
           ? json['id'] as int
           : int.tryParse(json['id']?.toString() ?? '') ?? 0,
 
-      generatedDate: json['generated_date']?.toString() ??
-          json['date']?.toString() ??
-          '',
+      generatedDate: json['generated_date'] != null
+          ? DateTime.tryParse(json['generated_date'].toString()) ??
+              DateTime.tryParse(json['date']?.toString() ?? '') ??
+              DateTime.now()
+          : DateTime.tryParse(json['date']?.toString() ?? '') ??
+              DateTime.now(),
 
       triggerType: json['trigger_type']?.toString() ?? 'auto',
 
@@ -157,7 +160,7 @@ class OutfitJobModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'generated_date': generatedDate,
+      'generated_date': generatedDate.toIso8601String(),
       'trigger_type': triggerType,
       'status': status,
       'avatar': avatar,
@@ -177,7 +180,7 @@ class OutfitJobModel {
 
   OutfitJobModel copyWith({
     int? id,
-    String? generatedDate,
+    DateTime? generatedDate,
     String? triggerType,
     String? status,
     int? avatar,

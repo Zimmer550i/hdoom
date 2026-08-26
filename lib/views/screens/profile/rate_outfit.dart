@@ -30,10 +30,10 @@ class _RateOutfitState extends State<RateOutfit> {
   void onSubmit() async {
     final message = await outfitCtrl.rateOutfit(
       widget.outfit.id,
-      colorHarmony: ratingValues["color_harmony"]!.toInt(),
-      trendy: ratingValues["trendy"]!.toInt(),
-      overallMatching: ratingValues["overall_matching"]!.toInt(),
-      accessories: ratingValues["accessories"]!.toInt(),
+      colorHarmony: (ratingValues["color_harmony"]! * 10).toInt(),
+      trendy: (ratingValues["trendy"]! * 10).toInt(),
+      overallMatching: (ratingValues["overall_matching"]! * 10).toInt(),
+      accessories: (ratingValues["accessories"]! * 10).toInt(),
     );
 
     if (message == "success") {
@@ -41,7 +41,7 @@ class _RateOutfitState extends State<RateOutfit> {
         Get.back();
       }
 
-      customSnackBar("Submited outfit rating");
+      customSnackBar("Submited outfit rating", isError: false);
     } else {
       customSnackBar(message);
     }

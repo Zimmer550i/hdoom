@@ -11,6 +11,7 @@ import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_loading.dart';
 import 'package:hdoom/views/widgets/custom_networked_image.dart';
+import 'package:hdoom/views/widgets/overlay_confirmation.dart';
 
 class OutfitDetails extends StatefulWidget {
   final SavedOutfitModel outfit;
@@ -93,6 +94,40 @@ class _OutfitDetailsState extends State<OutfitDetails> {
                           );
                         }),
                       ],
+                    ),
+                    CustomButton(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => OverlayConfirmation(
+                            title:
+                                "Are you sure your want to delete this outfit?",
+                            buttonTextLeft: "Confirm",
+                            buttonCallBackLeft: () {
+                              Get.back();
+                              Get.back();
+                              Get.find<OutfitController>()
+                                  .deleteSavedOutfit(widget.outfit.id)
+                                  .then((message) {
+                                    if (message == "success") {
+                                      customSnackBar(
+                                        "Outfit has been deleted",
+                                        isError: false,
+                                      );
+                                    } else {
+                                      customSnackBar(message);
+                                    }
+                                  });
+                            },
+                            buttonTextRight: "Go Back",
+                            buttonCallBackRight: () {
+                              Get.back();
+                            },
+                          ),
+                        );
+                      },
+                      isSecondary: true,
+                      text: "Remove this outfit",
                     ),
                     CustomButton(
                       onTap: () {

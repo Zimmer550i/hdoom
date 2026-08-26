@@ -60,12 +60,18 @@ class _CustomCalendarState extends State<CustomCalendar> {
   void _previousMonth() {
     setState(() {
       _focusedMonth = DateTime(_focusedMonth.year, _focusedMonth.month - 1);
+      if (widget.onMonthChanged != null) {
+        widget.onMonthChanged!(_focusedMonth);
+      }
     });
   }
 
   void _nextMonth() {
     setState(() {
       _focusedMonth = DateTime(_focusedMonth.year, _focusedMonth.month + 1);
+      if (widget.onMonthChanged != null) {
+        widget.onMonthChanged!(_focusedMonth);
+      }
     });
   }
 

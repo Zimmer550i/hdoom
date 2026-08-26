@@ -9,7 +9,7 @@ class SavedOutfitModel {
   final int ratingsCount;
   final double? averageRating;
   final Map<String, double?>? ratingBreakdown;
-  final DateTime createdAt;
+  final DateTime? createdAt;
   final DateTime? updatedAt;
 
   const SavedOutfitModel({
@@ -28,15 +28,14 @@ class SavedOutfitModel {
   factory SavedOutfitModel.fromJson(Map<String, dynamic> json) {
     return SavedOutfitModel(
       id: _parseInt(json['id']),
-      savedDate: _parseDateTime(json['saved_date']),
+      savedDate:
+          _parseDateTime(json['saved_date']),
       note: json['note']?.toString() ?? '',
       isShared: _parseBool(json['is_shared']),
       outfitJob: _parseOutfitJob(json['outfit_job']),
       ratingsCount: _parseInt(json['ratings_count']),
       averageRating: _parseDouble(json['average_rating']),
-      ratingBreakdown: _parseRatingBreakdown(
-        json['rating_breakdown'],
-      ),
+      ratingBreakdown: _parseRatingBreakdown(json['rating_breakdown']),
       createdAt: _parseDateTime(json['created_at']),
       updatedAt: _parseNullableDateTime(json['updated_at']),
     );
@@ -52,7 +51,7 @@ class SavedOutfitModel {
       'ratings_count': ratingsCount,
       'average_rating': averageRating,
       'rating_breakdown': ratingBreakdown,
-      'created_at': createdAt.toIso8601String(),
+      'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
     };
   }
@@ -113,10 +112,7 @@ class SavedOutfitModel {
         other.outfitJob == outfitJob &&
         other.ratingsCount == ratingsCount &&
         other.averageRating == averageRating &&
-        _mapEquals(
-          other.ratingBreakdown,
-          ratingBreakdown,
-        ) &&
+        _mapEquals(other.ratingBreakdown, ratingBreakdown) &&
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt;
   }
@@ -221,17 +217,13 @@ class SavedOutfitModel {
     }
 
     if (value is Map) {
-      return OutfitJobModel.fromJson(
-        Map<String, dynamic>.from(value),
-      );
+      return OutfitJobModel.fromJson(Map<String, dynamic>.from(value));
     }
 
     return null;
   }
 
-  static Map<String, double?>? _parseRatingBreakdown(
-    dynamic value,
-  ) {
+  static Map<String, double?>? _parseRatingBreakdown(dynamic value) {
     if (value == null || value is! Map) {
       return null;
     }
@@ -245,10 +237,7 @@ class SavedOutfitModel {
     return result;
   }
 
-  static bool _mapEquals(
-    Map<String, double?>? a,
-    Map<String, double?>? b,
-  ) {
+  static bool _mapEquals(Map<String, double?>? a, Map<String, double?>? b) {
     if (identical(a, b)) {
       return true;
     }
@@ -274,20 +263,13 @@ class SavedOutfitModel {
     return true;
   }
 
-  static int? _mapHashCode(
-    Map<String, double?>? map,
-  ) {
+  static int? _mapHashCode(Map<String, double?>? map) {
     if (map == null) {
       return null;
     }
 
     return Object.hashAll(
-      map.entries.map(
-        (entry) => Object.hash(
-          entry.key,
-          entry.value,
-        ),
-      ),
+      map.entries.map((entry) => Object.hash(entry.key, entry.value)),
     );
   }
 }

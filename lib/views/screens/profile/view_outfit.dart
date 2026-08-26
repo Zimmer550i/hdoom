@@ -10,7 +10,8 @@ import 'package:hdoom/views/widgets/custom_networked_image.dart';
 
 class ViewOutfit extends StatefulWidget {
   final SavedOutfitModel outfit;
-  const ViewOutfit({super.key, required this.outfit});
+  final bool canRate;
+  const ViewOutfit({super.key, required this.outfit, this.canRate = true});
 
   @override
   State<ViewOutfit> createState() => _ViewOutfitState();
@@ -38,10 +39,13 @@ class _ViewOutfitState extends State<ViewOutfit> {
                       children: [
                         Text("overall_rating".tr, style: AppTexts.tlgm),
                         Spacer(),
-                        Text(
-                          "${widget.outfit.averageRating}/10",
-                          style: AppTexts.tlgm,
-                        ),
+                        if (widget.outfit.averageRating != null)
+                          Text(
+                            "${widget.outfit.averageRating}/10",
+                            style: AppTexts.tlgm,
+                          ),
+                        if (widget.outfit.averageRating == null)
+                          Text("Not rated yet", style: AppTexts.tsmr),
                       ],
                     ),
                     const SizedBox(),
@@ -65,14 +69,16 @@ class _ViewOutfitState extends State<ViewOutfit> {
                 ),
               ),
               const SizedBox(height: 50),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: CustomButton(
-                  onTap: () => Get.to(() => RateOutfit(outfit: widget.outfit)),
-                  text: "rate_now".tr,
-                  isSecondary: true,
+              if (widget.canRate)
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: CustomButton(
+                    onTap: () =>
+                        Get.to(() => RateOutfit(outfit: widget.outfit)),
+                    text: "rate_now".tr,
+                    isSecondary: true,
+                  ),
                 ),
-              ),
               const SizedBox(height: 20),
             ],
           ),

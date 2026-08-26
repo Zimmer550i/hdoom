@@ -21,12 +21,7 @@ class _SaveOutfitState extends State<SaveForADay> {
   final outfitCtrl = Get.find<OutfitController>();
 
   void onSubmit() async {
-    final date = outfitCtrl.outfitsOfTheDayDate.value;
-
-    final message = await outfitCtrl.saveOutfit(
-      outfitJobId: widget.outfit.id,
-      savedDate: "${date.year}-${date.month}-${date.day}",
-    );
+    final message = await outfitCtrl.setOutfitsOfTheDay(widget.outfit.id);
 
     if (message == "success") {
       if (mounted) {
@@ -63,7 +58,7 @@ class _SaveOutfitState extends State<SaveForADay> {
                 () => CustomCalendar(
                   selectedDate: outfitCtrl.outfitsOfTheDayDate.value,
                   markedDates: outfitCtrl.outfitsOfTheDay
-                      .map((val) => val.savedDate)
+                      .map((val) => val.generatedDate)
                       .toList(),
                   onDateSelected: (date) {
                     outfitCtrl.outfitsOfTheDayDate.value = date;

@@ -29,7 +29,7 @@ class OutfitController extends GetxController {
   final Rxn<OutfitJobModel> currentTryOnJob = Rxn<OutfitJobModel>();
   final Rxn<OutfitRatingModel> currentOutfitRating = Rxn<OutfitRatingModel>();
   final RxList<OutfitRatingDetailModel> outfitRatings = RxList.empty();
-  final RxList<SavedOutfitModel> outfitsOfTheDay = RxList.empty();
+  final RxList<OutfitJobModel> outfitsOfTheDay = RxList.empty();
   final Rx<DateTime> outfitsOfTheDayDate = Rx(DateTime.now());
 
   // ── Polling internals ────────────────────────────────────────────────────
@@ -148,7 +148,7 @@ class OutfitController extends GetxController {
 
         outfitsOfTheDay.clear();
         for (var i in data) {
-          outfitsOfTheDay.add(SavedOutfitModel.fromJson(i));
+          outfitsOfTheDay.add(OutfitJobModel.fromJson(i));
         }
 
         return "success";
@@ -159,6 +159,29 @@ class OutfitController extends GetxController {
       return e.toString();
     } finally {
       isOutfitOfTheDayLoading(false);
+    }
+  }
+
+  Future<String> setOutfitsOfTheDay(int outfitId) async {
+    isSavedLoading(true);
+    try {
+      final res = await api.post('/outfits/daily-selection/', {
+        "date":
+            "${outfitsOfTheDayDate.value.year}-${outfitsOfTheDayDate.value.month}-${outfitsOfTheDayDate.value.day}",
+        "outfit_id": outfitId,
+      }, authReq: true);
+      final body = _decodeBody(res.body);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+
+        return "success";
+      } else {
+        return _parseError(body);
+      }
+    } catch (e) {
+      return e.toString();
+    } finally {
+      isSavedLoading(false);
     }
   }
 

@@ -70,13 +70,18 @@ class _OutfitsOfTheDayTabState extends State<OutfitsOfTheDayTab> {
             CustomCalendar(
               selectedDate: outfit.outfitsOfTheDayDate.value,
               markedDates: outfit.outfitsOfTheDay
-                  .map((val) => val.savedDate)
+                  .map((val) => val.generatedDate)
                   .toList(),
               onDateSelected: (date) {
-                setState(() => outfit.outfitsOfTheDayDate.value = date);
+                outfit.outfitsOfTheDayDate.value = date;
               },
               onMonthChanged: (date) {
                 outfit.outfitsOfTheDayDate.value = date;
+                outfit.getOutfitsOfTheDay().then((message) {
+                  if (message != "success") {
+                    customSnackBar(message);
+                  }
+                });
               },
               isLoading: outfit.isOutfitOfTheDayLoading.value,
             ),
@@ -103,14 +108,14 @@ class _OutfitsOfTheDayTabState extends State<OutfitsOfTheDayTab> {
     return Obx(() {
       final idx = outfit.outfitsOfTheDay.indexWhere(
         (val) =>
-            val.savedDate.year == outfit.outfitsOfTheDayDate.value.year &&
-            val.savedDate.month == outfit.outfitsOfTheDayDate.value.month &&
-            val.savedDate.day == outfit.outfitsOfTheDayDate.value.day,
+            val.generatedDate.year == outfit.outfitsOfTheDayDate.value.year &&
+            val.generatedDate.month == outfit.outfitsOfTheDayDate.value.month &&
+            val.generatedDate.day == outfit.outfitsOfTheDayDate.value.day,
       );
       if (idx != -1) {
         final savedOutfit = outfit.outfitsOfTheDay.elementAt(idx);
 
-        if (savedOutfit.outfitJob == null) {
+        if (savedOutfit.resultImage == null) {
           return Center(
             child: Text(
               "Error loading today's outfit",
@@ -122,10 +127,14 @@ class _OutfitsOfTheDayTabState extends State<OutfitsOfTheDayTab> {
         return Column(
           spacing: 12,
           children: [
-            CustomNetworkedImage(url: savedOutfit.outfitJob?.resultImage),
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.width,
+              ),
+              child: CustomNetworkedImage(url: savedOutfit.resultImage),
+            ),
             CustomButton(
-              onTap: () =>
-                  Get.to(() => WhyThisLook(outfitJob: savedOutfit.outfitJob!)),
+              onTap: () => Get.to(() => WhyThisLook(outfitJob: savedOutfit)),
               text: "Why this look?",
             ),
           ],

@@ -121,7 +121,7 @@ class _ProfileState extends State<Profile> {
                                     OutfitCard(
                                       outfit: i,
                                       onTap: () =>
-                                          Get.to(() => ViewOutfit(outfit: i)),
+                                          Get.to(() => ViewOutfit(outfit: i, canRate: !widget.isUserProfile,)),
                                     ),
                                 ],
                               ),

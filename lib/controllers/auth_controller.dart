@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/outfit_controller.dart';
 import 'package:hdoom/controllers/user_controller.dart';
 import 'package:hdoom/services/api_service.dart';
 import 'package:hdoom/services/shared_prefs_service.dart';
@@ -118,6 +119,7 @@ class AuthController extends GetxController {
       userController.clearUser();
 
       if (res.statusCode == 200 || res.statusCode == 204) {
+        Get.find<OutfitController>().todayOutfit.value = null;
         return "success";
       } else {
         return _parseError(_decodeBody(res.body));

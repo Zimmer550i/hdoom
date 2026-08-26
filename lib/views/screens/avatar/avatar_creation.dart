@@ -303,6 +303,8 @@ class _AvatarCreationState extends State<AvatarCreation> {
           : Column(
               spacing: 4,
               children: [
+                if(wardrobe.itemCategories.entries.isEmpty)
+                  Center(child: Text("No items in your wardrobe", style: AppTexts.tsmr,)),
                 for (var i in wardrobe.itemCategories.entries.indexed)
                   selector(i.$2.key.name, i.$2.value, i.$1),
               ],

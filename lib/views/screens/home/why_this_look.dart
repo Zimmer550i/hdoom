@@ -12,8 +12,6 @@ class WhyThisLook extends StatelessWidget {
   final OutfitJobModel outfitJob;
   const WhyThisLook({super.key, required this.outfitJob});
 
-  void onSubmit() async {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,9 +101,8 @@ class WhyThisLook extends StatelessWidget {
               ),
               const SizedBox(height: 50),
               CustomButton(
-                onTap: onSubmit,
-                text: "save_this_look".tr,
-                leading: "assets/icons/save.svg",
+                onTap: () => Get.back(),
+                text: "Get Back",
               ),
               const SizedBox(height: 20),
             ],

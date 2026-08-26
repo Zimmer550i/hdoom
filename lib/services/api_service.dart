@@ -20,8 +20,8 @@ class ApiService {
 
   static Future<bool>? _refreshFuture;
 
-  ApiService() {
-    baseUrl = inDevelopment ? devUrl : prodUrl;
+  ApiService([String? overrideBaseUrl]) {
+    baseUrl = overrideBaseUrl ?? (inDevelopment ? devUrl : prodUrl);
   }
 
   void _logResponse(http.Response response, String method, Uri uri) {
