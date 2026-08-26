@@ -5,6 +5,7 @@ import 'package:hdoom/models/item_model.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
 import 'package:hdoom/utils/custom_grid_handler.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/screens/wardrobe/item_details.dart';
 import 'package:hdoom/views/screens/wardrobe/widgets/wardrobe_item_card.dart';
 
@@ -119,6 +120,11 @@ class _ItemsTabState extends State<ItemsTab> {
       childAspectRatio: _gridAspectRatio,
       mainAxisSpacing: _gridSpacing,
       crossAxisSpacing: _gridSpacing,
+      onRefresh: () => wardrobe.getWardrobeItems().then((message) {
+        if (message != "success") {
+          customSnackBar(message);
+        }
+      }),
       children: List.generate(
         items.length,
         (index) => GestureDetector(

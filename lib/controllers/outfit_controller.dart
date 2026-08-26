@@ -34,6 +34,10 @@ class OutfitController extends GetxController {
 
   // ── Polling internals ────────────────────────────────────────────────────
 
+  Timer? _todayOutfitPollTimer;
+  static const List<int> _todayOutfitPollIntervals = [15, 10, 5];
+  int _todayOutfitPollStep = 0;
+
   Timer? _tryOnPollTimer;
   static const List<int> _pollIntervals = [15, 10, 5];
   int _pollStep = 0;
@@ -41,6 +45,7 @@ class OutfitController extends GetxController {
   @override
   void onClose() {
     _cancelTryOnPolling();
+    _cancelTodayOutfitPolling();
     super.onClose();
   }
 
@@ -77,13 +82,19 @@ class OutfitController extends GetxController {
   // TODAY'S OUTFIT API
   // ══════════════════════════════════════════════════════════════════════════
 
-  /// GET /outfits/today/ — Retrieves lazy daily auto outfit recommendation.
+  /// GET /outfits/today/
+  /// Retrieves today's auto outfit recommendation.
+  /// If the outfit is still processing, polling will continue automatically.
   Future<String> getTodayOutfit({bool forceRefresh = false}) async {
-    if (todayOutfit.value != null && !forceRefresh) return "success";
+    if (todayOutfit.value != null && !forceRefresh) {
+      return "success";
+    }
 
     isTodayLoading(true);
+
     try {
       final res = await api.get('/outfits/today/', authReq: true);
+
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200) {
@@ -94,11 +105,24 @@ class OutfitController extends GetxController {
                   : <String, dynamic>{});
 
         todayOutfit.value = OutfitJobModel.fromJson(data);
+
+        final status = data['status'] as String? ?? '';
+
+        // Stop polling when processing is finished.
+        if (status == 'completed' || status == 'done' || status == 'failed') {
+          _cancelTodayOutfitPolling();
+        } else {
+          // Still processing, continue polling.
+          _startTodayOutfitPolling();
+        }
+
         return "success";
-      } else {
-        return _parseError(body);
       }
+
+      _cancelTodayOutfitPolling();
+      return _parseError(body);
     } catch (e) {
+      debugPrint('❗ Error fetching today outfit: $e');
       return e.toString();
     } finally {
       isTodayLoading(false);
@@ -123,6 +147,50 @@ class OutfitController extends GetxController {
     } finally {
       isTodayLoading(false);
     }
+  }
+
+  // ── Today's Outfit Status Polling ────────────────────────────────────────
+
+  void _startTodayOutfitPolling() {
+    _cancelTodayOutfitPolling();
+
+    _todayOutfitPollStep = 0;
+
+    _scheduleTodayOutfitPoll();
+  }
+
+  void _scheduleTodayOutfitPoll() {
+    final int delaySec = _todayOutfitPollStep < _todayOutfitPollIntervals.length
+        ? _todayOutfitPollIntervals[_todayOutfitPollStep]
+        : _todayOutfitPollIntervals.last;
+
+    debugPrint('⏳ Next today outfit poll in $delaySec seconds');
+
+    _todayOutfitPollTimer = Timer(Duration(seconds: delaySec), () async {
+      final result = await getTodayOutfit(forceRefresh: true);
+
+      if (result != 'success' || todayOutfit.value == null) {
+        _cancelTodayOutfitPolling();
+        return;
+      }
+
+      final status = todayOutfit.value?.status ?? '';
+
+      debugPrint('🔄 Today outfit polling status: $status');
+
+      if (status == 'completed' || status == 'done' || status == 'failed') {
+        _cancelTodayOutfitPolling();
+      } else {
+        _todayOutfitPollStep++;
+
+        _scheduleTodayOutfitPoll();
+      }
+    });
+  }
+
+  void _cancelTodayOutfitPolling() {
+    _todayOutfitPollTimer?.cancel();
+    _todayOutfitPollTimer = null;
   }
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -173,7 +241,6 @@ class OutfitController extends GetxController {
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
-
         return "success";
       } else {
         return _parseError(body);

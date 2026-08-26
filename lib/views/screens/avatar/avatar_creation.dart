@@ -284,7 +284,7 @@ class _AvatarCreationState extends State<AvatarCreation> {
             child: AbsorbPointer(
               child: CustomNetworkedImage(
                 radius: selectedItems.contains(item.id) ? 12 : 0,
-                url: item.analysis?.processedImage,
+                url: item.analysis?.displayUrl,
                 fit: BoxFit.cover,
               ),
             ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/ai_image_controller.dart';
+import 'package:hdoom/controllers/outfit_controller.dart';
 import 'package:hdoom/controllers/wardrobe_controller.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/screens/avatar/avatar.dart';
@@ -27,6 +29,8 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
+    Get.find<OutfitController>().todayOutfit.value = null;
+    Get.find<AiImageController>().defaultAvatar.value = null;
     Get.find<WardrobeController>().getWardrobeOptions().then((message) {
       if (message != 'success') {
         customSnackBar("Failed to initialize Wardrobe features");

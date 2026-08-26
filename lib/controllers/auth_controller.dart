@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/outfit_controller.dart';
 import 'package:hdoom/controllers/user_controller.dart';
 import 'package:hdoom/services/api_service.dart';
 import 'package:hdoom/services/shared_prefs_service.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 
 class AuthController extends GetxController {
   final api = ApiService();
@@ -107,32 +106,16 @@ class AuthController extends GetxController {
   }
 
   // 3. Logout
-  Future<String> logout() async {
-    isLoading(true);
-    try {
-      final token = await SharedPrefsService.get('refresh_token');
-      final res = await api.post("/auth/logout/", {
-        "refresh": token,
-      }, authReq: true);
-      await SharedPrefsService.remove('token');
-      await SharedPrefsService.remove('refresh_token');
-      userController.clearUser();
-
-      if (res.statusCode == 200 || res.statusCode == 204) {
-        Get.find<OutfitController>().todayOutfit.value = null;
-        return "success";
-      } else {
-        return _parseError(_decodeBody(res.body));
+  void logout() async {
+    final token = await SharedPrefsService.get('refresh_token');
+    api.post("/auth/logout/", {"refresh": token}, authReq: true).then((res) {
+      if (res.statusCode != 200 && res.statusCode != 201) {
+        customSnackBar(_parseError(_decodeBody(res.body)));
       }
-    } catch (e) {
-      // Ensure session is cleared locally even if network fails during logout
-      await SharedPrefsService.remove('token');
-      await SharedPrefsService.remove('refresh_token');
-      userController.clearUser();
-      return e.toString();
-    } finally {
-      isLoading(false);
-    }
+    });
+    await SharedPrefsService.remove('token');
+    await SharedPrefsService.remove('refresh_token');
+    userController.clearUser();
   }
 
   // 4. Verify Email

@@ -47,7 +47,7 @@ class WardrobeItemCard extends StatelessWidget {
         children: [
           // Background image
           CustomNetworkedImage(
-            url: item.analysis?.processedImage ?? item.image,
+            url: item.analysis?.displayUrl ?? item.image,
             fit: BoxFit.cover,
           ),
 

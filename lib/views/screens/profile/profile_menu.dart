@@ -100,13 +100,8 @@ class ProfileMenu extends StatelessWidget {
                             },
                             buttonTextRight: "logout".tr,
                             buttonCallBackRight: () async {
-                              final res = await Get.find<AuthController>()
-                                  .logout();
-                              if (res == "success") {
-                                Get.offAll(() => Authentication());
-                              } else {
-                                customSnackBar(res);
-                              }
+                              Get.find<AuthController>().logout();
+                              Get.offAll(() => Authentication());
                             },
                           ),
                         );

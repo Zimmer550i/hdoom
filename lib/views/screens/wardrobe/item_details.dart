@@ -40,7 +40,7 @@ class ItemDetails extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         child: CustomNetworkedImage(
                           width: double.infinity,
-                          url: item.analysis?.processedImage ?? item.image,
+                          url: item.analysis?.displayUrl ?? item.image,
                           fit: .cover,
                         ),
                       ),
