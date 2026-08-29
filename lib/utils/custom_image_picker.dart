@@ -7,12 +7,13 @@ import 'package:hdoom/utils/app_colors.dart';
 Future<File?> customImagePicker({
   bool isCircular = true,
   bool isSquared = true,
+  ImageSource source = ImageSource.gallery,
 }) async {
   final picker = ImagePicker();
   final cropper = ImageCropper();
 
   final XFile? pickedImage = await picker.pickImage(
-    source: ImageSource.gallery,
+    source: source,
   );
 
   if (pickedImage != null) {

@@ -90,6 +90,10 @@ class OutfitController extends GetxController {
       return "success";
     }
 
+    if (isTodayLoading.value) {
+      return "success";
+    }
+
     isTodayLoading(true);
 
     try {

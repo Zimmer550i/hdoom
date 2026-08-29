@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:hdoom/controllers/wardrobe_controller.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_image_picker.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/screens/wardrobe/item_details.dart';
+import 'package:hdoom/views/screens/wardrobe/widgets/image_uploader.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_text_field.dart';
@@ -54,7 +54,7 @@ class _AddNewItemState extends State<AddNewItem> {
     );
 
     if (message == "success") {
-      Get.off(() => ItemDetails(item: wardrobe.currentItem.value!,));
+      Get.off(() => ItemDetails(item: wardrobe.currentItem.value!));
       customSnackBar("Item created successfully", isError: false);
     } else {
       customSnackBar(message);
@@ -76,7 +76,14 @@ class _AddNewItemState extends State<AddNewItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
-                    _buildUploadPhoto(),
+                    ImageUploader(
+                      image: _image,
+                      onChange: (val) {
+                        setState(() {
+                          _image = val;
+                        });
+                      },
+                    ),
                     const SizedBox(height: 24),
                     _buildChipSection(
                       'category'.tr,
@@ -130,68 +137,6 @@ class _AddNewItemState extends State<AddNewItem> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildUploadPhoto() {
-    return GestureDetector(
-      onTap: () async {
-        final picked = await customImagePicker(
-          isCircular: false,
-          isSquared: false,
-        );
-
-        setState(() {
-          _image = picked;
-        });
-      },
-      child: Container(
-        width: double.infinity,
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.width / 2,
-          maxHeight: MediaQuery.of(context).size.width / 1.5,
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 40),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          image: _image != null
-              ? DecorationImage(image: FileImage(_image!))
-              : null,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: AppColors.black.shade200,
-            style: BorderStyle.solid,
-          ),
-        ),
-        child: _image == null
-            ? Column(
-                mainAxisAlignment: .center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: AppColors.green.shade500,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.camera_alt_rounded,
-                      color: Colors.white,
-                      size: 32,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text('upload_photo'.tr, style: AppTexts.tlgm),
-                  const SizedBox(height: 4),
-                  Text(
-                    'upload_from_gallery'.tr,
-                    style: AppTexts.tsmr.copyWith(
-                      color: AppColors.black.shade300,
-                    ),
-                  ),
-                ],
-              )
-            : SizedBox(),
       ),
     );
   }

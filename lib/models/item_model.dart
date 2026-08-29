@@ -56,7 +56,7 @@ class ItemAnalysisModel {
   final int id;
   final int wardrobeItem;
   final String status;
-  final String displayUrl;
+  final String? displayUrl;
   final String falCdnUrl;
   final String? processedImage;
   final String color;
@@ -84,7 +84,7 @@ class ItemAnalysisModel {
       id: json['id'] as int,
       wardrobeItem: json['wardrobe_item'] as int,
       status: json['status'] as String? ?? '',
-      displayUrl: json['display_url'] as String? ?? '',
+      displayUrl: json['display_url'] as String?,
       falCdnUrl: json['fal_cdn_url'] as String? ?? '',
       processedImage: json['processed_image'] as String?,
       color: json['color'] as String? ?? '',

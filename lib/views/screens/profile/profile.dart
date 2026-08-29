@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/feed_controller.dart';
 import 'package:hdoom/controllers/outfit_controller.dart';
 import 'package:hdoom/controllers/social_controller.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/utils/custom_svg.dart';
 import 'package:hdoom/utils/formatter.dart';
+import 'package:hdoom/views/screens/profile/feed/create_feed.dart';
+import 'package:hdoom/views/screens/profile/feed/view_feed.dart';
 import 'package:hdoom/views/screens/profile/profile_menu.dart';
 import 'package:hdoom/views/screens/profile/subscription.dart';
 import 'package:hdoom/views/screens/profile/users_list.dart';
@@ -13,6 +17,7 @@ import 'package:hdoom/views/screens/wardrobe/widgets/outfit_card.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_loading.dart';
+import 'package:hdoom/views/widgets/custom_networked_image.dart';
 import 'package:hdoom/views/widgets/profile_picture.dart';
 import 'package:hdoom/controllers/user_controller.dart';
 import 'package:hdoom/utils/custom_snackbar.dart';
@@ -29,6 +34,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final social = Get.find<SocialController>();
   final outfit = Get.find<OutfitController>();
+  final feed = Get.find<FeedController>();
   final OverlayPortalController _overlayController = OverlayPortalController();
   final LayerLink _layerLink = LayerLink();
 
@@ -59,6 +65,12 @@ class _ProfileState extends State<Profile> {
         customSnackBar(message);
       }
     });
+
+    feed.getUserPosts(username).then((message) {
+      if (message != "success") {
+        customSnackBar(message);
+      }
+    });
   }
 
   void getPublicData() {
@@ -69,6 +81,12 @@ class _ProfileState extends State<Profile> {
     });
 
     outfit.getPublicSavedOutfits(widget.username!).then((message) {
+      if (message != "success") {
+        customSnackBar(message);
+      }
+    });
+
+    feed.getUserPosts(widget.username!).then((message) {
       if (message != "success") {
         customSnackBar(message);
       }
@@ -96,6 +114,116 @@ class _ProfileState extends State<Profile> {
                             : publicProfile(),
                       ),
                       const SizedBox(height: 20),
+                      Container(
+                        padding: .all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: .circular(12),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                CustomSvg(
+                                  asset: "assets/icons/feed.svg",
+                                  size: 32,
+                                ),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () => Get.to(() => CreateFeed()),
+                                  child: Container(
+                                    width: 32,
+                                    height: 32,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: AppColors.black.shade100,
+                                      ),
+                                    ),
+                                    child: Icon(Icons.add, size: 20),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Divider(),
+                            Obx(
+                              () => feed.isPostsLoading.value
+                                  ? CustomLoading()
+                                  : feed.userFeeds.isEmpty
+                                  ? Text("Nothing to show")
+                                  : GridView(
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            mainAxisSpacing: 16,
+                                            crossAxisSpacing: 16,
+                                            childAspectRatio: 0.66,
+                                          ),
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      children: [
+                                        for (var i in feed.userFeeds)
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.to(
+                                                () => ViewFeed(
+                                                  feed: i,
+                                                  canRate:
+                                                      !widget.isUserProfile,
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: .circular(12),
+                                                border: Border.all(
+                                                  color:
+                                                      AppColors.black.shade100,
+                                                ),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: .start,
+                                                children: [
+                                                  Expanded(
+                                                    child: AbsorbPointer(
+                                                      child: ClipRRect(
+                                                        borderRadius: .vertical(
+                                                          top: Radius.circular(
+                                                            12,
+                                                          ),
+                                                        ),
+                                                        child:
+                                                            CustomNetworkedImage(
+                                                              width: double
+                                                                  .infinity,
+                                                              url: i
+                                                                  .images
+                                                                  .first
+                                                                  .image,
+                                                              fit: .cover,
+                                                            ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                          8.0,
+                                                        ),
+                                                    child: Text(i.caption),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text("outfit".tr, style: AppTexts.txlm),
@@ -120,8 +248,12 @@ class _ProfileState extends State<Profile> {
                                   for (var i in outfit.publicOutfits)
                                     OutfitCard(
                                       outfit: i,
-                                      onTap: () =>
-                                          Get.to(() => ViewOutfit(outfit: i, canRate: !widget.isUserProfile,)),
+                                      onTap: () => Get.to(
+                                        () => ViewOutfit(
+                                          outfit: i,
+                                          canRate: !widget.isUserProfile,
+                                        ),
+                                      ),
                                     ),
                                 ],
                               ),
