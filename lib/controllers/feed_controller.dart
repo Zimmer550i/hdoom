@@ -11,7 +11,6 @@ class FeedController extends GetxController {
   // ── Observables ──────────────────────────────────────────────────────────
 
   final RxBool isLoading = RxBool(false);
-  final RxBool isPostsLoading = RxBool(false);
   final RxBool isMoreLoading = RxBool(false);
   final RxBool isUserPostsLoading = RxBool(false);
   final RxBool isDetailLoading = RxBool(false);
@@ -20,7 +19,6 @@ class FeedController extends GetxController {
   final RxBool isDeleteLoading = RxBool(false);
   final RxBool isRatingLoading = RxBool(false);
 
-  final RxList<FeedModel> feeds = RxList.empty();
   final RxList<FeedModel> userFeeds = RxList.empty();
   final Rxn<FeedModel> currentPost = Rxn<FeedModel>();
   final Rxn<FeedPostRatingModel> lastRatingResult = Rxn<FeedPostRatingModel>();
@@ -111,72 +109,6 @@ class FeedController extends GetxController {
   /// GET /feed/posts/ — Retrieve paginated feed posts.
   ///
   /// Can optionally filter by [username] or page number [page].
-  Future<String> getFeedPosts({
-    int page = 1,
-    int pageSize = 20,
-    String? username,
-    bool refresh = false,
-  }) async {
-    if (page == 1) {
-      isPostsLoading(true);
-    } else {
-      isMoreLoading(true);
-    }
-
-    try {
-      final queryParams = <String, String>{
-        'page': page.toString(),
-        'page_size': pageSize.toString(),
-      };
-      if (username != null && username.isNotEmpty) {
-        queryParams['username'] = username;
-      }
-
-      final res = await api.get(
-        '/feed/posts/',
-        queryParams: queryParams,
-        authReq: true,
-      );
-      final body = _decodeBody(res.body);
-
-      if (res.statusCode == 200) {
-        final results = _extractPaginatedResults(body);
-        final count = _extractPaginatedCount(body);
-        totalCount.value = count;
-        currentPage.value = page;
-
-        final newPosts = _parseFeedList(results);
-
-        if (page == 1 || refresh) {
-          feeds.clear();
-        }
-        feeds.addAll(newPosts);
-
-        hasMore.value = feeds.length < count && newPosts.isNotEmpty;
-
-        return "success";
-      } else {
-        return _parseError(body);
-      }
-    } catch (e) {
-      return e.toString();
-    } finally {
-      isPostsLoading(false);
-      isMoreLoading(false);
-    }
-  }
-
-  /// Loads the next page of feed posts if more are available.
-  Future<String> loadMorePosts({String? username, int pageSize = 20}) async {
-    if (isMoreLoading.value || isPostsLoading.value || !hasMore.value) {
-      return "no_more";
-    }
-    return getFeedPosts(
-      page: currentPage.value + 1,
-      pageSize: pageSize,
-      username: username,
-    );
-  }
 
   /// GET /feed/posts/?username={username} — Retrieve user-specific feed posts.
   Future<String> getUserPosts(
@@ -266,7 +198,7 @@ class FeedController extends GetxController {
 
       if (res.statusCode == 200 || res.statusCode == 201) {
         final newPost = FeedModel.fromJson(_extractObject(body));
-        feeds.insert(0, newPost);
+        userFeeds.insert(0, newPost);
         totalCount.value += 1;
         return "success";
       } else {
@@ -301,9 +233,9 @@ class FeedController extends GetxController {
       if (res.statusCode == 200) {
         final updatedPost = FeedModel.fromJson(_extractObject(body));
 
-        // Update in feeds list if present
-        final idx = feeds.indexWhere((p) => p.id == id);
-        if (idx >= 0) feeds[idx] = updatedPost;
+        // Update in userFeeds list if present
+        final idx = userFeeds.indexWhere((p) => p.id == id);
+        if (idx >= 0) userFeeds[idx] = updatedPost;
 
         // Update in userFeeds list if present
         final userIdx = userFeeds.indexWhere((p) => p.id == id);
@@ -326,23 +258,26 @@ class FeedController extends GetxController {
 
   /// DELETE /feed/posts/{id}/ — Delete a post by ID.
   Future<String> deletePost(int id) async {
+    int index = userFeeds.indexWhere((p) => p.id == id);
+    FeedModel deletedFeed = userFeeds.elementAt(index);
+    userFeeds.removeAt(index);
     isDeleteLoading(true);
     try {
       final res = await api.delete('/feed/posts/$id/', authReq: true);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200 || res.statusCode == 204) {
-        feeds.removeWhere((p) => p.id == id);
-        userFeeds.removeWhere((p) => p.id == id);
         if (currentPost.value?.id == id) {
           currentPost.value = null;
         }
         totalCount.value = (totalCount.value - 1).clamp(0, 999999);
         return "success";
       } else {
+        userFeeds.insert(index, deletedFeed);
         return _parseError(body);
       }
     } catch (e) {
+      userFeeds.insert(index, deletedFeed);
       return e.toString();
     } finally {
       isDeleteLoading(false);
@@ -386,11 +321,11 @@ class FeedController extends GetxController {
 
         // Optionally refresh post details or update post rating locally
         final avg = rating.average;
-        final idx = feeds.indexWhere((p) => p.id == id);
+        final idx = userFeeds.indexWhere((p) => p.id == id);
         if (idx >= 0) {
-          feeds[idx] = feeds[idx].copyWith(
+          userFeeds[idx] = userFeeds[idx].copyWith(
             userRating: avg.toStringAsFixed(1),
-            totalRatings: feeds[idx].totalRatings + 1,
+            totalRatings: userFeeds[idx].totalRatings + 1,
           );
         }
 
@@ -418,7 +353,6 @@ class FeedController extends GetxController {
 
   /// Clears all feed cached data.
   void clearFeedData() {
-    feeds.clear();
     userFeeds.clear();
     currentPost.value = null;
     lastRatingResult.value = null;
@@ -428,4 +362,3 @@ class FeedController extends GetxController {
     userPostsTotalCount.value = 0;
   }
 }
-

@@ -75,6 +75,28 @@ class _AddNewItemState extends State<AddNewItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      "For the best results, please follow these simple guidelines:",
+                      style: AppTexts.tmdr,
+                    ),
+                    const SizedBox(height: 12,),
+                    Text("1. One item per photo", style: AppTexts.tsms),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Text(
+                        "Upload a picture containing only one specific wardrobe item.",
+                        style: AppTexts.tsmr,
+                      ),
+                    ),
+                    const SizedBox(height: 6,),
+                    Text("2. Keep the background simple", style: AppTexts.tsms),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Text(
+                        "Use a clean, plain, and uncluttered background so the item can be detected accurately.",
+                        style: AppTexts.tsmr,
+                      ),
+                    ),
                     const SizedBox(height: 20),
                     ImageUploader(
                       image: _image,

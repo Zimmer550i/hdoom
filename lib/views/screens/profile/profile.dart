@@ -147,7 +147,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             Divider(),
                             Obx(
-                              () => feed.isPostsLoading.value
+                              () => feed.isUserPostsLoading.value
                                   ? CustomLoading()
                                   : feed.userFeeds.isEmpty
                                   ? Text("Nothing to show")
