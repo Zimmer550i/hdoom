@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hdoom/controllers/feed_controller.dart';
 import 'package:hdoom/models/feed_model.dart';
 import 'package:hdoom/utils/app_colors.dart';
 import 'package:hdoom/utils/app_texts.dart';
+import 'package:hdoom/utils/custom_snackbar.dart';
 import 'package:hdoom/views/widgets/custom_app_bar.dart';
 import 'package:hdoom/views/widgets/custom_button.dart';
 import 'package:hdoom/views/widgets/custom_networked_image.dart';
+import 'package:hdoom/views/widgets/overlay_confirmation.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ViewFeed extends StatefulWidget {
@@ -94,6 +97,43 @@ class _ViewOutfitState extends State<ViewFeed> {
                     // onTap: () => Get.to(() => RateOutfit(feed: widget.feed)),
                     text: "rate_now".tr,
                     isSecondary: true,
+                  ),
+                ),
+              if (!widget.canRate)
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: CustomButton(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => OverlayConfirmation(
+                          title: "Are you sure your want to delete this post?",
+                          buttonTextLeft: "Confirm",
+                          buttonCallBackLeft: () {
+                            Get.back();
+                            Get.back();
+                            Get.find<FeedController>()
+                                .deletePost(widget.feed.id)
+                                .then((message) {
+                                  if (message == "success") {
+                                    customSnackBar(
+                                      "Post has been deleted",
+                                      isError: false,
+                                    );
+                                  } else {
+                                    customSnackBar(message);
+                                  }
+                                });
+                          },
+                          buttonTextRight: "Go Back",
+                          buttonCallBackRight: () {
+                            Get.back();
+                          },
+                        ),
+                      );
+                    },
+                    isSecondary: true,
+                    text: "Remove this post",
                   ),
                 ),
               const SizedBox(height: 20),
