@@ -296,6 +296,8 @@ class AiImageController extends GetxController {
       }
     } else {
       debugPrint('✅ Avatar polling complete: ${avatar.status}');
+      defaultAvatar.value = null;
+      defaultAvatar.value = currentAvatar.value;
       _cancelPolling();
     }
   }

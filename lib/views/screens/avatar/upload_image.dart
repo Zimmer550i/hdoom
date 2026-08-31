@@ -33,7 +33,7 @@ class _UploadImageState extends State<UploadImage> {
     );
 
     if (message == "success") {
-      Get.to(() => AvatarCreation());
+      Get.off(() => AvatarCreation());
     } else {
       customSnackBar(message);
     }
