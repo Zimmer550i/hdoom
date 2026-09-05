@@ -3,11 +3,11 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/models/outfit_job_model.dart';
-import 'package:hdoom/models/outfit_rating_detail_model.dart';
-import 'package:hdoom/models/outfit_rating_model.dart';
-import 'package:hdoom/models/saved_outfit_model.dart';
-import 'package:hdoom/services/api_service.dart';
+import 'package:khzanti/models/outfit_job_model.dart';
+import 'package:khzanti/models/outfit_rating_detail_model.dart';
+import 'package:khzanti/models/outfit_rating_model.dart';
+import 'package:khzanti/models/saved_outfit_model.dart';
+import 'package:khzanti/services/api_service.dart';
 
 class OutfitController extends GetxController {
   final api = ApiService();

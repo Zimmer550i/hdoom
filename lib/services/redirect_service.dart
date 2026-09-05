@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/auth_controller.dart';
-import 'package:hdoom/controllers/user_controller.dart';
-import 'package:hdoom/services/shared_prefs_service.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/screens/app.dart';
-import 'package:hdoom/views/screens/auth/choose_language.dart';
-import 'package:hdoom/views/screens/auth/verification.dart';
+import 'package:khzanti/controllers/auth_controller.dart';
+import 'package:khzanti/controllers/user_controller.dart';
+import 'package:khzanti/services/shared_prefs_service.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/screens/app.dart';
+import 'package:khzanti/views/screens/auth/choose_language.dart';
+import 'package:khzanti/views/screens/auth/verification.dart';
 
 class RedirectService {
   static const Duration splashDuration = Duration(seconds: 2);

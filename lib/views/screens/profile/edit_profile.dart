@@ -2,20 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/user_controller.dart';
-import 'package:hdoom/models/aesthetic_model.dart';
-import 'package:hdoom/services/redirect_service.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/views/widgets/custom_drop_down.dart';
-import 'package:hdoom/views/widgets/custom_loading.dart';
-import 'package:hdoom/views/widgets/custom_networked_image.dart';
-import 'package:hdoom/views/widgets/custom_text_field.dart';
-import 'package:hdoom/views/widgets/profile_picture.dart';
+import 'package:khzanti/controllers/user_controller.dart';
+import 'package:khzanti/models/aesthetic_model.dart';
+import 'package:khzanti/services/redirect_service.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/utils/custom_svg.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
+import 'package:khzanti/views/widgets/custom_drop_down.dart';
+import 'package:khzanti/views/widgets/custom_loading.dart';
+import 'package:khzanti/views/widgets/custom_networked_image.dart';
+import 'package:khzanti/views/widgets/custom_text_field.dart';
+import 'package:khzanti/views/widgets/profile_picture.dart';
 
 class EditProfile extends StatefulWidget {
   final bool createAccount;

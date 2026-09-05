@@ -1,5 +1,5 @@
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 // ──────────────────────────────────────────────

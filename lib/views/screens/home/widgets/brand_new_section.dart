@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/views/screens/home/show_card_lists.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_svg.dart';
+import 'package:khzanti/views/screens/home/show_card_lists.dart';
 
 /// Horizontally-scrolling "BRAND NEW" product showcase section.
 class BrandNewSection extends StatelessWidget {

@@ -1,8 +1,8 @@
-import 'package:hdoom/themes/dark_theme.dart';
-import 'package:hdoom/themes/light_theme.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_constants.dart';
-import 'package:hdoom/utils/message.dart';
+import 'package:khzanti/themes/dark_theme.dart';
+import 'package:khzanti/themes/light_theme.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_constants.dart';
+import 'package:khzanti/utils/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/outfit_controller.dart';
-import 'package:hdoom/utils/custom_grid_handler.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/screens/wardrobe/outfit_details.dart';
-import 'package:hdoom/views/screens/wardrobe/widgets/outfit_card.dart';
+import 'package:khzanti/controllers/outfit_controller.dart';
+import 'package:khzanti/utils/custom_grid_handler.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/screens/wardrobe/outfit_details.dart';
+import 'package:khzanti/views/screens/wardrobe/widgets/outfit_card.dart';
 
 // ──────────────────────────────────────────────
 // CUSTOMIZABLE VARIABLES — Change these to style

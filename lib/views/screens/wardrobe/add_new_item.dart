@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/wardrobe_controller.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/screens/wardrobe/item_details.dart';
-import 'package:hdoom/views/screens/wardrobe/widgets/image_uploader.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/views/widgets/custom_text_field.dart';
+import 'package:khzanti/controllers/wardrobe_controller.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/screens/wardrobe/item_details.dart';
+import 'package:khzanti/views/screens/wardrobe/widgets/image_uploader.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
+import 'package:khzanti/views/widgets/custom_text_field.dart';
 
 class AddNewItem extends StatefulWidget {
   const AddNewItem({super.key});

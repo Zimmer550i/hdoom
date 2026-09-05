@@ -1,8 +1,8 @@
-import 'package:hdoom/utils/app_colors.dart';
+import 'package:khzanti/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hdoom/utils/app_constants.dart';
-import 'package:hdoom/utils/app_texts.dart';
+import 'package:khzanti/utils/app_constants.dart';
+import 'package:khzanti/utils/app_texts.dart';
 
 // ──────────────────────────────────────────────
 // CUSTOMIZABLE VARIABLES — Change these to style
@@ -91,7 +91,7 @@ class _CustomButtonState extends State<CustomButton> {
           gradient: widget.isSecondary || widget.isDisabled
               ? null
               : AppConstants.DEFAULT_GRADIENT_BACKGROUND,
-              // : null,
+          // : null,
           color: widget.isSecondary
               ? _secondaryColor
               : widget.isDisabled

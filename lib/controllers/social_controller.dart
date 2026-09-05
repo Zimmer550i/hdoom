@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:hdoom/models/public_user_model.dart';
-import 'package:hdoom/services/api_service.dart';
+import 'package:khzanti/models/public_user_model.dart';
+import 'package:khzanti/services/api_service.dart';
 
 class SocialController extends GetxController {
   final api = ApiService();
@@ -105,9 +105,7 @@ class SocialController extends GetxController {
       if (item is Map<String, dynamic>) {
         users.add(PublicUserModel.fromJson(item));
       } else if (item is Map) {
-        users.add(
-          PublicUserModel.fromJson(Map<String, dynamic>.from(item)),
-        );
+        users.add(PublicUserModel.fromJson(Map<String, dynamic>.from(item)));
       }
     }
     return users;
@@ -162,10 +160,7 @@ class SocialController extends GetxController {
   Future<String> getUserProfile(String username) async {
     isProfileLoading(true);
     try {
-      final res = await api.get(
-        '/social/users/$username/',
-        authReq: true,
-      );
+      final res = await api.get('/social/users/$username/', authReq: true);
       final body = _decodeBody(res.body);
 
       if (res.statusCode == 200) {
@@ -240,8 +235,10 @@ class SocialController extends GetxController {
             viewedProfile.value!.username == username) {
           viewedProfile.value = viewedProfile.value!.copyWith(
             isFollowing: false,
-            followersCount:
-                (viewedProfile.value!.followersCount - 1).clamp(0, 999999),
+            followersCount: (viewedProfile.value!.followersCount - 1).clamp(
+              0,
+              999999,
+            ),
           );
         }
 

@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/views/screens/avatar/image_viewer.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/views/screens/avatar/image_viewer.dart';
 import 'package:shimmer/shimmer.dart';
 
 // ──────────────────────────────────────────────

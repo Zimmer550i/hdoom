@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/news_controller.dart';
-import 'package:hdoom/models/news_model.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_constants.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_loading.dart';
-import 'package:hdoom/views/widgets/custom_networked_image.dart';
+import 'package:khzanti/controllers/news_controller.dart';
+import 'package:khzanti/models/news_model.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_constants.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_loading.dart';
+import 'package:khzanti/views/widgets/custom_networked_image.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -98,8 +98,12 @@ class _NewsState extends State<News> {
                                 "<p style=\"color: red; text-align: center;\">Error Fetching Content</p>",
                             style: {
                               "img": Style(
-                                width: Width(MediaQuery.of(context).size.width/1.7),
-                                height: Height(MediaQuery.of(context).size.width/1.7)
+                                width: Width(
+                                  MediaQuery.of(context).size.width / 1.7,
+                                ),
+                                height: Height(
+                                  MediaQuery.of(context).size.width / 1.7,
+                                ),
                               ),
                               "p": Style(
                                 fontSize: FontSize(16),

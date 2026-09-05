@@ -4,9 +4,9 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/state_manager.dart';
-import 'package:hdoom/models/item_model.dart';
-import 'package:hdoom/models/wardrobe_options.dart';
-import 'package:hdoom/services/api_service.dart';
+import 'package:khzanti/models/item_model.dart';
+import 'package:khzanti/models/wardrobe_options.dart';
+import 'package:khzanti/services/api_service.dart';
 
 class WardrobeController extends GetxController {
   final api = ApiService();

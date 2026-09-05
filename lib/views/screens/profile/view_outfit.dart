@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/models/saved_outfit_model.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/views/screens/profile/rate_outfit.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/views/widgets/custom_networked_image.dart';
+import 'package:khzanti/models/saved_outfit_model.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/views/screens/profile/rate_outfit.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
+import 'package:khzanti/views/widgets/custom_networked_image.dart';
 
 class ViewOutfit extends StatefulWidget {
   final SavedOutfitModel outfit;

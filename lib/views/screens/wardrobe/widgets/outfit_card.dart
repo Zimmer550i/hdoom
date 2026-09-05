@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hdoom/models/outfit_model.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/views/widgets/custom_networked_image.dart';
+import 'package:khzanti/models/outfit_model.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/views/widgets/custom_networked_image.dart';
 
 // ──────────────────────────────────────────────
 // CUSTOMIZABLE VARIABLES — Change these to style

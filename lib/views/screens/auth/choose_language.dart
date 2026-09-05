@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/views/screens/auth/authentication.dart';
-import 'package:hdoom/views/widgets/logo.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_svg.dart';
+import 'package:khzanti/views/screens/auth/authentication.dart';
+import 'package:khzanti/views/widgets/logo.dart';
 
 class ChooseLanguage extends StatelessWidget {
   const ChooseLanguage({super.key});
@@ -23,7 +23,7 @@ class ChooseLanguage extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Welcome to HDOOMI /",
+                    "Welcome to KHZANTI /",
                     style: AppTexts.tlgm.copyWith(
                       color: AppColors.black.shade400,
                     ),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/wardrobe_controller.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/screens/wardrobe/add_new_item.dart';
-import 'package:hdoom/views/screens/wardrobe/widgets/items_tab.dart';
-import 'package:hdoom/views/screens/wardrobe/widgets/outfits_of_the_day_tab.dart';
-import 'package:hdoom/views/screens/wardrobe/widgets/outfits_tab.dart';
-import 'package:hdoom/views/widgets/custom_loading.dart';
+import 'package:khzanti/controllers/wardrobe_controller.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/screens/wardrobe/add_new_item.dart';
+import 'package:khzanti/views/screens/wardrobe/widgets/items_tab.dart';
+import 'package:khzanti/views/screens/wardrobe/widgets/outfits_of_the_day_tab.dart';
+import 'package:khzanti/views/screens/wardrobe/widgets/outfits_tab.dart';
+import 'package:khzanti/views/widgets/custom_loading.dart';
 
 // ──────────────────────────────────────────────
 // CUSTOMIZABLE VARIABLES — Change these to style

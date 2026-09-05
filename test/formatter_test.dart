@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hdoom/utils/formatter.dart';
+import 'package:khzanti/utils/formatter.dart';
 
 void main() {
   group('Formatter.compactNumber', () {

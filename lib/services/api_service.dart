@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/user_controller.dart';
-import 'package:hdoom/services/shared_prefs_service.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/screens/auth/authentication.dart';
+import 'package:khzanti/controllers/user_controller.dart';
+import 'package:khzanti/services/shared_prefs_service.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/screens/auth/authentication.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -189,12 +189,7 @@ class ApiService {
           !endpoint.contains('token/refresh')) {
         final refreshed = await refreshToken();
         if (refreshed) {
-          return post(
-            endpoint,
-            data,
-            authReq: authReq,
-            isRetry: true,
-          );
+          return post(endpoint, data, authReq: authReq, isRetry: true);
         } else {
           _handleSessionExpired();
         }
@@ -318,12 +313,7 @@ class ApiService {
           !endpoint.contains('token/refresh')) {
         final refreshed = await refreshToken();
         if (refreshed) {
-          return patch(
-            endpoint,
-            data,
-            authReq: authReq,
-            isRetry: true,
-          );
+          return patch(endpoint, data, authReq: authReq, isRetry: true);
         } else {
           _handleSessionExpired();
         }
@@ -355,11 +345,7 @@ class ApiService {
           !endpoint.contains('token/refresh')) {
         final refreshed = await refreshToken();
         if (refreshed) {
-          return delete(
-            endpoint,
-            authReq: authReq,
-            isRetry: true,
-          );
+          return delete(endpoint, authReq: authReq, isRetry: true);
         } else {
           _handleSessionExpired();
         }

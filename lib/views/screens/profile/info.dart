@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/user_controller.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_loading.dart';
-import 'package:hdoom/views/widgets/logo.dart';
+import 'package:khzanti/controllers/user_controller.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_loading.dart';
+import 'package:khzanti/views/widgets/logo.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -45,7 +45,9 @@ class Info extends StatelessWidget {
                             "<p style=\"color: red; text-align: center;\">Error Fetching Content</p>",
                         style: {
                           "img": Style(
-                            width: Width(MediaQuery.of(context).size.width / 1.7),
+                            width: Width(
+                              MediaQuery.of(context).size.width / 1.7,
+                            ),
                             height: Height(
                               MediaQuery.of(context).size.width / 1.7,
                             ),
@@ -81,7 +83,7 @@ class Info extends StatelessWidget {
                         },
                         onLinkTap: (link, attributes, element) async {
                           var url = Uri.parse(link ?? "");
-                      
+
                           if (await canLaunchUrl(url)) {
                             launchUrl(url);
                           } else {

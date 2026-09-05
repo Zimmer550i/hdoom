@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/wardrobe_controller.dart';
-import 'package:hdoom/models/item_model.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_grid_handler.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/screens/wardrobe/item_details.dart';
-import 'package:hdoom/views/screens/wardrobe/widgets/wardrobe_item_card.dart';
+import 'package:khzanti/controllers/wardrobe_controller.dart';
+import 'package:khzanti/models/item_model.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_grid_handler.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/screens/wardrobe/item_details.dart';
+import 'package:khzanti/views/screens/wardrobe/widgets/wardrobe_item_card.dart';
 
 // ──────────────────────────────────────────────
 // CUSTOMIZABLE VARIABLES — Change these to style

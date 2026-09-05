@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/ai_image_controller.dart';
-import 'package:hdoom/controllers/outfit_controller.dart';
-import 'package:hdoom/controllers/wardrobe_controller.dart';
-import 'package:hdoom/models/item_model.dart';
-import 'package:hdoom/utils/ai_loading.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_icons.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/views/screens/avatar/try_on.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/views/widgets/custom_loading.dart';
-import 'package:hdoom/views/widgets/custom_networked_image.dart';
+import 'package:khzanti/controllers/ai_image_controller.dart';
+import 'package:khzanti/controllers/outfit_controller.dart';
+import 'package:khzanti/controllers/wardrobe_controller.dart';
+import 'package:khzanti/models/item_model.dart';
+import 'package:khzanti/utils/ai_loading.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_icons.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/utils/custom_svg.dart';
+import 'package:khzanti/views/screens/avatar/try_on.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
+import 'package:khzanti/views/widgets/custom_loading.dart';
+import 'package:khzanti/views/widgets/custom_networked_image.dart';
 
 class AvatarCreation extends StatefulWidget {
   final bool useDefault;

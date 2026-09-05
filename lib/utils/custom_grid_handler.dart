@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/views/widgets/custom_loading.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/views/widgets/custom_loading.dart';
 
 class CustomGridHandler extends StatelessWidget {
   final Future<void> Function()? onRefresh;
@@ -101,7 +101,8 @@ class CustomGridHandler extends StatelessWidget {
       );
     }
 
-    final delegate = gridDelegate ??
+    final delegate =
+        gridDelegate ??
         SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
           mainAxisSpacing: mainAxisSpacing,
@@ -133,7 +134,8 @@ class CustomGridHandler extends StatelessWidget {
                   child: Center(child: CustomLoading()),
                 )
               : SafeArea(
-                  child: endWidget ??
+                  child:
+                      endWidget ??
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),

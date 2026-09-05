@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/user_controller.dart';
-import 'package:hdoom/services/api_service.dart';
-import 'package:hdoom/services/shared_prefs_service.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
+import 'package:khzanti/controllers/user_controller.dart';
+import 'package:khzanti/services/api_service.dart';
+import 'package:khzanti/services/shared_prefs_service.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
 
 class AuthController extends GetxController {
   final api = ApiService();

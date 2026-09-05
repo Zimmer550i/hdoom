@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
-import 'package:hdoom/models/feed_model.dart';
-import 'package:hdoom/services/api_service.dart';
+import 'package:khzanti/models/feed_model.dart';
+import 'package:khzanti/services/api_service.dart';
 
 class FeedController extends GetxController {
   final api = ApiService();

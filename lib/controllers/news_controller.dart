@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:get/state_manager.dart';
-import 'package:hdoom/models/news_model.dart';
-import 'package:hdoom/services/api_service.dart';
+import 'package:khzanti/models/news_model.dart';
+import 'package:khzanti/services/api_service.dart';
 
 class NewsController extends GetxController {
   final api = ApiService();

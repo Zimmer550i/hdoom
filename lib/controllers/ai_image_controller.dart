@@ -4,9 +4,9 @@ import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/models/avatar_model.dart';
-import 'package:hdoom/models/three_d_conversion_model.dart';
-import 'package:hdoom/services/api_service.dart';
+import 'package:khzanti/models/avatar_model.dart';
+import 'package:khzanti/models/three_d_conversion_model.dart';
+import 'package:khzanti/services/api_service.dart';
 
 class AiImageController extends GetxController {
   final api = ApiService();

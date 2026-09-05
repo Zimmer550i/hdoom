@@ -1,4 +1,4 @@
-import 'package:hdoom/models/wardrobe_options.dart';
+import 'package:khzanti/models/wardrobe_options.dart';
 
 class ItemModel {
   final int id;

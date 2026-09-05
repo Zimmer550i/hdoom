@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/views/widgets/custom_networked_image.dart';
+import 'package:khzanti/utils/custom_svg.dart';
+import 'package:khzanti/views/widgets/custom_networked_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ImageViewer extends StatelessWidget {

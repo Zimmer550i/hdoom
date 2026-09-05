@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/feed_controller.dart';
-import 'package:hdoom/models/feed_model.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/views/widgets/custom_networked_image.dart';
-import 'package:hdoom/views/widgets/overlay_confirmation.dart';
+import 'package:khzanti/controllers/feed_controller.dart';
+import 'package:khzanti/models/feed_model.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
+import 'package:khzanti/views/widgets/custom_networked_image.dart';
+import 'package:khzanti/views/widgets/overlay_confirmation.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ViewFeed extends StatefulWidget {

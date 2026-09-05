@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/auth_controller.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/views/screens/auth/authentication.dart';
-import 'package:hdoom/views/screens/profile/change_password.dart';
-import 'package:hdoom/views/screens/profile/edit_profile.dart';
-import 'package:hdoom/views/screens/profile/info.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/views/widgets/custom_text_field.dart';
-import 'package:hdoom/views/widgets/overlay_confirmation.dart';
+import 'package:khzanti/controllers/auth_controller.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/utils/custom_svg.dart';
+import 'package:khzanti/views/screens/auth/authentication.dart';
+import 'package:khzanti/views/screens/profile/change_password.dart';
+import 'package:khzanti/views/screens/profile/edit_profile.dart';
+import 'package:khzanti/views/screens/profile/info.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
+import 'package:khzanti/views/widgets/custom_text_field.dart';
+import 'package:khzanti/views/widgets/overlay_confirmation.dart';
 
 class ProfileMenu extends StatelessWidget {
   final LayerLink _layerLink;

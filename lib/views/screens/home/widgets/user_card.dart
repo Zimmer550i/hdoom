@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/models/public_user_model.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/views/screens/profile/profile.dart';
-import 'package:hdoom/views/widgets/profile_picture.dart';
+import 'package:khzanti/models/public_user_model.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/views/screens/profile/profile.dart';
+import 'package:khzanti/views/widgets/profile_picture.dart';
 
 class UserCard extends StatelessWidget {
   final PublicUserModel userInfo;

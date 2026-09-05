@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/views/screens/home/show_card_lists.dart';
-import 'package:hdoom/views/widgets/profile_picture.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_svg.dart';
+import 'package:khzanti/views/screens/home/show_card_lists.dart';
+import 'package:khzanti/views/widgets/profile_picture.dart';
 
 /// Horizontally-scrolling "FRIENDS STYLE" social feed section
 /// showing friends' outfit photos with their handles.

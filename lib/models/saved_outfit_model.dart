@@ -1,4 +1,4 @@
-import 'package:hdoom/models/outfit_job_model.dart';
+import 'package:khzanti/models/outfit_job_model.dart';
 
 class SavedOutfitModel {
   final int id;
@@ -28,8 +28,7 @@ class SavedOutfitModel {
   factory SavedOutfitModel.fromJson(Map<String, dynamic> json) {
     return SavedOutfitModel(
       id: _parseInt(json['id']),
-      savedDate:
-          _parseDateTime(json['saved_date']),
+      savedDate: _parseDateTime(json['saved_date']),
       note: json['note']?.toString() ?? '',
       isShared: _parseBool(json['is_shared']),
       outfitJob: _parseOutfitJob(json['outfit_job']),

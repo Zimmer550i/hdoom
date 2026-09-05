@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/ai_image_controller.dart';
-import 'package:hdoom/controllers/outfit_controller.dart';
-import 'package:hdoom/controllers/wardrobe_controller.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/screens/avatar/avatar.dart';
-import 'package:hdoom/views/screens/home/home.dart';
-import 'package:hdoom/views/screens/profile/profile.dart';
-import 'package:hdoom/views/screens/wardrobe/wardrobe.dart';
-import 'package:hdoom/views/widgets/custom_bottom_navbar.dart';
+import 'package:khzanti/controllers/ai_image_controller.dart';
+import 'package:khzanti/controllers/outfit_controller.dart';
+import 'package:khzanti/controllers/wardrobe_controller.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/screens/avatar/avatar.dart';
+import 'package:khzanti/views/screens/home/home.dart';
+import 'package:khzanti/views/screens/profile/profile.dart';
+import 'package:khzanti/views/screens/wardrobe/wardrobe.dart';
+import 'package:khzanti/views/widgets/custom_bottom_navbar.dart';
 
 class App extends StatefulWidget {
   const App({super.key});

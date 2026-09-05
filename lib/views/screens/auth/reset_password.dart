@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/views/screens/auth/password_updated.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/controllers/auth_controller.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/widgets/custom_text_field.dart';
-import 'package:hdoom/views/widgets/logo.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/views/screens/auth/password_updated.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
+import 'package:khzanti/controllers/auth_controller.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/widgets/custom_text_field.dart';
+import 'package:khzanti/views/widgets/logo.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -29,7 +29,8 @@ class _ResetPasswordState extends State<ResetPassword> {
   }
 
   void onSubmit() async {
-    if (newPasswordController.text.isEmpty || confirmPasswordController.text.isEmpty) {
+    if (newPasswordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty) {
       customSnackBar("Please enter and confirm your new password");
       return;
     }

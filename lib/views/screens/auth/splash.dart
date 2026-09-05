@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hdoom/services/redirect_service.dart';
+import 'package:khzanti/services/redirect_service.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});

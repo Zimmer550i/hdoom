@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/feed_controller.dart';
-import 'package:hdoom/controllers/outfit_controller.dart';
-import 'package:hdoom/controllers/social_controller.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/utils/custom_svg.dart';
-import 'package:hdoom/utils/formatter.dart';
-import 'package:hdoom/views/screens/profile/feed/create_feed.dart';
-import 'package:hdoom/views/screens/profile/feed/view_feed.dart';
-import 'package:hdoom/views/screens/profile/profile_menu.dart';
-import 'package:hdoom/views/screens/profile/subscription.dart';
-import 'package:hdoom/views/screens/profile/users_list.dart';
-import 'package:hdoom/views/screens/profile/view_outfit.dart';
-import 'package:hdoom/views/screens/wardrobe/widgets/outfit_card.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/views/widgets/custom_loading.dart';
-import 'package:hdoom/views/widgets/custom_networked_image.dart';
-import 'package:hdoom/views/widgets/profile_picture.dart';
-import 'package:hdoom/controllers/user_controller.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
+import 'package:khzanti/controllers/feed_controller.dart';
+import 'package:khzanti/controllers/outfit_controller.dart';
+import 'package:khzanti/controllers/social_controller.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/utils/custom_svg.dart';
+import 'package:khzanti/utils/formatter.dart';
+import 'package:khzanti/views/screens/profile/feed/create_feed.dart';
+import 'package:khzanti/views/screens/profile/feed/view_feed.dart';
+import 'package:khzanti/views/screens/profile/profile_menu.dart';
+import 'package:khzanti/views/screens/profile/subscription.dart';
+import 'package:khzanti/views/screens/profile/users_list.dart';
+import 'package:khzanti/views/screens/profile/view_outfit.dart';
+import 'package:khzanti/views/screens/wardrobe/widgets/outfit_card.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
+import 'package:khzanti/views/widgets/custom_loading.dart';
+import 'package:khzanti/views/widgets/custom_networked_image.dart';
+import 'package:khzanti/views/widgets/profile_picture.dart';
+import 'package:khzanti/controllers/user_controller.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
 
 class Profile extends StatefulWidget {
   final bool isUserProfile;
@@ -315,7 +315,7 @@ class _ProfileState extends State<Profile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "HDOOM-i",
+                      "KHZANTI",
                       style: AppTexts.tmds.copyWith(color: AppColors.gold),
                     ),
                     Text("subscription_active".tr, style: AppTexts.tsmr),

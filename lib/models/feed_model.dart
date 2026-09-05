@@ -1,4 +1,4 @@
-import 'package:hdoom/models/public_user_model.dart';
+import 'package:khzanti/models/public_user_model.dart';
 
 typedef FeedUser = PublicUserModel;
 
@@ -42,38 +42,40 @@ class FeedModel {
       user: json['user'] is Map<String, dynamic>
           ? PublicUserModel.fromJson(json['user'] as Map<String, dynamic>)
           : json['user'] is Map
-              ? PublicUserModel.fromJson(
-                  Map<String, dynamic>.from(json['user'] as Map),
-                )
-              : const PublicUserModel(id: 0, username: '', name: ''),
+          ? PublicUserModel.fromJson(
+              Map<String, dynamic>.from(json['user'] as Map),
+            )
+          : const PublicUserModel(id: 0, username: '', name: ''),
       caption: json['caption'] as String? ?? '',
       privacy: json['privacy'] as String? ?? 'public',
       images: (json['images'] as List<dynamic>? ?? [])
-          .map((item) => FeedImage.fromJson(
-                item is Map<String, dynamic>
-                    ? item
-                    : Map<String, dynamic>.from(item as Map),
-              ))
+          .map(
+            (item) => FeedImage.fromJson(
+              item is Map<String, dynamic>
+                  ? item
+                  : Map<String, dynamic>.from(item as Map),
+            ),
+          )
           .toList(),
       avgColorHarmony: json['avg_color_harmony'] != null
           ? (json['avg_color_harmony'] is num
-              ? json['avg_color_harmony'] as num
-              : num.tryParse(json['avg_color_harmony'].toString()))
+                ? json['avg_color_harmony'] as num
+                : num.tryParse(json['avg_color_harmony'].toString()))
           : null,
       avgTrendy: json['avg_trendy'] != null
           ? (json['avg_trendy'] is num
-              ? json['avg_trendy'] as num
-              : num.tryParse(json['avg_trendy'].toString()))
+                ? json['avg_trendy'] as num
+                : num.tryParse(json['avg_trendy'].toString()))
           : null,
       avgOverallMatching: json['avg_overall_matching'] != null
           ? (json['avg_overall_matching'] is num
-              ? json['avg_overall_matching'] as num
-              : num.tryParse(json['avg_overall_matching'].toString()))
+                ? json['avg_overall_matching'] as num
+                : num.tryParse(json['avg_overall_matching'].toString()))
           : null,
       avgAccessories: json['avg_accessories'] != null
           ? (json['avg_accessories'] is num
-              ? json['avg_accessories'] as num
-              : num.tryParse(json['avg_accessories'].toString()))
+                ? json['avg_accessories'] as num
+                : num.tryParse(json['avg_accessories'].toString()))
           : null,
       totalRatings: (json['total_ratings'] is int)
           ? json['total_ratings'] as int
@@ -197,8 +199,9 @@ class FeedPostRatingModel {
   factory FeedPostRatingModel.fromJson(Map<String, dynamic> json) {
     PublicUserModel? raterModel;
     if (json['rater'] is Map<String, dynamic>) {
-      raterModel =
-          PublicUserModel.fromJson(json['rater'] as Map<String, dynamic>);
+      raterModel = PublicUserModel.fromJson(
+        json['rater'] as Map<String, dynamic>,
+      );
     } else if (json['rater'] is Map) {
       raterModel = PublicUserModel.fromJson(
         Map<String, dynamic>.from(json['rater'] as Map),

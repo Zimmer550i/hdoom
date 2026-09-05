@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/app_texts.dart';
-import 'package:hdoom/views/widgets/custom_loading.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/app_texts.dart';
+import 'package:khzanti/views/widgets/custom_loading.dart';
 
 class CustomCalendar extends StatefulWidget {
   final List<DateTime> markedDates;

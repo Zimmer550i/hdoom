@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/feed_controller.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/screens/wardrobe/widgets/image_uploader.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/views/widgets/custom_text_field.dart';
+import 'package:khzanti/controllers/feed_controller.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/screens/wardrobe/widgets/image_uploader.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
+import 'package:khzanti/views/widgets/custom_text_field.dart';
 
 class CreateFeed extends StatefulWidget {
   const CreateFeed({super.key});
@@ -84,10 +84,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                   _images.removeAt(index);
                                 });
                               },
-                              child: Icon(
-                                Icons.cancel,
-                                color: AppColors.black,
-                              ),
+                              child: Icon(Icons.cancel, color: AppColors.black),
                             ),
                           ),
                         ),

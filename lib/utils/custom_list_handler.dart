@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hdoom/utils/app_colors.dart';
-import 'package:hdoom/views/widgets/custom_loading.dart';
+import 'package:khzanti/utils/app_colors.dart';
+import 'package:khzanti/views/widgets/custom_loading.dart';
 
 class CustomListHandler extends StatelessWidget {
   final Future<void> Function()? onRefresh;
@@ -118,7 +118,8 @@ class CustomListHandler extends StatelessWidget {
             return Center(child: CustomLoading());
           }
           return SafeArea(
-            child: endWidget ??
+            child:
+                endWidget ??
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

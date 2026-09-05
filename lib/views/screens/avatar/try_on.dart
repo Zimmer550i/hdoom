@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hdoom/controllers/outfit_controller.dart';
-import 'package:hdoom/utils/ai_loading.dart';
-import 'package:hdoom/utils/custom_snackbar.dart';
-import 'package:hdoom/views/widgets/custom_app_bar.dart';
-import 'package:hdoom/views/widgets/custom_button.dart';
-import 'package:hdoom/views/widgets/custom_networked_image.dart';
+import 'package:khzanti/controllers/outfit_controller.dart';
+import 'package:khzanti/utils/ai_loading.dart';
+import 'package:khzanti/utils/custom_snackbar.dart';
+import 'package:khzanti/views/widgets/custom_app_bar.dart';
+import 'package:khzanti/views/widgets/custom_button.dart';
+import 'package:khzanti/views/widgets/custom_networked_image.dart';
 
 class TryOn extends StatefulWidget {
   const TryOn({super.key});
@@ -40,14 +40,15 @@ class _TryOnState extends State<TryOn> {
                 tryOn.currentTryOnJob.value?.status == "processing"
                     ? AiLoading()
                     : ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: MediaQuery.of(context).size.width
-                      ),
-                      child: CustomNetworkedImage(
-                          url: tryOn.currentTryOnJob.value?.resultImage,
-                          errorMessage: tryOn.currentTryOnJob.value?.errorMessage,
+                        constraints: BoxConstraints(
+                          minHeight: MediaQuery.of(context).size.width,
                         ),
-                    ),
+                        child: CustomNetworkedImage(
+                          url: tryOn.currentTryOnJob.value?.resultImage,
+                          errorMessage:
+                              tryOn.currentTryOnJob.value?.errorMessage,
+                        ),
+                      ),
                 if (tryOn.currentTryOnJob.value?.status != "processing")
                   Padding(
                     padding: const EdgeInsets.all(20.0),
