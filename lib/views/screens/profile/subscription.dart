@@ -41,22 +41,14 @@ class Subscription extends StatelessWidget {
                         SizedBox(height: MediaQuery.of(context).size.width / 3),
                         Text(
                           "features".tr,
-                          style: AppTexts.tlgm.copyWith(color: AppColors.green),
+                          style: AppTexts.tlgm.copyWith(color: AppColors.gold),
                         ),
-                        featureRow(
-                          "feature_unlimited_recommendations".tr,
-                        ),
-                        featureRow(
-                          "feature_advanced_ai".tr,
-                        ),
+                        featureRow("feature_unlimited_recommendations".tr),
+                        featureRow("feature_advanced_ai".tr),
                         featureRow("feature_event_based".tr),
-                        featureRow(
-                          "feature_why_this_look".tr,
-                        ),
+                        featureRow("feature_why_this_look".tr),
                         featureRow("feature_influencer_content".tr),
-                        featureRow(
-                          "feature_save_unlimited".tr,
-                        ),
+                        featureRow("feature_save_unlimited".tr),
                         featureRow("feature_ad_free".tr),
                         const SizedBox(height: 80),
                       ],
@@ -155,7 +147,7 @@ class Subscription extends StatelessWidget {
           width: 8,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.green,
+            color: AppColors.gold,
           ),
         ),
         Expanded(child: Text(feature, style: AppTexts.tsmr)),

@@ -94,6 +94,7 @@ class _StyleNewsCardState extends State<StyleNewsCard> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
+                      // color: AppColors.gold,
                       gradient: AppConstants.DEFAULT_GRADIENT_BACKGROUND,
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(8),
@@ -168,7 +169,7 @@ class _StyleNewsCardState extends State<StyleNewsCard> {
                   Container(
                     width: double.infinity,
                     height: 0.5,
-                    color: AppColors.green.shade100,
+                    color: AppColors.gold.shade100,
                   ),
               ],
             ),

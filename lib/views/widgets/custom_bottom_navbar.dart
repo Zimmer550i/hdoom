@@ -8,7 +8,7 @@ import 'package:hdoom/utils/custom_svg.dart';
 // ──────────────────────────────────────────────
 
 // Colors
-const _selectedColor = AppColors.green;
+const _selectedColor = AppColors.gold;
 final _unselectedColor = AppColors.black.shade300;
 
 // Sizing

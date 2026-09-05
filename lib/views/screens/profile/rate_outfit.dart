@@ -125,8 +125,8 @@ class _RateOutfitState extends State<RateOutfit> {
                 ratingValues[name] = val;
               });
             },
-            activeColor: AppColors.green,
-            thumbColor: AppColors.green,
+            activeColor: AppColors.gold,
+            thumbColor: AppColors.gold,
             showValueIndicator: ShowValueIndicator.alwaysVisible,
             padding: .zero,
           ),

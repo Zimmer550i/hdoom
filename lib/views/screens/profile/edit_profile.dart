@@ -48,17 +48,14 @@ class _EditProfileState extends State<EditProfile> {
     'plus_size',
   ];
 
-  List<String> get genderDisplayOptions => [
-        "male".tr,
-        "female".tr,
-      ];
+  List<String> get genderDisplayOptions => ["male".tr, "female".tr];
 
   List<String> get bodyTypeDisplayOptions => [
-        "slim".tr,
-        "athletic".tr,
-        "stocky".tr,
-        "curvy".tr,
-      ];
+    "slim".tr,
+    "athletic".tr,
+    "stocky".tr,
+    "curvy".tr,
+  ];
 
   @override
   void initState() {
@@ -251,7 +248,8 @@ class _EditProfileState extends State<EditProfile> {
                                   options: genderDisplayOptions,
                                   initialPick: _genderInitialIndex,
                                   onChanged: (index, value) {
-                                    if (index >= 0 && index < genderValues.length) {
+                                    if (index >= 0 &&
+                                        index < genderValues.length) {
                                       selectedGender = genderValues[index];
                                     }
                                   },
@@ -315,11 +313,11 @@ class _EditProfileState extends State<EditProfile> {
                             : GridView(
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 20,
-                                  crossAxisSpacing: 20,
-                                  childAspectRatio: 0.88,
-                                ),
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 20,
+                                      crossAxisSpacing: 20,
+                                      childAspectRatio: 0.88,
+                                    ),
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 children: [
@@ -363,7 +361,7 @@ class _EditProfileState extends State<EditProfile> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: isSelected
-              ? Border.all(width: 2, color: AppColors.green.shade400)
+              ? Border.all(width: 2, color: AppColors.gold.shade400)
               : Border.all(width: 2, color: Colors.transparent),
         ),
         child: Stack(
@@ -407,7 +405,7 @@ class _EditProfileState extends State<EditProfile> {
                     child: Text(
                       aesthetic.name.isNotEmpty
                           ? aesthetic.name.substring(0, 1).toUpperCase() +
-                              aesthetic.name.substring(1)
+                                aesthetic.name.substring(1)
                           : '',
                       style: AppTexts.tmds.copyWith(color: Colors.white),
                     ),

@@ -32,7 +32,7 @@ class AppConstants {
   static const LinearGradient DEFAULT_GRADIENT_BACKGROUND = LinearGradient(
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
-    colors: [Color.fromRGBO(2, 72, 50, 0.8), Color.fromRGBO(9, 79, 26, 0.8)],
+    colors: [Color(0xFFb59856), Color(0xFFa37e2c)],
     stops: [0.149, 1],
   );
 }

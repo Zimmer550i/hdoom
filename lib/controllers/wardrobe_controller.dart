@@ -122,6 +122,7 @@ class WardrobeController extends GetxController {
         final item = ItemModel.fromJson(data);
         items.add(item);
         currentItem.value = item;
+        populateItemCategories();
 
         _startItemStatusPolling(item.id);
 

@@ -214,12 +214,12 @@ class _CustomCalendarState extends State<CustomCalendar> {
     BoxDecoration? decoration;
     if (selected) {
       decoration = BoxDecoration(
-        color: AppColors.green.shade700,
+        color: AppColors.gold.shade700,
         shape: BoxShape.circle,
       );
     } else if (marked) {
       decoration = BoxDecoration(
-        color: AppColors.green.shade50,
+        color: AppColors.gold.shade50,
         shape: BoxShape.circle,
       );
     }

@@ -6,7 +6,7 @@ import 'package:hdoom/utils/app_colors.dart';
 // ──────────────────────────────────────────────
 
 // Colors
-final _defaultLoaderColor = AppColors.green.shade500;
+final _defaultLoaderColor = AppColors.gold.shade500;
 
 // ──────────────────────────────────────────────
 

@@ -244,7 +244,7 @@ class _AvatarCreationState extends State<AvatarCreation> {
                 height: 200,
                 width: 200,
                 child: CircularProgressIndicator(
-                  color: AppColors.green.shade400,
+                  color: AppColors.gold.shade400,
                   strokeCap: StrokeCap.round,
                   strokeWidth: 14,
                 ),
@@ -277,7 +277,7 @@ class _AvatarCreationState extends State<AvatarCreation> {
             decoration: BoxDecoration(
               color: Colors.white,
               border: selectedItems.contains(item.id)
-                  ? Border.all(color: AppColors.green)
+                  ? Border.all(color: AppColors.gold)
                   : null,
               borderRadius: BorderRadius.circular(12),
             ),
@@ -298,13 +298,20 @@ class _AvatarCreationState extends State<AvatarCreation> {
 
   Widget getWardrobe() {
     return Obx(
-      () => wardrobe.isWardrobeItemsLoading.value
+      () =>
+          wardrobe.isWardrobeItemsLoading.value &&
+              wardrobe.itemCategories.isEmpty
           ? CustomLoading()
           : Column(
               spacing: 4,
               children: [
-                if(wardrobe.itemCategories.entries.isEmpty)
-                  Center(child: Text("No items in your wardrobe", style: AppTexts.tsmr,)),
+                if (wardrobe.itemCategories.entries.isEmpty)
+                  Center(
+                    child: Text(
+                      "No items in your wardrobe",
+                      style: AppTexts.tsmr,
+                    ),
+                  ),
                 for (var i in wardrobe.itemCategories.entries.indexed)
                   selector(i.$2.key.name, i.$2.value, i.$1),
               ],

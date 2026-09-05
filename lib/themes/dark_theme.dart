@@ -6,8 +6,8 @@ ThemeData dark() => ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: AppColors.bg,
   colorScheme: ColorScheme.dark(
-    primary: AppColors.green,
-    secondary: AppColors.green.shade300,
+    primary: AppColors.gold,
+    secondary: AppColors.gold.shade300,
     surface: AppColors.black.shade800,
   ),
 );

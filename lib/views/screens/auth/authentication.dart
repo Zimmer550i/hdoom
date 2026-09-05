@@ -104,7 +104,7 @@ class _AuthenticationState extends State<Authentication> {
                   borderRadius: BorderRadius.circular(99),
                   color: Colors.white,
                   border: Border.all(
-                    color: AppColors.green.shade100,
+                    color: AppColors.gold.shade100,
                     width: 0.5,
                   ),
                 ),
@@ -147,7 +147,7 @@ class _AuthenticationState extends State<Authentication> {
                         },
                         child: Text(
                           "forgot_password".tr,
-                          style: AppTexts.tsmr.copyWith(color: AppColors.green),
+                          style: AppTexts.tsmr.copyWith(color: AppColors.gold),
                         ),
                       ),
                     ),

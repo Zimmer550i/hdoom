@@ -10,9 +10,9 @@ import 'package:hdoom/utils/app_texts.dart';
 
 // Colors
 const _backgroundColor = Colors.white;
-final _focusBorderColor = AppColors.green[300]!;
-final _defaultBorderColor = AppColors.green[100]!;
-final _cursorColor = AppColors.green.shade300;
+final _focusBorderColor = AppColors.gold[300]!;
+final _defaultBorderColor = AppColors.gold[100]!;
+final _cursorColor = AppColors.gold.shade300;
 const _errorColor = AppColors.red;
 
 // Border
@@ -28,7 +28,7 @@ const _iconSize = 24.0;
 const _itemSpacing = 8.0;
 
 // Icon colors
-const _iconFocusedColor = AppColors.green;
+const _iconFocusedColor = AppColors.gold;
 final _iconUnfocusedColor = AppColors.black.shade400;
 final _toggleIconUnfocusedColor = AppColors.black.shade100;
 

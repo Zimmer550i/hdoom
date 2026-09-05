@@ -14,7 +14,7 @@ AppBar buildHomeAppBar() {
   return AppBar(
     titleSpacing: 0,
     backgroundColor: AppColors.bg,
-    surfaceTintColor: AppColors.green,
+    surfaceTintColor: AppColors.gold,
     title: Row(
       children: [
         const SizedBox(width: 20),
@@ -37,7 +37,7 @@ AppBar buildHomeAppBar() {
                         ? userController.user!.name
                         : "User",
                   }),
-                  style: AppTexts.txlm.copyWith(color: AppColors.green),
+                  style: AppTexts.txlm.copyWith(color: AppColors.gold),
                 ),
               ),
               Text(

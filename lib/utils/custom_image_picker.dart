@@ -12,9 +12,7 @@ Future<File?> customImagePicker({
   final picker = ImagePicker();
   final cropper = ImageCropper();
 
-  final XFile? pickedImage = await picker.pickImage(
-    source: source,
-  );
+  final XFile? pickedImage = await picker.pickImage(source: source);
 
   if (pickedImage != null) {
     final CroppedFile? croppedImage = await cropper.cropImage(
@@ -22,9 +20,9 @@ Future<File?> customImagePicker({
       uiSettings: [
         AndroidUiSettings(
           toolbarTitle: 'Crop your image',
-          toolbarColor: AppColors.green,
+          toolbarColor: AppColors.gold,
           toolbarWidgetColor: Colors.blue[50],
-          backgroundColor: AppColors.green,
+          backgroundColor: AppColors.gold,
           statusBarLight: false,
           cropStyle: isCircular ? CropStyle.circle : CropStyle.rectangle,
           hideBottomControls: isSquared,

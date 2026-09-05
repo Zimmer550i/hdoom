@@ -6,8 +6,8 @@ import 'package:hdoom/utils/app_colors.dart';
 // ──────────────────────────────────────────────
 
 // Colors
-final _indicatorBackgroundColor = AppColors.green[400]!;
-final _indicatorShadowColor = AppColors.green[800]!;
+final _indicatorBackgroundColor = AppColors.gold[400]!;
+final _indicatorShadowColor = AppColors.gold[800]!;
 
 // Sizing
 const _thresholdMin = 80.0;

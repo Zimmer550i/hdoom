@@ -79,7 +79,7 @@ class _AddNewItemState extends State<AddNewItem> {
                       "For the best results, please follow these simple guidelines:",
                       style: AppTexts.tmdr,
                     ),
-                    const SizedBox(height: 12,),
+                    const SizedBox(height: 12),
                     Text("1. One item per photo", style: AppTexts.tsms),
                     Padding(
                       padding: const EdgeInsets.only(left: 16),
@@ -88,7 +88,7 @@ class _AddNewItemState extends State<AddNewItem> {
                         style: AppTexts.tsmr,
                       ),
                     ),
-                    const SizedBox(height: 6,),
+                    const SizedBox(height: 6),
                     Text("2. Keep the background simple", style: AppTexts.tsms),
                     Padding(
                       padding: const EdgeInsets.only(left: 16),
@@ -188,12 +188,12 @@ class _AddNewItemState extends State<AddNewItem> {
                   ),
                   decoration: BoxDecoration(
                     color: i == selected
-                        ? AppColors.green.shade500
+                        ? AppColors.gold.shade500
                         : Colors.white,
                     borderRadius: BorderRadius.circular(24),
                     border: Border.all(
                       color: i == selected
-                          ? AppColors.green.shade500
+                          ? AppColors.gold.shade500
                           : AppColors.black.shade200,
                     ),
                   ),

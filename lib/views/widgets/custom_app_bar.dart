@@ -11,7 +11,7 @@ import 'package:hdoom/utils/custom_svg.dart';
 
 // Colors
 final _backgroundColor = AppColors.bg;
-final _titleColor = AppColors.green[700]!;
+final _titleColor = AppColors.gold[700]!;
 
 // Sizing
 const _appBarHeight = 44.0;
@@ -40,7 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: _backgroundColor,
-      surfaceTintColor: AppColors.green,
+      surfaceTintColor: AppColors.gold,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
       title: SizedBox(
@@ -48,7 +48,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             SizedBox(width: _leadingStartPadding),
-            if (hasLeading)    
+            if (hasLeading)
               InkWell(
                 onTap: () => hasLeading ? Get.back() : null,
                 borderRadius: BorderRadius.circular(_leadingRadius),

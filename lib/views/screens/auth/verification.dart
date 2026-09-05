@@ -73,10 +73,15 @@ class _VerificationState extends State<Verification> {
       final authController = Get.find<AuthController>();
       final res = await authController.resendOtp(
         widget.email,
-        purpose: widget.isResettingPassword ? 'password_reset' : 'email_verification',
+        purpose: widget.isResettingPassword
+            ? 'password_reset'
+            : 'email_verification',
       );
       if (res == "success") {
-        customSnackBar("Verification code resent successfully!", isError: false);
+        customSnackBar(
+          "Verification code resent successfully!",
+          isError: false,
+        );
         startTimer();
       } else {
         customSnackBar(res);
@@ -120,11 +125,11 @@ class _VerificationState extends State<Verification> {
                 controller: pinController,
                 length: 6,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                cursor: Container(height: 20, width: 2, color: AppColors.green),
+                cursor: Container(height: 20, width: 2, color: AppColors.gold),
                 defaultPinTheme: PinTheme(
                   height: 50,
                   width: 50,
-                  textStyle: AppTexts.tmds.copyWith(color: AppColors.green),
+                  textStyle: AppTexts.tmds.copyWith(color: AppColors.gold),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
@@ -140,7 +145,7 @@ class _VerificationState extends State<Verification> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
-                    border: Border.all(width: 0.5, color: AppColors.green),
+                    border: Border.all(width: 0.5, color: AppColors.gold),
                   ),
                 ),
               ),
@@ -151,7 +156,7 @@ class _VerificationState extends State<Verification> {
                     onTap: resendCode,
                     child: Text(
                       "resend_code".tr,
-                      style: AppTexts.tsmm.copyWith(color: AppColors.green),
+                      style: AppTexts.tsmm.copyWith(color: AppColors.gold),
                     ),
                   ),
                 ),
@@ -167,7 +172,7 @@ class _VerificationState extends State<Verification> {
                     ),
                     Text(
                       "00:${seconds.toString().padLeft(2, "0")}",
-                      style: AppTexts.tsms.copyWith(color: AppColors.green),
+                      style: AppTexts.tsms.copyWith(color: AppColors.gold),
                     ),
                   ],
                 ),

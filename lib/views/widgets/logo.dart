@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hdoom/utils/app_colors.dart';
 
 class Logo extends StatelessWidget {
   final bool showName;
@@ -16,17 +15,17 @@ class Logo extends StatelessWidget {
             "assets/images/name.png",
             fit: BoxFit.cover,
             height: 28,
-            width: 90,
+            // width: 90,
           ),
-        if (showName)
-          Container(width: 112, height: 0.5, color: AppColors.green.shade100),
-        if (showName)
-          Image.asset(
-            "assets/images/name_ar.png",
-            fit: BoxFit.cover,
-            height: 28,
-            width: 90,
-          ),
+        // if (showName)
+        //   Container(width: 112, height: 0.5, color: AppColors.gold.shade100),
+        // if (showName)
+        //   Image.asset(
+        //     "assets/images/name_ar.png",
+        //     fit: BoxFit.cover,
+        //     height: 28,
+        //     width: 90,
+        //   ),
       ],
     );
   }

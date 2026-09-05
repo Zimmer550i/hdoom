@@ -16,13 +16,13 @@ import 'package:hdoom/views/widgets/custom_loading.dart';
 
 // Colors
 final _scaffoldBg = AppColors.bg;
-final _headerTitleColor = AppColors.green.shade500;
+final _headerTitleColor = AppColors.gold.shade500;
 final _headerSubtitleColor = AppColors.black.shade300;
 final _addIconColor = AppColors.black.shade300;
 final _addIconBorderColor = AppColors.black.shade200;
 
 // Top tabs
-final _selectedTabBg = AppColors.green.shade500;
+final _selectedTabBg = AppColors.gold.shade500;
 const _selectedTabTextColor = Colors.white;
 final _unselectedTabBg = AppColors.black.shade50;
 final _unselectedTabTextColor = AppColors.black.shade400;

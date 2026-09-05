@@ -75,7 +75,7 @@ class _RateOutfitState extends State<RateFeed> {
               const SizedBox(height: 8),
               SmoothPageIndicator(
                 controller: controller,
-                effect: WormEffect(activeDotColor: AppColors.green),
+                effect: WormEffect(activeDotColor: AppColors.gold),
                 count: widget.feed.images.length,
               ),
               Padding(
@@ -144,8 +144,8 @@ class _RateOutfitState extends State<RateFeed> {
                 ratingValues[name] = val;
               });
             },
-            activeColor: AppColors.green,
-            thumbColor: AppColors.green,
+            activeColor: AppColors.gold,
+            thumbColor: AppColors.gold,
             showValueIndicator: ShowValueIndicator.alwaysVisible,
             padding: .zero,
           ),

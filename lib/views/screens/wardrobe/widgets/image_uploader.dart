@@ -50,7 +50,7 @@ class ImageUploader extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: AppColors.green.shade500,
+                          color: AppColors.gold.shade500,
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
@@ -77,7 +77,7 @@ class ImageUploader extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: AppColors.green.shade500,
+                          color: AppColors.gold.shade500,
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(

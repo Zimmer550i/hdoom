@@ -52,7 +52,7 @@ class _AvatarState extends State<Avatar> {
                     children: [
                       Text(
                         "avatar_creation".tr,
-                        style: AppTexts.txlm.copyWith(color: AppColors.green),
+                        style: AppTexts.txlm.copyWith(color: AppColors.gold),
                       ),
                       Text(
                         "avatar_creation_subtitle".tr,
@@ -114,7 +114,7 @@ class _AvatarState extends State<Avatar> {
                                   state,
                                 ) {
                                   if (state.contains(WidgetState.selected)) {
-                                    return AppColors.green[50]!;
+                                    return AppColors.gold[50]!;
                                   } else {
                                     return AppColors.bg;
                                   }

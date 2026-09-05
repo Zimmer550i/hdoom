@@ -7,18 +7,18 @@ class AppColors {
   static const Color red = Color(0xFFDC2626);
 
   // Green
-  static const MaterialColor green = MaterialColor(0xFF005B36, {
+  static const MaterialColor gold = MaterialColor(0xFFA37E2C, {
     25: Color(0xFFF3F8F6),
-    50: Color(0xFFE6EFEB),
-    100: Color(0xFFC4D8D0),
-    200: Color(0xFF8EB9A6),
-    300: Color(0xFF549178),
-    400: Color(0xFF2A7657),
-    500: Color(0xFF005B36),
-    600: Color(0xFF004D2E),
-    700: Color(0xFF004126),
-    800: Color(0xFF00311D),
-    900: Color(0xFF002315),
+    50: Color(0xFFf6f2ea),
+    100: Color(0xFFe2d7be),
+    200: Color(0xFFd5c49e),
+    300: Color(0xFFc1a972),
+    400: Color(0xFFb59856),
+    500: Color(0xFFa37e2c),
+    600: Color(0xFF947328),
+    700: Color(0xFF74591f),
+    800: Color(0xFF5a4518),
+    900: Color(0xFF443512),
   });
 
   // Gray

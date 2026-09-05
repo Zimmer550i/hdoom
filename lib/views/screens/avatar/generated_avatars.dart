@@ -76,7 +76,7 @@ class _GeneratedAvatarsState extends State<GeneratedAvatars> {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
-                    color: AppColors.green.shade100,
+                    color: AppColors.gold.shade100,
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: Row(
@@ -105,7 +105,7 @@ class _GeneratedAvatarsState extends State<GeneratedAvatars> {
       case "done":
         return Text(
           "Completed",
-          style: AppTexts.tsms.copyWith(color: AppColors.green),
+          style: AppTexts.tsms.copyWith(color: AppColors.gold),
         );
       case "processing":
         return Text("Processing...", style: AppTexts.tsmm);

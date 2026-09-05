@@ -49,7 +49,7 @@ class _ViewOutfitState extends State<ViewFeed> {
               const SizedBox(height: 8),
               SmoothPageIndicator(
                 controller: controller,
-                effect: WormEffect(activeDotColor: AppColors.green),
+                effect: WormEffect(activeDotColor: AppColors.gold),
                 count: widget.feed.images.length,
               ),
               Padding(

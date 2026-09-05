@@ -10,8 +10,8 @@ import 'package:hdoom/utils/custom_svg.dart';
 
 // Colors (same as CustomTextField)
 const _backgroundColor = Colors.white;
-final _focusBorderColor = AppColors.green[300]!;
-final _defaultBorderColor = AppColors.green[100]!;
+final _focusBorderColor = AppColors.gold[300]!;
+final _defaultBorderColor = AppColors.gold[100]!;
 const _errorColor = AppColors.red;
 
 // Border
@@ -194,14 +194,14 @@ class _CustomDropDownState extends State<CustomDropDown> {
                                 horizontal: _horizontalPadding,
                               ),
                               color: isSelected
-                                  ? AppColors.green[25]
+                                  ? AppColors.gold[25]
                                   : Colors.transparent,
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 option,
                                 style: _inputStyle.copyWith(
                                   color: isSelected
-                                      ? AppColors.green
+                                      ? AppColors.gold
                                       : AppColors.black.shade400,
                                 ),
                               ),

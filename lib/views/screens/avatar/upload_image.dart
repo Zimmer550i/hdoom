@@ -65,7 +65,7 @@ class _UploadImageState extends State<UploadImage> {
                   height: 200,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: AppColors.green.shade200,
+                      color: AppColors.gold.shade200,
                       width: 2,
                     ),
                     borderRadius: BorderRadius.circular(32),

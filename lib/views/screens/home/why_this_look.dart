@@ -74,7 +74,7 @@ class WhyThisLook extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: AppColors.green.shade50,
+                        color: AppColors.gold.shade50,
                       ),
                       child: Column(
                         crossAxisAlignment: .start,
@@ -100,10 +100,7 @@ class WhyThisLook extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 50),
-              CustomButton(
-                onTap: () => Get.back(),
-                text: "Get Back",
-              ),
+              CustomButton(onTap: () => Get.back(), text: "Get Back"),
               const SizedBox(height: 20),
             ],
           ),
@@ -116,7 +113,7 @@ class WhyThisLook extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.green.shade50)),
+        border: Border(bottom: BorderSide(color: AppColors.gold.shade50)),
       ),
       child: Column(
         children: [
@@ -128,12 +125,12 @@ class WhyThisLook extends StatelessWidget {
                 width: 32,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.green.shade50,
+                  color: AppColors.gold.shade50,
                 ),
                 child: Center(
                   child: Text(
                     num.toString(),
-                    style: AppTexts.tmdr.copyWith(color: AppColors.green),
+                    style: AppTexts.tmdr.copyWith(color: AppColors.gold),
                   ),
                 ),
               ),

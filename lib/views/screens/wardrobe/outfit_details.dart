@@ -76,7 +76,7 @@ class _OutfitDetailsState extends State<OutfitDetails> {
                               Switch(
                                 value: liveOutfit?.isShared ?? false,
                                 padding: EdgeInsets.zero,
-                                activeTrackColor: AppColors.green,
+                                activeTrackColor: AppColors.gold,
                                 onChanged: (val) {
                                   outfitCtrl
                                       .updateSavedOutfit(

@@ -16,7 +16,7 @@ class NewsArticleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => News(news: news,));
+        Get.to(() => News(news: news));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -43,7 +43,7 @@ class NewsArticleTile extends StatelessWidget {
               width: 80,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: AppColors.green.shade300),
+                border: Border.all(color: AppColors.gold.shade300),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(999),

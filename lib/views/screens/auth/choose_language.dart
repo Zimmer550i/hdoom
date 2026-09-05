@@ -116,7 +116,7 @@ class ChooseLanguage extends StatelessWidget {
               Spacer(),
               Text(
                 "experience_luxury".tr,
-                style: AppTexts.tsmr.copyWith(color: AppColors.green.shade600),
+                style: AppTexts.tsmr.copyWith(color: AppColors.gold.shade600),
               ),
               const SizedBox(height: 20),
             ],

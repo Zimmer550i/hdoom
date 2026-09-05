@@ -9,18 +9,18 @@ import 'package:hdoom/utils/app_texts.dart';
 // ──────────────────────────────────────────────
 
 // Primary button colors
-final _primaryColor = AppColors.green.shade500;
-final _primaryDisabledColor = AppColors.green.shade100;
+final _primaryColor = AppColors.gold.shade500;
+final _primaryDisabledColor = AppColors.gold.shade100;
 final _primaryTextColor = Colors.white;
 final _primaryIconColor = Colors.white;
 final _primaryLoaderColor = Colors.white;
 
 // Secondary button colors
-final _secondaryColor = AppColors.green[50]!;
-const _secondaryBorderColor = AppColors.green;
-const _secondaryTextColor = AppColors.green;
-const _secondaryIconColor = AppColors.green;
-const _secondaryLoaderColor = AppColors.green;
+final _secondaryColor = AppColors.gold[50]!;
+const _secondaryBorderColor = AppColors.gold;
+const _secondaryTextColor = AppColors.gold;
+const _secondaryIconColor = AppColors.gold;
+const _secondaryLoaderColor = AppColors.gold;
 
 // Sizing defaults
 const _defaultHeight = 50.0;
@@ -91,6 +91,7 @@ class _CustomButtonState extends State<CustomButton> {
           gradient: widget.isSecondary || widget.isDisabled
               ? null
               : AppConstants.DEFAULT_GRADIENT_BACKGROUND,
+              // : null,
           color: widget.isSecondary
               ? _secondaryColor
               : widget.isDisabled

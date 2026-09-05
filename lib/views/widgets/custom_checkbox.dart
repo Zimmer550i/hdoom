@@ -6,7 +6,7 @@ import 'package:hdoom/utils/app_colors.dart';
 // ──────────────────────────────────────────────
 
 // Colors
-const _activeColor = AppColors.green;
+const _activeColor = AppColors.gold;
 const _inactiveColor = AppColors.black;
 const _checkmarkColor = Colors.white;
 const _inactiveBackgroundColor = Colors.transparent;

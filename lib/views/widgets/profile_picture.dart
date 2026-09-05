@@ -12,10 +12,10 @@ import 'package:hdoom/utils/custom_svg.dart';
 // ──────────────────────────────────────────────
 
 // Colors
-final _progressColor = AppColors.green[400]!;
-final _errorBackgroundColor = AppColors.green[100]!;
+final _progressColor = AppColors.gold[400]!;
+final _errorBackgroundColor = AppColors.gold[100]!;
 const _errorIconColor = Colors.blue;
-final _placeholderIconColor = AppColors.green[400]!;
+final _placeholderIconColor = AppColors.gold[400]!;
 
 // Sizing
 const _defaultSize = 100.0;

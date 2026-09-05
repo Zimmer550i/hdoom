@@ -316,7 +316,7 @@ class _ProfileState extends State<Profile> {
                   children: [
                     Text(
                       "HDOOM-i",
-                      style: AppTexts.tmds.copyWith(color: AppColors.green),
+                      style: AppTexts.tmds.copyWith(color: AppColors.gold),
                     ),
                     Text("subscription_active".tr, style: AppTexts.tsmr),
                   ],
@@ -383,7 +383,7 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
               ),
-              Divider(thickness: 1, height: 32, color: AppColors.green.shade50),
+              Divider(thickness: 1, height: 32, color: AppColors.gold.shade50),
               Row(
                 children: [
                   Expanded(
@@ -403,7 +403,7 @@ class _ProfileState extends State<Profile> {
                     width: 36,
                     child: Switch(
                       value: isPublic,
-                      activeTrackColor: AppColors.green,
+                      activeTrackColor: AppColors.gold,
                       onChanged: (val) {
                         setState(() {
                           isPublic = val;
@@ -509,7 +509,7 @@ class _ProfileState extends State<Profile> {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 14),
           decoration: BoxDecoration(
-            color: isGreen ? AppColors.green.shade50 : Colors.white,
+            color: isGreen ? AppColors.gold.shade50 : Colors.white,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(

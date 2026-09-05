@@ -124,9 +124,9 @@ class ProfileMenu extends StatelessWidget {
             height: 32,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.green),
+              border: Border.all(color: AppColors.gold),
             ),
-            child: Icon(Icons.more_vert, size: 18, color: AppColors.green),
+            child: Icon(Icons.more_vert, size: 18, color: AppColors.gold),
           ),
         ),
       ),

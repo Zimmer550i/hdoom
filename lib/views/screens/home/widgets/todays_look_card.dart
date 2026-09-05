@@ -103,7 +103,7 @@ class _TodaysLookCardState extends State<TodaysLookCard> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: AppColors.green.shade50,
+                color: AppColors.gold.shade50,
               ),
               child: Row(
                 children: [
